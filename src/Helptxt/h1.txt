@@ -1,0 +1,16 @@
+const onTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>
+) => {
+    var name = event.currentTarget.name;
+    var newValue = event.currentTarget.value;
+    setLaptopInfo((prev) => ({ ...prev, [name]: newValue }));
+};
+
+const onSelectFieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = event.currentTarget.value;
+    const name = event.currentTarget.name;
+
+    setLaptopInfo((prevState) => ({ ...prevState, [name]: newValue }));
+
+};<TextField sx={{ margin: 10 }} value={laptopInfo.laptopPrice} id="laptopPrice" label="Laptop Price" variant="outlined" />
+    <TextField sx={{ margin: 10 }} value={laptopInfo.laptopName} id="laptopName" label="Laptop Name" variant="outlined" />
+    <TextField  value={laptopInfo.laptopName} id="laptopName" label="Laptop Name" variant="outlined" />
