@@ -1,16 +1,183 @@
-const onTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>
-) => {
-    var name = event.currentTarget.name;
-    var newValue = event.currentTarget.value;
-    setLaptopInfo((prev) => ({ ...prev, [name]: newValue }));
-};
+import { Button, Snackbar } from '@mui/material';
+import React, { useState } from 'react';
 
-const onSelectFieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newValue = event.currentTarget.value;
-    const name = event.currentTarget.name;
+export default function MyComponent() {
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    setLaptopInfo((prevState) => ({ ...prevState, [name]: newValue }));
+    const handleSnackbarClose = () => {
+        setOpenSnackbar(false);
+    };
 
-};<TextField sx={{ margin: 10 }} value={laptopInfo.laptopPrice} id="laptopPrice" label="Laptop Price" variant="outlined" />
-    <TextField sx={{ margin: 10 }} value={laptopInfo.laptopName} id="laptopName" label="Laptop Name" variant="outlined" />
-    <TextField  value={laptopInfo.laptopName} id="laptopName" label="Laptop Name" variant="outlined" />
+    const handleButtonClick = () => {
+        // Perform some action, like submitting a form or fetching data
+        // If the action is successful, display a success snackbar
+        setOpenSnackbar(true);
+    };
+
+    return (
+        <div>
+            <Button onClick={handleButtonClick} variant="contained" color="primary">
+                Perform Action
+            </Button>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000} // Optional: How long the snackbar should be displayed (in milliseconds)
+                onClose={handleSnackbarClose}
+                message="Operation successful!"
+            />
+        </div>
+    );
+}
+
+
+In the code snippet you provided, the expression `error={!!errors.find(error => error.parameterName === "firstName")}` is used in the `<TextField />` component to determine whether an error state should be set for the "First Name" field.
+
+Let's break it down:
+
+- `errors.find(error => error.parameterName === "firstName")`
+: This part of the expression searches for an error object in 
+the `errors` array that has a `parameterName` equal to "firstName".
+ The `find` method returns the first element in the array that 
+ satisfies the provided testing function. If no such element is found,
+  it returns `undefined`.
+
+- `!!errors.find(...)`: The `!!` double negation operator is used to convert 
+the result of the `find` operation into a boolean value. 
+It converts any truthy value to `true` and `undefined` to `false`.
+ So, if an error with `parameterName` equal to "firstName" is found,
+  it evaluates to `true`, indicating that there's an error for the "First Name" field.
+   Otherwise, it evaluates to `false`.
+
+- `error={...}`: This part sets the error state of the `<TextField />` component
+ based on the boolean result obtained from the previous expression.
+  If `true`, it indicates that there's an error for the "First Name" field,
+   and the component will display error styling. If `false`, 
+   it indicates that there's no error, and the component will display normally.
+
+In summary, this expression dynamically determines whether there's 
+an error for the "First Name" field based on the contents of the `errors` array 
+and sets the error state of the `<TextField />` component accordingly.
+
+import React, { useState } from "react"
+import { LoginModel } from "../model/LoginModels"
+import FieldErrorModel from "../model/FieldErrorModel";
+import { isValidEmailAddress } from "../common/CommonFunctions";
+import { SnackbarOrigin } from "@mui/material";
+import { LoginAsync } from "../services/UserService";
+import { setSessionValue } from "./SessionStorageUtility";
+import { useNavigate } from "react-router-dom";
+
+const LoginUtility = () => {
+    const navigate = useNavigate();
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = React.useState("");
+    const [snackbarPosition, setSnackbarPosition] =
+        React.useState<SnackbarOrigin>({
+            vertical: "top",
+            horizontal: "center",
+        });
+    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
+        "success" | "error" | "info" | "warning"
+    >();
+
+    const initialLogin: LoginModel = {
+        emailAddress: "test@test.com",
+        password: "test2@test2.com"
+    }
+    const initialErrors: FieldErrorModel[] = [];
+    const [login, setLogin] = useState<LoginModel>(initialLogin);
+    const [errorInfo, setErrorInfo] = useState<FieldErrorModel[]>(initialErrors);
+
+
+    const onLogin = async () => {
+        if (isValidate()) {
+            let response;
+
+
+            response = await LoginAsync(login);
+           alert(JSON.stringify(response.data));
+            if (response.data != null && response.status === 200 ) {
+               // console.log(response.data.userInfo.emailAddress);
+                //console.log(response);
+
+                setSessionValue("accessToken", response.data.accessToken);
+                setSessionValue("refreshToken", response.data.accessToken);
+                setSessionValue("loginUserId", response.data.userInfo.id);
+                setSessionValue("loginUserEmailAddress", response.data.userInfo.emailAddress);
+
+                navigate("/profile");
+            }
+
+
+            const snackbarSeverity = response.status === 200 ? "success" : "error";
+            setSnackbarMessage(response.message);
+            setSnackbarOpen(true);
+            setSnackbarSeverity(snackbarSeverity);
+
+            //  alert(JSON.stringify(response));
+        } else {
+            setSnackbarMessage("Fields marked in red are required");
+            setSnackbarOpen(true);
+            setSnackbarSeverity("error");
+        }
+    };
+    const isValidate = () => {
+        const newErrors: FieldErrorModel[] = [];
+
+        if (login.password === "") {
+            newErrors.push({
+                fieldName: "password",
+                errorMessage: "Enter password",
+            });
+        }
+        // Validate email address
+        if (login.emailAddress.trim() === "") {
+            newErrors.push({
+                fieldName: "emailAddress",
+                errorMessage: "Enter email address",
+            });
+        } else if (!isValidEmailAddress(login.emailAddress)) {
+            newErrors.push({
+                fieldName: "emailAddress",
+                errorMessage: "Invalid email address",
+            });
+        }
+
+        // alert(JSON.stringify(newErrors));
+
+        setErrorInfo(newErrors);
+        return newErrors.length === 0;
+    };
+
+    const handleSnackbarClose = (
+        event: React.SyntheticEvent | Event,
+        reason?: string
+    ) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
+    const onTextFieldChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const name = event.currentTarget.name;
+        const value = event.currentTarget.value;
+
+        setLogin((prev) => ({ ...prev, [name]: value }));
+
+        setErrorInfo((prevErrors) => {
+            const newErrors = prevErrors.filter((error) => error.fieldName !== name);
+            return newErrors;
+        });
+    };
+
+    return {
+        login, onLogin, errorInfo, onTextFieldChanged,
+        snackbarOpen,
+        handleSnackbarClose,
+        snackbarMessage,
+        snackbarPosition,
+        snackbarSeverity,
+    }
+}
+export default LoginUtility;

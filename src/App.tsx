@@ -9,6 +9,7 @@ import About from './Components/About';
 import Layout from './Components/Layout';
 import User from './Components/User';
 import ShowUser from './Components/ShowUser';
+import Subscriber from './Components/Subscriber';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path='/user' element={<User/>}></Route>
         <Route path='/user/:id' element={<User/>}></Route>
         <Route path='/showusers' element={<ShowUser/>}></Route>
+
+        <Route path='/subscriber' element={<Subscriber/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

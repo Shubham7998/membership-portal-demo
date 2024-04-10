@@ -44,16 +44,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ShowUser() {
 
-    const {handleDelete, userInfo, handleEdit} = ShowUserUtility();
+    const { handleDelete, userInfo, handleEdit } = ShowUserUtility();
 
     return (
         <>
             <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
-                <Box component="main" sx={{ margin :6, flexGrow: 1, p: 3 }}>
+                <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 700}} aria-label="customized table">
+                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead  >
                                 <TableRow color="primary" >
                                     <StyledTableCell align="left">Sr. No.</StyledTableCell>
@@ -75,8 +75,8 @@ export default function ShowUser() {
                                         <StyledTableCell align="left">{user.lastName}</StyledTableCell>
                                         <StyledTableCell align="left">{user.email}</StyledTableCell>
                                         <StyledTableCell align="left">{user.contactNumber}</StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary" sx={{cursor: 'pointer'}}/></StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary" sx={{cursor: 'pointer'}}/></StyledTableCell>
+                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>

@@ -107,9 +107,13 @@ async function GetAllUserService() : Promise<ResponseModel> {
     .then( function (response){
         result.data = response.data;
         result.errorCode = response.status + "";
+        console.log(result.data)
+        console.log(result)
     })
     .catch(function (error) {
         alert(JSON.stringify(error));
+        console.log(error)
+        console.log(result.errorCode)
     })
     return result;
 }

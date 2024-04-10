@@ -1,94 +1,133 @@
-import { userInfo } from 'os'
-import { Button, Grid, Paper, TextField } from '@mui/material';
-import React from 'react'
-import SideNav from './SideNav'
+import { Button, Grid, Paper, TextField, Snackbar, Alert } from '@mui/material';
+import React, { useState } from 'react';
+import SideNav from './SideNav';
+import { SnackbarOrigin } from "@mui/material";
+import { ParameterErrorModel } from '../Models/ParameterErrorModel';
+import { error } from 'console';
 
 export default function Subscriber() {
-    
-    function handleSubmit() {
-        
-    }
+    const [firstName, setFirstName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
 
-  return (
-    <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
-            <SideNav/>
-            <Grid item xs={3} sm={6} md={3}>
-                <Paper elevation={3} style={{ padding: 20 }}>
-                    <Grid container spacing={2} justifyContent="center">
-                    <h1> User </h1>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                id="firstName"
-                                label="First Name"
-                                variant="outlined"
-                                size="small"
-                                name='firstName'
-                                // onChange={(e) => handleTextChange(e)}
-                                // value={userInfo.firstName}
-                                required
-                            />
+
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = React.useState("");
+    const [snackbarPosition, setSnackbarPosition] =
+        React.useState<SnackbarOrigin>({
+            vertical: "top",
+            horizontal: "center",
+        });
+    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
+        "success" | "error" | "info" | "warning"
+    >();
+
+    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { value } = event.currentTarget;
+        setFirstName(value);
+    };
+    const handleText2Change = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { value } = event.currentTarget;
+        setLastName(value);
+    };
+
+    const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
+    const newErrors: ParameterErrorModel[] = [];
+
+    const handleSubmit = () => {
+        if (firstName.trim() === "") {
+
+            newErrors.push({
+                parameterName: "firstName",
+                errorMessage: "Enter a valid first name"
+            });
+            
+        }
+        if (lastName.trim() === "") {
+
+            newErrors.push({
+                parameterName: "lastName",
+                errorMessage: "Enter a valid last name"
+            });
+        }
+
+        setSnackbarMessage("Fields marked in red are required");
+        setSnackbarOpen(true);
+        setSnackbarSeverity("error");
+        setErrors(newErrors);
+
+    };
+
+    const handleSnackbarClose = (
+        event: React.SyntheticEvent | Event,
+        reason?: string
+    ) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
+
+    return (
+        <div>
+            <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
+                <SideNav />
+                <Grid item xs={12} sm={6} md={3}>
+                    <Paper elevation={3} style={{ padding: 20 }}>
+                        <Grid container spacing={2} justifyContent="center">
+                            <h1> User </h1>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    id="firstName"
+                                    label="First Name"
+                                    variant="outlined"
+                                    size="small"
+                                    name='firstName'
+                                    onChange={handleTextChange}
+                                    value={firstName}
+                                    required
+                                    helperText={errors.find(error => error.parameterName === "firstName")?.errorMessage || ""}
+                                    error={!!errors.find(error => error.parameterName === "firstName")}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    id="lasName"
+                                    label="last Name"
+                                    variant="outlined"
+                                    size="small"
+                                    name='lasName'
+                                    onChange={handleText2Change}
+                                    value={lastName}
+                                    required
+                                    helperText={errors.find(error => error.parameterName === "lastName")?.errorMessage || ""}
+                                    error={!!errors.find(error => error.parameterName === "lastName")}
+                                />
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
+                                    Submit
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                variant="outlined"
-                                size="small"
-                                name='lastName'
-                                // onChange={(e) => handleTextChange(e)}
-                                // value={userInfo.lastName}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                id="email"
-                                label="Email"
-                                variant="outlined"
-                                size="small"
-                                name='email'
-                                // onChange={(e) => handleTextChange(e)}
-                                // value={userInfo.email}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                id="contactNumber"
-                                label="Contact Number"
-                                variant="outlined"
-                                size="small"
-                                name='contactNumber'
-                                // onChange={(e) => handleNumberChange(e)}
-                                // value={userInfo.contactNumber}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                id="password"
-                                label="Password"
-                                variant="outlined"
-                                size="small"
-                                name='password'
-                                // onChange={(e) => handleTextChange(e)}
-                                // value={userInfo.password}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={5}>
-                            <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
-                                Submit
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Paper>
+                    </Paper>
+                </Grid>
             </Grid>
-        </Grid>
-  )
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                anchorOrigin={snackbarPosition}>
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+        </div>
+
+    );
 }
+
