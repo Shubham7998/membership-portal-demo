@@ -62,7 +62,7 @@ export function UserUtility(id: number) {
                 alert(result.data);
                 console.log(result.data);
             }
-            navigate(`/showuser`)
+            navigate(`/showusers`)
             
         }catch(error){
             console.log(error)

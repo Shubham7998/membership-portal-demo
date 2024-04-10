@@ -75,8 +75,8 @@ export default function ShowUser() {
                                         <StyledTableCell align="left">{user.lastName}</StyledTableCell>
                                         <StyledTableCell align="left">{user.email}</StyledTableCell>
                                         <StyledTableCell align="left">{user.contactNumber}</StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary"/></StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary"/></StyledTableCell>
+                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary" sx={{cursor: 'pointer'}}/></StyledTableCell>
+                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary" sx={{cursor: 'pointer'}}/></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
