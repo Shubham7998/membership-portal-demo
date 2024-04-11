@@ -4,8 +4,6 @@ import { Button, Grid, Paper, TextField } from '@mui/material';
 import { userInfo } from 'os';
 import { UserUtility } from '../Utility/UserUtility';
 import { useParams } from 'react-router-dom';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SideNav from './SideNav';
 
 export default function User() {
