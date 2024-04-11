@@ -10,21 +10,23 @@ import Layout from './Pages/HelpingPages/Layout';
 import User from './Pages/User';
 import ShowUser from './Pages/ShowUser';
 import Subscriber from './Pages/Subscriber';
+import HelperComponents from './Pages/HelperComponents';
 
 function App() {
   return (
     <BrowserRouter >
       <Routes>
-        <Route element={<Layout/>}>
-        <Route path='/' element = {<Home />}>Home</Route>
-        <Route path='/about' element = {<About />}>About</Route>
-        <Route path='/settings' element = {<Settings />}>Settings</Route>
+        <Route element={<Layout />}>
+          <Route path='/' element={<Home />}>Home</Route>
+          <Route path='/about' element={<About />}>About</Route>
+          <Route path='/settings' element={<Settings />}>Settings</Route>
 
-        <Route path='/user' element={<User/>}></Route>
-        <Route path='/user/:id' element={<User/>}></Route>
-        <Route path='/showusers' element={<ShowUser/>}></Route>
+          <Route path='/user' element={<User />}></Route>
+          <Route path='/user/:id' element={<User />}></Route>
+          <Route path='/showusers' element={<ShowUser />}></Route>
 
-        <Route path='/subscriber' element={<Subscriber/>}></Route>
+          <Route path='/sub' element={<Subscriber />}></Route>
+          <Route path='/helpme' element={<HelperComponents />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,217 +1,146 @@
-import { Button, Grid, Paper, TextField, Snackbar, Alert } from '@mui/material';
-import React, { useState } from 'react';
-import SideNav from './HelpingPages/SideNav';
-import { SnackbarOrigin } from "@mui/material";
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import { error } from 'console';
-import InputAdornment from '@mui/material/InputAdornment';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import LockIcon from '@mui/icons-material/Lock';
-import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import FormHelperText from '@mui/material/FormHelperText';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import IconButton from '@mui/material/IconButton';
-import image from '../Images/pexels-photo-4761779.webp';
-
+import * as React from 'react';
+import { useParams } from 'react-router-dom';
+import SubscriberUtility from '../Utility/SubscriberUtility';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {
+    Paper, Grid, TextField,InputLabel,
+    MenuItem,FormControl, Button,InputAdornment
+} from "@mui/material";
 
 export default function Subscriber() {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
+    const { id = 0 } = useParams();
 
-
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-    const [snackbarMessage, setSnackbarMessage] = React.useState("");
-    const [snackbarPosition, setSnackbarPosition] =
-        React.useState<SnackbarOrigin>({
-            vertical: "top",
-            horizontal: "center",
-        });
-    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
-        "success" | "error" | "info" | "warning"
-    >();
-    const [showLastName, setShowLastName] = useState(true); // State to manage last name visibility
-
-
-    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { value } = event.currentTarget;
-        setFirstName(value);
-
-        // Clear errors for firstName when user starts typing
-        if (errors.some(error => error.parameterName === "firstName")) {
-            const updatedErrors = errors.filter(error => error.parameterName !== "firstName");
-            setErrors(updatedErrors);
-        }
+    const handleChange = (event: SelectChangeEvent) => {
+        const val = event.target.value;
+        const name = event.target.name;
+    
+        setSubscriberInfo(prev => ({ ...prev, [name]: val }));
     };
 
-    const handleText2Change = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { value } = event.currentTarget;
-        setLastName(value);
-
-        // Clear errors for lastName when user starts typing
-        if (errors.some(error => error.parameterName === "lastName")) {
-            const updatedErrors = errors.filter(error => error.parameterName !== "lastName");
-            setErrors(updatedErrors);
-        }
-    };
-
-
-    const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
-    const newErrors: ParameterErrorModel[] = [];
-
-    // newErrors = {
-    //     "firstName" : "Enter a valid first name",
-    //     "lastName" : "Enter a valid last name"
-    // }
-
-    const validate = () => {
-        if (firstName.trim() === "") {
-
-            newErrors.push({
-                parameterName: "firstName",
-                errorMessage: "Enter a valid first name"
-            });
-
-        }
-        if (lastName.trim() === "") {
-
-            newErrors.push({
-                parameterName: "lastName",
-                errorMessage: "Enter a valid last name"
-            });
-        }
-    }
-    const handleSubmit = () => {
-
-        validate();
-        if (newErrors.length == 0) {
-
-            setSnackbarMessage("Record added successfully");
-            setSnackbarSeverity("success");
-        }
-        else {
-            setSnackbarMessage("Fields marked in red are required");
-            setSnackbarSeverity("warning");
-        }
-        setErrors(newErrors);
-        setSnackbarOpen(true);
-
-
-    };
-
-    const handleSnackbarClose = (
-        event: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-
-        setSnackbarOpen(false);
-    };
-
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
+    const { handleSubmit,handleNumberChange,subscriberInfo, handleTextChange, gender,gendersInfo, handleSelectChange,setSubscriberInfo } = SubscriberUtility(+id);
 
     return (
-
-        <div>
+        <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
-                <SideNav />
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={3} sm={6} md={3}>
                     <Paper elevation={3} style={{ padding: 20 }}>
                         <Grid container spacing={2} justifyContent="center">
-                            <h1> User </h1>
+                            <h1>Subscriber</h1>
                             <Grid item xs={12}>
                                 <TextField
-                                    type={'text'}
                                     fullWidth
                                     id="firstName"
                                     label="First Name"
                                     variant="outlined"
-                                    size="small"
-                                    name='firstName'
-                                    onChange={handleTextChange}
-                                    value={firstName}
+                                    size="small" // Set size to "small"
+                                    name="firstName"
+                                    onChange={(e) => handleTextChange(e)}
+                                    value={subscriberInfo.firstName}
                                     required
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <AccountCircle />
-                                            </InputAdornment>
-
-                                        ),
-                                    }}
-                                    helperText={errors.find(error => error.parameterName === "firstName")?.errorMessage || ""}
-                                    error={!!errors.find(error => error.parameterName === "firstName")}
                                 />
                             </Grid>
-
+                            
                             <Grid item xs={12}>
-                                <TextField
-                                    type={showLastName ? 'text' : 'password'}
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    variant="outlined"
-                                    size="small"
-                                    name='lastName'
-                                    onChange={handleText2Change}
-                                    value={lastName}
+                            <TextField
+                                fullWidth
+                                id="lastName"
+                                label="Last Name"
+                                variant="outlined"
+                                size="small"
+                                name='lastName'
+                                required
+                                onChange={(e) => handleTextChange(e)}
+                                value={subscriberInfo.lastName}
+                                // helperText={
+                                //     errors.find(
+                                //         (error) => error.parameterName === "lastName"
+                                //     )?.errorMessage || ""
+                                // }
+                                // error={
+                                //     !!errors.find(
+                                //         (error) => error.parameterName === "lastName"
+                                //     )
+                                // }
+                            />
+                        </Grid>
+                        <Grid item xs={12} >
+                            <FormControl fullWidth >
+                                <InputLabel id="demo-select-small-label">Gender</InputLabel>
+                                <Select
+                                style={{height : 40}}
+                                    labelId="demo-select-small-label"
+                                    id="demo-select-small"
+                                    value={subscriberInfo.genderId.toString()}
+                                    label="Gender"
+                                    name='genderId'
                                     required
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <LockIcon />
-                                            </InputAdornment>
-                                        ),
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle last name visibility"
-                                                    onClick={() => setShowLastName(!showLastName)}
-                                                    edge="end"
-                                                >
-                                                    {showLastName ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                    helperText={errors.find(error => error.parameterName === "lastName")?.errorMessage || ""}
-                                    error={!!errors.find(error => error.parameterName === "lastName")}
-                                />
+                                    onChange={handleChange}
+                                >
+                                    {gender?.map((genders, key) => (
+                                        <MenuItem value={key}>{genders.genderName}</MenuItem>
+                                    ))}
+                                </Select>
+                                </FormControl>
                             </Grid>
-
-
-                            <Grid item xs={5}>
-                                <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
-                                    Submit
-                                </Button>
-                            </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                id="email"
+                                label="Email"
+                                variant="outlined"
+                                size="small"
+                                name='email'
+                                onChange={(e) => handleTextChange(e)}
+                                value={subscriberInfo.email}
+                                required
+                                // helperText={
+                                //     errors.find(
+                                //         (error) => error.parameterName === 'email'
+                                //     )?.errorMessage || ""
+                                // }
+                                // error={
+                                //     !!errors.find(
+                                //         (error) => error.parameterName == "email"
+                                //     )
+                                // }
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                id="contactNumber"
+                                label="Contact Number"
+                                variant="outlined"
+                                size="small"
+                                name='contactNumber'
+                                onChange={(e) => handleNumberChange(e)}
+                                value={subscriberInfo.contactNumber}
+                                required
+                                InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">
+                                        +91
+                                      </InputAdornment>
+                                    ),
+                                  }}
+                                // helperText={errors.find(
+                                //     (error) => error.parameterName == "contactNumber"
+                                //     )?.errorMessage || ""
+                                // }
+                                // error={
+                                //     !!errors.find((error) => error.parameterName === "contactNumber")
+                                // }
+                            />
+                        </Grid>
+                        <Grid item xs={5}>
+                            <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
+                                Submit
+                            </Button>
+                        </Grid>
                         </Grid>
                     </Paper>
                 </Grid>
             </Grid>
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={5000}
-                onClose={handleSnackbarClose}
-                message={snackbarMessage}
-                anchorOrigin={snackbarPosition}>
-                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
-        </div>
-
+        </>
     );
 }
-

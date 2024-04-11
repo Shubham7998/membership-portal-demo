@@ -195,7 +195,7 @@ export default function SideNav() {
                 <ListItemText primary="Show User" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/subscriber')}>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/sub')}>
               <ListItemButton
                 sx={{
                   minHeight: 48,

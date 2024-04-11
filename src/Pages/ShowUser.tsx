@@ -22,12 +22,17 @@ import ShowUserUtility from '../Utility/ShowUserUtility';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+       backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
     },
+}));
+
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+    backgroundColor: '#2196f3', // Blue color
+    color: theme.palette.common.white,
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -55,7 +60,7 @@ export default function ShowUser() {
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead  >
-                                <TableRow color="primary" >
+                                <TableRow  >
                                     <StyledTableCell align="left">Sr. No.</StyledTableCell>
                                     <StyledTableCell align="left">First Name </StyledTableCell>
                                     <StyledTableCell align="left">Last Name</StyledTableCell>
