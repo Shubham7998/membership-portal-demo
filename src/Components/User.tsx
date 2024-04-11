@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { UserModel } from '../Models/UserModel'
-import { Button, Grid, Paper, TextField } from '@mui/material';
+import { Button, Grid, Paper, TextField , Snackbar, Alert} from '@mui/material';
 import { userInfo } from 'os';
 import { UserUtility } from '../Utility/UserUtility';
 import { useParams } from 'react-router-dom';
@@ -13,12 +13,13 @@ import { error } from 'console';
 export default function User() {
 
     const { id = 0 } = useParams();
-    const { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors } = UserUtility(+id);
+    const { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors,snackbarOpen, handleSnackbarClose,snackbarMessage, snackbarPosition,snackbarSeverity} = UserUtility(+id);
 
 
 
     return (
-        <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
+        <div>
+            <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
             <SideNav />
             <Grid item xs={3} sm={6} md={3}>
                 <Paper elevation={3} style={{ padding: 20 }}>
@@ -143,5 +144,16 @@ export default function User() {
                 </Paper>
             </Grid>
         </Grid>
+        <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                anchorOrigin={snackbarPosition}>
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+        </div>
     )
 }

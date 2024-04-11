@@ -24,11 +24,25 @@ export default function Subscriber() {
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value } = event.currentTarget;
         setFirstName(value);
+    
+        // Clear errors for firstName when user starts typing
+        if (errors.some(error => error.parameterName === "firstName")) {
+            const updatedErrors = errors.filter(error => error.parameterName !== "firstName");
+            setErrors(updatedErrors);
+        }
     };
+    
     const handleText2Change = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value } = event.currentTarget;
         setLastName(value);
+    
+        // Clear errors for lastName when user starts typing
+        if (errors.some(error => error.parameterName === "lastName")) {
+            const updatedErrors = errors.filter(error => error.parameterName !== "lastName");
+            setErrors(updatedErrors);
+        }
     };
+    
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
     const newErrors: ParameterErrorModel[] = [];

@@ -4,6 +4,7 @@ import { CreateUserService, GetUserService, UpdateUserService } from '../Service
 import { useNavigate } from 'react-router-dom';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { isValidContactNumber, isValidEmailAddress, isValidName, isValidPassword, removeSpace } from '../Generics/Validations';
+import { SnackbarOrigin } from "@mui/material";
 
 export function UserUtility(id: number) {
     const initialValue: UserModel = {
@@ -22,6 +23,28 @@ export function UserUtility(id: number) {
     const newErrors: ParameterErrorModel[] = [];
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
+
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = React.useState("");
+    const [snackbarPosition, setSnackbarPosition] =
+        React.useState<SnackbarOrigin>({
+            vertical: "top",
+            horizontal: "center",
+        });
+    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
+        "success" | "error" | "info" | "warning"
+    >();
+
+    const handleSnackbarClose = (
+        event: React.SyntheticEvent | Event,
+        reason?: string
+    ) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
 
     useEffect(() => {
         fetchData();
@@ -42,6 +65,7 @@ export function UserUtility(id: number) {
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.currentTarget;
         setUserInfo(prev => ({ ...prev, [name]: value }));
+        // isValidate();
     };
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,149 +73,154 @@ export function UserUtility(id: number) {
         if (/^\d*$/.test(value)) {
             setUserInfo(prevState => ({ ...prevState, [name]: value }));
         }
+        // isValidate();
     };
 
     const handleSelectChange = (event: any) => {
         const { name, value } = event.target;
         setUserInfo(prev => ({ ...prev, [name]: value }));
+        // isValidate();
     };
 
     const isValidate = () => {
 
-        if(userInfo.firstName.trim() === ""){
+        if (userInfo.firstName.trim() === "") {
             newErrors.push({
-                parameterName : "firstName",
-                errorMessage : "Please enter a first name"
+                parameterName: "firstName",
+                errorMessage: "Please enter a first name"
             })
             console.log("first name")
-        }else if(userInfo.firstName.length > 25){
+        } else if (userInfo.firstName.length > 25) {
             newErrors.push({
-                parameterName : "firstName",
-                errorMessage : "FirstName atmost contain 25 chars"
+                parameterName: "firstName",
+                errorMessage: "FirstName atmost contain 25 chars"
             })
-        }else if(!isValidName(userInfo.firstName)){
+        } else if (!isValidName(userInfo.firstName)) {
             newErrors.push({
-                parameterName : "firstName",
-                errorMessage : "Please enter valid first name"
+                parameterName: "firstName",
+                errorMessage: "Please enter valid first name"
             })
-        }else{
+        } else {
             userInfo.firstName = removeSpace(userInfo.firstName);
         }
 
-        if(userInfo.lastName.trim() === ""){
+        if (userInfo.lastName.trim() === "") {
             newErrors.push({
-                parameterName : "lastName",
-                errorMessage : "Please enter a Last name"
+                parameterName: "lastName",
+                errorMessage: "Please enter a Last name"
             })
             console.log("lastName")
-        }else if(userInfo.lastName.length > 25){
+        } else if (userInfo.lastName.length > 25) {
             newErrors.push({
-                parameterName : "lastName",
-                errorMessage : "LastName atmost contain 25 chars"
+                parameterName: "lastName",
+                errorMessage: "LastName atmost contain 25 chars"
             })
-        }else if(!isValidName(userInfo.lastName)){
+        } else if (!isValidName(userInfo.lastName)) {
             newErrors.push({
-                parameterName : "lastName",
-                errorMessage : "Please enter valid Last name"
+                parameterName: "lastName",
+                errorMessage: "Please enter valid Last name"
             })
-        }else{
+        } else {
             userInfo.lastName = removeSpace(userInfo.lastName);
         }
 
-        if(userInfo.email.trim() === ""){
+        if (userInfo.email.trim() === "") {
             newErrors.push({
-                parameterName : "email",
-                errorMessage : "Please enter a email"
+                parameterName: "email",
+                errorMessage: "Please enter a email"
             })
-            
+
             console.log("email")
         }
-        else if(!isValidEmailAddress(userInfo.email)){
+        else if (!isValidEmailAddress(userInfo.email)) {
             newErrors.push({
-                parameterName : "email",
-                errorMessage : "Please enter valid email"
+                parameterName: "email",
+                errorMessage: "Please enter valid email"
             })
             console.log("email 1")
         }
 
-        if(userInfo.contactNumber.trim() === ""){
+        if (userInfo.contactNumber.trim() === "") {
             newErrors.push({
-                parameterName : "contactNumber",
-                errorMessage : "Please enter a mobile number"
+                parameterName: "contactNumber",
+                errorMessage: "Please enter a mobile number"
             })
             console.log("Contact Number")
         }
-        else if(userInfo.contactNumber.length != 10){
+        else if (userInfo.contactNumber.length != 10) {
             newErrors.push({
-                parameterName : "contactNumber",
-                errorMessage : "Please enter 10 digit mobile number"
+                parameterName: "contactNumber",
+                errorMessage: "Please enter 10 digit mobile number"
             })
         }
-        else{
-            if(!isValidContactNumber(userInfo.contactNumber)){
+        else {
+            if (!isValidContactNumber(userInfo.contactNumber)) {
                 newErrors.push({
-                    parameterName : "contactNumber",
-                    errorMessage : "Please enter a valid mobile number"
+                    parameterName: "contactNumber",
+                    errorMessage: "Please enter a valid mobile number"
                 })
                 console.log("Contact Number 1")
             }
         }
 
-        if(userInfo.password.trim() === ""){
+        if (userInfo.password.trim() === "") {
             newErrors.push({
-                parameterName : "password",
-                errorMessage : "Please enter a password"
+                parameterName: "password",
+                errorMessage: "Please enter a password"
             })
-        }else if(userInfo.password.length > 20 || userInfo.password.length < 8){
+        } else if (userInfo.password.length > 20 || userInfo.password.length < 8) {
             newErrors.push({
-                parameterName : "password",
-                errorMessage : "Password atleast contain 8 chars and at most contain 20 chars "
+                parameterName: "password",
+                errorMessage: "Password atleast contain 8 chars and at most contain 20 chars "
             })
         }
-        else{
-            if(!isValidPassword(userInfo.password)){
+        else {
+            if (!isValidPassword(userInfo.password)) {
                 newErrors.push({
-                    parameterName : "password",
-                    errorMessage : "Password must contain atleast one \ncapital letter \nsmall letter \nNumber "
+                    parameterName: "password",
+                    errorMessage: "Password must contain atleast one \ncapital letter \nsmall letter \nNumber "
                 })
             }
         }
 
         setErrors(newErrors);
-       
+
         return newErrors.length === 0;
     };
 
 
     async function handleSubmit() {
-        if(isValidate()){
-            try{
-                if(userInfo.firstName == ""){
-                    newErrors.push({
-                        parameterName : "firstName",
-                        errorMessage : "Enter valid firstname"
-                    })
-                    
+        if (isValidate()) {
+            try {
+                if (id > 0) {
+                    alert("update");
+                    var result = await UpdateUserService(userInfo, id);
+                    alert(result.data);
+                    console.log(result.data);
+                    setSnackbarMessage("User updated successfully");
+                } else {
+                    var result = await CreateUserService(userInfo);
+                    alert(result.data);
+                    console.log(result.data);
+                    setSnackbarMessage("User added successfully");
                 }
-                else{
-                    if (id > 0) {
-                        alert("update");
-                        var result = await UpdateUserService(userInfo, id);
-                        alert(result.data);
-                        console.log(result.data);
-                    } else {
-                        var result = await CreateUserService(userInfo);
-                        alert(result.data);
-                        console.log(result.data);
-                    }
-                    navigate(`/showusers`)
-                }
-                
-            }catch(error){
+                setSnackbarOpen(true);
+                setSnackbarSeverity("success");
+                setErrors(newErrors);
+
+                //navigate(`/showusers`)
+
+            } catch (error) {
                 console.log(error)
+                
             }
+        } else {
+            setSnackbarMessage("Fields marked in red are required");
+            setSnackbarOpen(true);
+            setSnackbarSeverity("error");
+            setErrors(newErrors);
         }
     }
 
-    return { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit , errors};
+    return { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors ,snackbarOpen, handleSnackbarClose,snackbarMessage, snackbarPosition,snackbarSeverity};
 }
