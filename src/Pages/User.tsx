@@ -6,9 +6,11 @@ import { UserUtility } from '../Utility/UserUtility';
 import { useParams } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import SideNav from './SideNav';
+import SideNav from './HelpingPages/SideNav';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { error } from 'console';
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 export default function User() {
 
@@ -106,6 +108,13 @@ export default function User() {
                                 onChange={(e) => handleNumberChange(e)}
                                 value={userInfo.contactNumber}
                                 required
+                                InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">
+                                        +91
+                                      </InputAdornment>
+                                    ),
+                                  }}
                                 helperText={errors.find(
                                     (error) => error.parameterName == "contactNumber"
                                     )?.errorMessage || ""

@@ -1,7 +1,7 @@
 import React from 'react';
-import SideNav from './SideNav';
 import { Box } from '@mui/material';
 import Navbar from './Navbar';
+import SideNav from './SideNav';
 
 export default function About() {
     return (

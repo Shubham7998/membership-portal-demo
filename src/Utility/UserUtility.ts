@@ -16,6 +16,8 @@ export function UserUtility(id: number) {
         contactNumber: ''
     }
 
+
+
     const navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState<UserModel>(initialValue);
@@ -66,6 +68,10 @@ export function UserUtility(id: number) {
         const { name, value } = event.currentTarget;
         setUserInfo(prev => ({ ...prev, [name]: value }));
         // isValidate();
+        if (errors.some(error => error.parameterName === name)) {
+            const updatedErrors = errors.filter(error => error.parameterName !== name);
+            setErrors(updatedErrors);
+        }
     };
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -73,7 +79,10 @@ export function UserUtility(id: number) {
         if (/^\d*$/.test(value)) {
             setUserInfo(prevState => ({ ...prevState, [name]: value }));
         }
-        // isValidate();
+        if (errors.some(error => error.parameterName === name)) {
+            const updatedErrors = errors.filter(error => error.parameterName !== name);
+            setErrors(updatedErrors);
+        }
     };
 
     const handleSelectChange = (event: any) => {
@@ -208,11 +217,13 @@ export function UserUtility(id: number) {
                 setSnackbarSeverity("success");
                 setErrors(newErrors);
 
-                //navigate(`/showusers`)
-
+                //Navigate to another page after 2 seconds
+                setTimeout(() => {
+                    navigate(`/showusers`); 
+                }, 1000);
             } catch (error) {
                 console.log(error)
-                
+
             }
         } else {
             setSnackbarMessage("Fields marked in red are required");
@@ -222,5 +233,5 @@ export function UserUtility(id: number) {
         }
     }
 
-    return { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors ,snackbarOpen, handleSnackbarClose,snackbarMessage, snackbarPosition,snackbarSeverity};
+    return { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity };
 }

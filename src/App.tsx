@@ -2,14 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import SideNav from './Components/SideNav';
-import Home from './Components/Home';
-import Settings from './Components/Settings';
-import About from './Components/About';
-import Layout from './Components/Layout';
-import User from './Components/User';
-import ShowUser from './Components/ShowUser';
-import Subscriber from './Components/Subscriber';
+import SideNav from './Pages/HelpingPages/SideNav';
+import Home from './Pages/HelpingPages/Home';
+import Settings from './Pages/HelpingPages/Settings';
+import About from './Pages/HelpingPages/About';
+import Layout from './Pages/HelpingPages/Layout';
+import User from './Pages/User';
+import ShowUser from './Pages/ShowUser';
+import Subscriber from './Pages/Subscriber';
 
 function App() {
   return (
