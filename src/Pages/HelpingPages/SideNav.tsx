@@ -20,6 +20,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../appStore';
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
 
@@ -110,7 +111,7 @@ export default function SideNav() {
                     justifyContent: 'center',
                   }}
                 >
-                 <MailIcon />
+                 <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
@@ -195,7 +196,7 @@ export default function SideNav() {
                 <ListItemText primary="Show User" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/sub')}>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/subscriber')}>
               <ListItemButton
                 sx={{
                   minHeight: 48,

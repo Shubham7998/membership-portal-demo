@@ -25,7 +25,8 @@ function App() {
           <Route path='/user/:id' element={<User />}></Route>
           <Route path='/showusers' element={<ShowUser />}></Route>
 
-          <Route path='/sub' element={<Subscriber />}></Route>
+          <Route path='/subscriber' element={<Subscriber />}></Route>
+          <Route path='/subscriber/:id' element={<Subscriber />}></Route>
           <Route path='/helpme' element={<HelperComponents />}></Route>
         </Route>
       </Routes>

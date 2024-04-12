@@ -18,8 +18,8 @@ export async function GetAllGenderAsync() : Promise<ResponseModel> {
     .then(function(response) {
         console.log(genderURL);
         result.data = response.data;
-        console.log("result"+result.data)
-        console.log("response"+response.data)
+        console.log(result.data)
+        console.log(response.data)
         result.errorCode = response.status + "";
     })
     .catch(function (error) {
