@@ -80,8 +80,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function SideNav() {
   const theme = useTheme();
  // const [open, setOpen] = React.useState(false);
-  const updateOpen = useAppStore((state)=> state.updateOpen);
-  const dOpen = useAppStore((state)=> state.dOpen);
+ const updateOpen = useAppStore((state : any)=> state.updateOpen);
+ const dOpen = useAppStore((state : any)=> state.dOpen);
   const isOpen = typeof dOpen === 'boolean' ? dOpen : false;
   const navigate = useNavigate();
 

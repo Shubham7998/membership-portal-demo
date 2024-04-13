@@ -56,11 +56,19 @@ export function UserUtility(id: number) {
         if (id > 0) {
             try {
                 const result = await GetUserService(id);
-                setUserInfo(result.data);
-                console.log(result.data);
+                console.log("result.errorCode = "+ result.errorCode )
+                if(result.errorCode == "200"){
+                    console.log("result.errorCode = "+ result.errorCode )
+                    if(result != null){
+                        setUserInfo(result.data);
+                        console.log(result.data);
+                    }
+                }
             } catch (error) {
                 console.log(error);
             }
+        }else{
+            setUserInfo(initialValue);
         }
     }
 

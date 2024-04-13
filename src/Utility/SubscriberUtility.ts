@@ -11,7 +11,7 @@ import {
 import { userInfo } from 'os';
 import { isValidName, removeSpace, isValidEmailAddress, isValidContactNumber, isValidPassword } from '../Generics/Validations';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import { GetSubscriberAsync, GetSubscriberByIdAsync } from '../Services/SubscriberService';
+import { CreateSubscriberAsync, GetSubscriberAsync, GetSubscriberByIdAsync, UpdateSubscriberAsync } from '../Services/SubscriberService';
 
 export default function SubscriberUtility(id: number) {
 
@@ -23,24 +23,21 @@ export default function SubscriberUtility(id: number) {
 
   const [genders, setGenders] = useState<GenderModel[]>([genderInitialValue]);
 
-  var genderId = 0;
   const initialValue: SubscriberModel = {
     id: 0,
     firstName: '',
     contactNumber: '',
     email: '',
-    genderId: 0,
+    genderId: -1,
     lastName: ''
   }
 
   const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel>(initialValue);
 
-
-
   useEffect(() => {
     fetchData();
     console.log("use effect")
-  }, [])
+  }, [id])
 
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState("");
@@ -70,6 +67,7 @@ export default function SubscriberUtility(id: number) {
 
       const response = await GetAllGenderAsync();
       setGenders(response.data);
+      console.log(genders)
     } catch (error) {
       alert(JSON.stringify(error));
       console.log(error)
@@ -77,11 +75,15 @@ export default function SubscriberUtility(id: number) {
     if (id > 0) {
       try {
         const result = await GetSubscriberByIdAsync(id);
-        console.log(result.data)
-        setSubscriberInfo(result.data);
+        if (result.errorCode == "200") {
+          console.log(result.data)
+          setSubscriberInfo(result.data);
+        }
       } catch (error) {
         alert(error)
       }
+    } else {
+      setSubscriberInfo(initialValue);
     }
   }
 
@@ -116,23 +118,41 @@ export default function SubscriberUtility(id: number) {
     setSubscriberInfo(prev => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     console.log("submit")
 
     if (isValidate()) {
+      setDefaultValue();
+      console.log("Subscriber info")
+      console.log(subscriberInfo)
       if (id > 0) {
-        alert("Update")
+        alert("Update");
+        const response = await UpdateSubscriberAsync(subscriberInfo, id);
+        console.log("response data  update ");
+        console.log(response);
+        setSnackbarMessage("Subscriber details updated successfully");
       } else {
         alert("add");
-
+        subscriberInfo.genderId += 1;
+        const response = await CreateSubscriberAsync(subscriberInfo);
+        console.log("response data added");
+        console.log(response);
+        setSnackbarMessage("Subscriber details added successfully");
       }
+      setSnackbarSeverity("success");
     } else {
-      setSnackbarMessage("Fields marked in red are required");
-      setSnackbarOpen(true);
+      setSnackbarMessage("Please field mendatory fields");
       setSnackbarSeverity("error");
-      setErrors(newErrors);
     }
+    setSnackbarOpen(true);
+    setErrors(newErrors);
 
+  }
+
+  const setDefaultValue = () => {
+    if (subscriberInfo.genderId === -1) {
+      subscriberInfo.genderId = 6;
+    }
   }
   const isValidate = () => {
 
@@ -215,7 +235,13 @@ export default function SubscriberUtility(id: number) {
       }
     }
 
-
+    if (subscriberInfo.genderId === -1) {
+      // newErrors.push({
+      //   parameterName : "genderId",
+      //   errorMessage : "Please select the gender"
+      // })
+      // console.log("gender is not valid")
+    }
     setErrors(newErrors);
 
     return newErrors.length === 0;

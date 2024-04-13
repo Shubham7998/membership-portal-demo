@@ -18,12 +18,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
-import { ConfirmationModal } from './HelpingPages/ConfirmationModel';
+import ShowSubscriberUtility from '../Utility/ShowSubscriberUtility';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+       backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -46,15 +46,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const handleConfirmation = () => {
-    // Handle confirmation logic here
-    console.log("Confirmed!");
-  };
 
 
-export default function ShowUser() {
+export default function ShowSubscriber() {
 
-    const { handleDelete, userInfo, handleEdit } = ShowUserUtility();
+    const { handleDelete, subscriberInfo, handleEdit } = ShowSubscriberUtility();
+
 
     return (
         <>
@@ -71,22 +68,24 @@ export default function ShowUser() {
                                     <StyledTableCell align="left">Last Name</StyledTableCell>
                                     <StyledTableCell align="left">Email</StyledTableCell>
                                     <StyledTableCell align="left">Contact No.</StyledTableCell>
+                                    <StyledTableCell align="left">Gender</StyledTableCell>
                                     <StyledTableCell align="left">Delete</StyledTableCell>
                                     <StyledTableCell align="left">Edit</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {userInfo?.map((user, index) => (
+                                {subscriberInfo?.map((subscriber, index) => (
                                     <StyledTableRow key={index}>
                                         <StyledTableCell align="left" component="th" scope="row">
                                             {++index}
                                         </StyledTableCell>
-                                        <StyledTableCell align="left">{user.firstName}</StyledTableCell>
-                                        <StyledTableCell align="left">{user.lastName}</StyledTableCell>
-                                        <StyledTableCell align="left">{user.email}</StyledTableCell>
-                                        <StyledTableCell align="left">{user.contactNumber}</StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                                        <StyledTableCell align="left">{subscriber.firstName}</StyledTableCell>
+                                        <StyledTableCell align="left">{subscriber.lastName}</StyledTableCell>
+                                        <StyledTableCell align="left">{subscriber.email}</StyledTableCell>
+                                        <StyledTableCell align="left">{subscriber.contactNumber}</StyledTableCell>
+                                        <StyledTableCell align="left">{subscriber.genderId}</StyledTableCell>
+                                        <StyledTableCell align="left" onClick={() => handleDelete(subscriber.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                                        <StyledTableCell align="left" onClick={() => handleEdit(subscriber.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>

@@ -11,6 +11,7 @@ import User from './Pages/User';
 import ShowUser from './Pages/ShowUser';
 import Subscriber from './Pages/Subscriber';
 import HelperComponents from './Pages/HelperComponents';
+import ShowSubscriber from './Pages/ShowSubscriber';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 
           <Route path='/subscriber' element={<Subscriber />}></Route>
           <Route path='/subscriber/:id' element={<Subscriber />}></Route>
+          <Route path='/showsubscribers' element={<ShowSubscriber />}></Route>
           <Route path='/helpme' element={<HelperComponents />}></Route>
         </Route>
       </Routes>

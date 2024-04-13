@@ -70,19 +70,20 @@ export default function Subscriber() {
                             </Grid>
                             <Grid item xs={12} >
                                 <FormControl fullWidth >
-                                    <InputLabel id="demo-select-small-label">Gender</InputLabel>
+                                    <InputLabel id="genderId">Gender</InputLabel>
                                     <Select
                                         style={{ height: 40 }}
-                                        labelId="demo-select-small-label"
-                                        id="demo-select-small"
+                                        labelId="genderId"
+                                        id="genderId"
                                         value={subscriberInfo.genderId.toString()}
                                         label="Gender"
                                         name='genderId'
                                         required
-                                        onChange={handleChange}
+                                        onChange={handleChange}    
                                     >
+                                        <MenuItem value={-1}>---Select Gender---</MenuItem>
                                         {genders?.map((gender, key) => (
-                                            <MenuItem key={gender.id} value={key}>{gender.genderName}</MenuItem>
+                                            <MenuItem key={gender.id} value={gender.id}>{gender.genderName}</MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>

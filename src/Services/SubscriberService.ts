@@ -4,7 +4,7 @@ import ResponseModel from "../Models/ResponseModel"
 import { SubscriberModel } from "../Models/SubscriberModel"
 import axios from 'axios';
 
-const URL = API_URL+'subscriber';
+const URL = API_URL+'subscriber/';
 
 async function GetSubscriberAsync() : Promise<ResponseModel> {
     let result : ResponseModel = {
@@ -42,10 +42,14 @@ async function GetSubscriberByIdAsync(id : number) : Promise<ResponseModel> {
     console.log("Get subscriber by id");
 
     await axios
-    .get(URL+`/${id}`)
+    .get(URL+`${id}`)
     .then(function (response)  {
-         result.data = response.data;
-         result.message = response.status + ""
+        if (!response.data) {
+            console.log(`Data with id = ${id} is not found`)
+        } else {
+            result.data = response.data;
+            result.errorCode = response.status + "";
+        }
     })
     .catch((error) => {
         result.error = error.message + "";
@@ -67,8 +71,12 @@ async function DeleteSubscriberByIdAsync(id : number) : Promise<ResponseModel> {
     await axios
     .delete(URL+`${id}`)
     .then(function (response)  {
-         result.data = response.data;
-         result.message = response.status + ""
+        if (!response.data) {
+            console.log(`Data with id = ${id} is not found`)
+        } else {
+            result.data = response.data;
+            result.errorCode = response.status + "";
+        }
     })
     .catch((error) => {
         result.error = error.message + "";
@@ -101,5 +109,33 @@ async function CreateSubscriberAsync(subscriberInfo : SubscriberModel) : Promise
 
     return result;
 }
-export {GetSubscriberAsync, GetSubscriberByIdAsync, CreateSubscriberAsync, }
+
+const UpdateSubscriberAsync = async (subscriberInfo : SubscriberModel, id : number) : Promise<ResponseModel> => {
+    let result : ResponseModel = {
+        error: "",
+        data: null,
+        message: "",
+        errorCode: ""
+    }
+
+    console.log("Update subscriber async")
+
+    await axios
+    .put(URL+`${id}`,subscriberInfo)
+    .then(function (response) {
+        if (!response.data) {
+            console.log(`Data with id = ${id} is not found`)
+        } else {
+            result.data = response.data;
+            result.errorCode = response.status + "";
+        }
+    })
+    .catch(function (error) {
+        alert(error)
+        console.log(error)
+    })
+
+    return result;
+}
+export {UpdateSubscriberAsync,GetSubscriberAsync, GetSubscriberByIdAsync, CreateSubscriberAsync, DeleteSubscriberByIdAsync}
 
