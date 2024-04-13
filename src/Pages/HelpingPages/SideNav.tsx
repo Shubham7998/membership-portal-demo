@@ -236,6 +236,46 @@ export default function SideNav() {
                 <ListItemText primary="Show Subscriber" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/product')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Product" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showproducts')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Show Products" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
         </List>
         
         

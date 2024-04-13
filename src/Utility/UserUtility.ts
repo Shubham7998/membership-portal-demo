@@ -227,7 +227,7 @@ export function UserUtility(id: number) {
 
                 //Navigate to another page after 2 seconds
                 setTimeout(() => {
-                    navigate(`/showusers`); 
+                    //navigate(`/showusers`); 
                 }, 1000);
             } catch (error) {
                 console.log(error)

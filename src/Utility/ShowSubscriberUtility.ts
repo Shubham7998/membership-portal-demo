@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SubscriberModel } from '../Models/SubscriberModel';
 import { DeleteSubscriberByIdAsync, GetSubscriberAsync } from '../Services/SubscriberService';
 import { useNavigate } from 'react-router-dom';
+import { handleSwirl } from '../Generics/Swirl';
 
 export default function ShowSubscriberUtility() {
     const initialValue: SubscriberModel = {
@@ -28,14 +29,13 @@ export default function ShowSubscriberUtility() {
         console.log(result);
     }
 
-    const handleEdit = (id : number) => {
+    const handleEdit = (id: number) => {
         navigate(`/subscriber/${id}`)
     }
-
-    const handleDelete = async (id : number) => {
-        const confirmation = window.confirm("Are you sure ? ");
-
-        if(confirmation){
+    
+    const handleDelete = async (id: number) => {
+        const confirmation = await handleSwirl();
+        if (confirmation.confirmed) {
             console.log("delete data successfullu")
             const result = await DeleteSubscriberByIdAsync(id);
             console.log(result)
@@ -43,7 +43,7 @@ export default function ShowSubscriberUtility() {
         }
     }
 
-    return {handleDelete, subscriberInfo, handleEdit}
+    return { handleDelete, subscriberInfo, handleEdit ,navigate}
 
 }
 

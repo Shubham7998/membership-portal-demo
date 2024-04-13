@@ -7,13 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import SideNav from './HelpingPages/SideNav';
 import Navbar from './HelpingPages/Navbar';
 import { UserModel } from '../Models/UserModel';
 import { useEffect, useState } from 'react';
 import { DeleteUserService, GetAllUserService } from '../Services/UserService';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { UserUtility } from '../Utility/UserUtility';
@@ -23,7 +24,7 @@ import ShowSubscriberUtility from '../Utility/ShowSubscriberUtility';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-       backgroundColor: theme.palette.common.black,
+        backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -50,7 +51,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ShowSubscriber() {
 
-    const { handleDelete, subscriberInfo, handleEdit } = ShowSubscriberUtility();
+    const { navigate, handleDelete, subscriberInfo, handleEdit } = ShowSubscriberUtility();
+
 
 
     return (
@@ -58,7 +60,19 @@ export default function ShowSubscriber() {
             <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
-                <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
+                <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
+                        <h1 style={{ display: 'flex', justifyContent : 'center', marginBottom: 10 }}>Subscriber List</h1>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+                        <Button
+                            size="small"
+                            variant="contained"
+                            color="primary"
+                            onClick={() => navigate("/subscriber")}
+                            style={{ alignItems: "right" }}
+                        >
+                            Add <AddCircleOutlineRoundedIcon />
+                        </Button>
+                    </div>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead  >
@@ -92,7 +106,7 @@ export default function ShowSubscriber() {
                         </Table>
                     </TableContainer>
                 </Box>
-            </Box>
+                </Box>
 
 
         </>

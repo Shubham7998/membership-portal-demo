@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import { ConfirmationModal } from './HelpingPages/ConfirmationModel';
+import Swal from 'sweetalert2';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -56,6 +57,24 @@ export default function ShowUser() {
 
     const { handleDelete, userInfo, handleEdit } = ShowUserUtility();
 
+    
+
+    const handleSwirl = () => {
+        Swal.fire({
+          title: "Do you want to save the changes?",
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: "Save",
+          denyButtonText: `Don't save`
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Saved!", "", "success");
+          } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+          }
+        });
+      };
+
     return (
         <>
             <Box height={30} />
@@ -85,8 +104,8 @@ export default function ShowUser() {
                                         <StyledTableCell align="left">{user.lastName}</StyledTableCell>
                                         <StyledTableCell align="left">{user.email}</StyledTableCell>
                                         <StyledTableCell align="left">{user.contactNumber}</StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                                        <StyledTableCell align="left" ><DeleteIcon onClick={() => handleDelete(user.id)} color="primary" sx={{border : 'none'}}></DeleteIcon></StyledTableCell>
+                                        <StyledTableCell align="left" ><EditIcon color="primary" sx={{ cursor: 'pointer' }} onClick={() => handleEdit(user.id)}/></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>

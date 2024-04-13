@@ -12,6 +12,9 @@ import ShowUser from './Pages/ShowUser';
 import Subscriber from './Pages/Subscriber';
 import HelperComponents from './Pages/HelperComponents';
 import ShowSubscriber from './Pages/ShowSubscriber';
+import Helpme2 from './Pages/HelpingPages/Helpme2';
+import ShowProduct from './Pages/HelpingPages/ShowProduct';
+import Product from './Pages/Product';
 
 function App() {
   return (
@@ -29,7 +32,14 @@ function App() {
           <Route path='/subscriber' element={<Subscriber />}></Route>
           <Route path='/subscriber/:id' element={<Subscriber />}></Route>
           <Route path='/showsubscribers' element={<ShowSubscriber />}></Route>
+          
+          <Route path='/product' element={<Product />}></Route>
+          <Route path='/product/:id' element={<Product />}></Route>
+          <Route path='/showproducts' element={<ShowProduct />}></Route>
+          
+          
           <Route path='/helpme' element={<HelperComponents />}></Route>
+          <Route path='/helpme2' element={<Helpme2 />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
