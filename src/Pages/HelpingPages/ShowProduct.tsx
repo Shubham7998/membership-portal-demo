@@ -12,10 +12,11 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import { Alert, Box, Button, Snackbar } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { GetProductAsync } from '../../Services/ProductService';
+import { useEffect, useState } from 'react';
+import { GetPaginatedProductAsync, GetProductAsync } from '../../Services/ProductService';
 import ShowProductUtility from '../../Utility/ShowProductUtility';
 import SideNav from './SideNav';
+import Data from '../../Helptxt/Data.json';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,11 +42,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ShowProduct() {
 
 
-  const { handleDelete, productInfo, handleEdit } = ShowProductUtility();
+  const { handleDelete, productInfo, handleEdit , prevPage, nextPage, currentPage, changeCurrentPage, numbers, records} = ShowProductUtility();
 
   const navigate = useNavigate();
-
-
 
   return (
     <>
@@ -78,7 +77,17 @@ export default function ShowProduct() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {productInfo?.map((data, index) => (
+
+                {records?.map((data, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell align="center">{data.id}</StyledTableCell>
+                    <StyledTableCell align="center">{data.productName}</StyledTableCell>
+                    <StyledTableCell align="center">{data.price}</StyledTableCell>
+                    <StyledTableCell align="center" onClick={() => handleEdit(data.id)}><EditIcon color="primary" sx={{ cursor: 'pointer', alignItems: 'left' }} /></StyledTableCell>
+                    <StyledTableCell align="center" onClick={() => handleDelete(data.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                  </StyledTableRow>
+                ))}
+                {/* {productInfo?.map((data, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell align="center">{index + 1}</StyledTableCell>
                     <StyledTableCell align="center">{data.productName}</StyledTableCell>
@@ -86,10 +95,25 @@ export default function ShowProduct() {
                     <StyledTableCell align="center" onClick={() => handleEdit(data.id)}><EditIcon color="primary" sx={{ cursor: 'pointer', alignItems: 'left' }} /></StyledTableCell>
                     <StyledTableCell align="center" onClick={() => handleDelete(data.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
                   </StyledTableRow>
-                ))}
+                ))} */}
               </TableBody>
             </Table>
           </TableContainer>
+          <nav>
+            <ul>
+              <li>
+                <a href="#" onClick={(e) => prevPage(e)}>Prev</a>
+              </li>
+              {
+                numbers.map((n, i) => (
+                  <li key={i}><a href="#" onClick={(e) => changeCurrentPage(n,e)}>{n}</a></li>
+                ))
+              }
+              <li>
+                <a href="#" onClick={(e) => nextPage(e)}>Next</a>
+              </li>
+            </ul>
+          </nav>
         </Box>
       </Box>
     </>

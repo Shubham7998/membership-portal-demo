@@ -4,24 +4,52 @@ import { SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { DeleteUserService, GetAllUserService } from '../Services/UserService';
-import { DeleteProductAsync, GetProductAsync } from '../Services/ProductService';
+import { DeleteProductAsync, GetPaginatedProductAsync, GetProductAsync } from '../Services/ProductService';
 import { handleSwirl } from '../Generics/Swirl';
 
 export default function ShowProductUtility() {
 
-    const initialValue : ProductModel = {
+    const initialValue: ProductModel = {
         id: 0,
         productName: '',
         price: 0
     }
 
-    const [productInfo , setProductInfo] = useState<ProductModel[]>([initialValue]);
+    const [productInfo, setProductInfo] = useState<ProductModel[]>([initialValue]);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchData();
     }, [])
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordsPerPage = 5;
+    const lastIndex = currentPage * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+    const records = productInfo.slice(firstIndex, lastIndex);
+    const npage = Math.ceil(productInfo.length / recordsPerPage);
+    const numbers = [...Array(npage + 1).keys()].slice(1);
+
+    async function prevPage(e: any) {
+        await GetPaginatedProductAsync(0, 4);
+        e.preventDefault();
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+
+    function nextPage(e: any): void {
+        e.preventDefault();
+        if (currentPage !== npage) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    function changeCurrentPage(id: number, e: any): void {
+        e.preventDefault();
+        setCurrentPage(id);
+    }
 
 
     const fetchData = async () => {
@@ -48,5 +76,5 @@ export default function ShowProductUtility() {
     const handleEdit = (id: number) => {
         navigate(`/user/${id}`)
     }
-    return { handleDelete, productInfo, handleEdit }
+    return { handleDelete, productInfo, handleEdit , prevPage, nextPage, currentPage, changeCurrentPage,numbers, records}
 }

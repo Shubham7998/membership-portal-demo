@@ -276,6 +276,26 @@ export default function SideNav() {
                 <ListItemText primary="Show Products" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/table')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Table" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
         </List>
         
         

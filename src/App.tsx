@@ -15,6 +15,7 @@ import ShowSubscriber from './Pages/ShowSubscriber';
 import Helpme2 from './Pages/HelpingPages/Helpme2';
 import ShowProduct from './Pages/HelpingPages/ShowProduct';
 import Product from './Pages/Product';
+import { TablePaginationActions } from './Helptxt/TableComp';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path='/showproducts' element={<ShowProduct />}></Route>
           
           
+          <Route path='/table' element={<TablePaginationActions />}></Route>
           <Route path='/helpme' element={<HelperComponents />}></Route>
           <Route path='/helpme2' element={<Helpme2 />}></Route>
         </Route>

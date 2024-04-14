@@ -2,6 +2,7 @@ import axios from "axios";
 import ResponseModel from "../Models/ResponseModel";
 import API_URL from "../Generics/URL_Config";
 import { ProductModel } from "../Models/ProductModel";
+import { PaginatedModel } from "../Models/PaginatedModel";
 
 
 export const CreateProductAsync = async (
@@ -126,6 +127,34 @@ export const GetProductAsync = async (): Promise<ResponseModel> => {
   try {
     const response = await axios.get(`${API_URL}product`);
     result.data = response.data;
+    result.errorCode = response.status + "";
+  } catch (error) {
+    handleError(error, result);
+  }
+
+  return result;
+};
+export const GetPaginatedProductAsync = async  (page  : number = 0, pageSize : number = 5): Promise<ResponseModel> => {
+  let result: ResponseModel = {
+    error: "",
+    data: null,
+    message: "",
+    errorCode: "",
+  };
+
+  let paginatedResult : PaginatedModel = {
+    dataArray: null,
+    totalPages: 0
+  }
+  try {
+    const response = await axios.get(`${API_URL}product/paginated?page=${page}&pageSize=${pageSize}`);
+    paginatedResult.dataArray = response.data.dataArray;
+    paginatedResult.totalPages = response.data.totalPages;
+
+    console.log(paginatedResult)
+
+    console.log(response);
+    
     result.errorCode = response.status + "";
   } catch (error) {
     handleError(error, result);
