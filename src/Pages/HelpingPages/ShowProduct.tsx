@@ -9,7 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import { Alert, Box, Button, ButtonGroup, Snackbar } from "@mui/material";
+import {
+  Alert, Box, Button, ButtonGroup, Snackbar, Grid, TextField, InputLabel, Select,
+  MenuItem, FormControl
+} from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -41,7 +45,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ShowProduct() {
 
-  const { handleDelete, productInfo, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate } = ShowProductUtility();
+  const {removeDuplicates, handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate, handleSelectChange } = ShowProductUtility();
   return (
     <>
       <Box height={30} />
@@ -49,16 +53,68 @@ export default function ShowProduct() {
         <SideNav />
         <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              onClick={() => navigate("/product")}
-              style={{ alignItems: "right" }}
-            >
-              Add <AddCircleOutlineRoundedIcon />
-            </Button>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
+
+            <Grid item xs={12} sx={{ marginRight: 5 }}>
+              <FormControl fullWidth >
+                <InputLabel id="productName">Product Name</InputLabel>
+                <Select
+                  style={{ height: 40 }}
+                  labelId="productName"
+                  id="productName"
+                  value={productInfoSearch.productName} //{subscriberInfo.genderId.toString()}
+                  label="Product Name"
+                  name='productName'
+                  required
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem value={""} >---Select Product Name---</MenuItem>
+                  {productInfo?.map((product, key) => (
+                    <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sx={{ marginRight: 5 }}>
+              <FormControl fullWidth >
+                <InputLabel id="price">Product Price</InputLabel>
+                <Select
+                  style={{ height: 40 }}
+                  labelId="price"
+                  id="price"
+                  value={productInfoSearch.price.toString()}
+                  label="Product Price"
+                  name='price'
+                  required
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem value={0}>---Select Product Price---</MenuItem>
+                  {productInfo?.map((product, key) => (
+                    <MenuItem key={product.id} value={product.id}>{product.price}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sx={{ marginRight: 5 }}>
+              <Button size="small"
+                variant="contained"
+                color="primary"
+                sx={{ padding: 1 }}
+              ><SearchIcon /> Search</Button>
+            </Grid>
+            <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', flexGrow: 1 }}>
+
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/product")}
+                style={{ alignItems: "right" }}
+              >
+                Add <AddCircleOutlineRoundedIcon />
+              </Button>
+            </Box>
+
           </div>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">

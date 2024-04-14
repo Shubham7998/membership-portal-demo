@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ProductModel } from '../Models/ProductModel'
-import { SnackbarOrigin } from '@mui/material';
+import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { DeleteUserService, GetAllUserService } from '../Services/UserService';
@@ -15,15 +15,36 @@ export default function ShowProductUtility() {
         price: 0
     }
 
+    const [productInfoSearch, setProductInfoSearch] = useState<ProductModel>(initialValue);
     const [productInfo, setProductInfo] = useState<ProductModel[]>([initialValue]);
+
+    const removeDuplicates = (products: ProductModel[]): ProductModel[] => {
+        const uniqueProducts: ProductModel[] = [];
+        products.forEach((product) => {
+          if (!uniqueProducts.some((p) => p.productName === product.productName && p.price === product.price)) {
+            uniqueProducts.push(product);
+          }
+        });
+        console.log("uniqueProducts")
+        console.log(uniqueProducts)
+        return uniqueProducts;
+    };
 
     const navigate = useNavigate();
 
+    const handleSelectChange = (
+        event: SelectChangeEvent) => {
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        setProductInfoSearch((prevState) => ({ ...prevState, [name]: value })); 
 
+        
+      };
 
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 5;
+    const recordsPerPage = 15;
     const npage = Math.ceil(totalPages / recordsPerPage);
     const numbers = [];
     for (let i = 1; i <= npage; i++) {
@@ -88,5 +109,5 @@ export default function ShowProductUtility() {
     const handleEdit = (id: number) => {
         navigate(`/product/${id}`)
     }
-    return { navigate,handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers ,prevPageDisabled,nextPageDisabled}
+    return { handleSelectChange,navigate,handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers ,prevPageDisabled,nextPageDisabled,removeDuplicates}
 }

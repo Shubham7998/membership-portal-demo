@@ -16,6 +16,7 @@ import Helpme2 from './Pages/HelpingPages/Helpme2';
 import ShowProduct from './Pages/HelpingPages/ShowProduct';
 import Product from './Pages/Product';
 import { TablePaginationActions } from './Helptxt/TableComp';
+import Discount from './Pages/Discount';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path='/product/:id' element={<Product />}></Route>
           <Route path='/showproducts' element={<ShowProduct />}></Route>
           
+          
+          <Route path='/discount' element={<Discount />}></Route>
           
           <Route path='/table' element={<TablePaginationActions />}></Route>
           <Route path='/helpme' element={<HelperComponents />}></Route>
