@@ -48,7 +48,6 @@ export default function ShowProduct() {
 
   return (
     <>
-
       <Box height={30} />
       <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
         <SideNav />

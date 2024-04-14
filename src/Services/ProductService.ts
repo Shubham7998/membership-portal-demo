@@ -134,7 +134,7 @@ export const GetProductAsync = async (): Promise<ResponseModel> => {
 
   return result;
 };
-export const GetPaginatedProductAsync = async  (page  : number = 0, pageSize : number = 5): Promise<ResponseModel> => {
+export const GetPaginatedProductAsync = async  (page  : number = 0, pageSize : number = 5): Promise<PaginatedModel> => {
   let result: ResponseModel = {
     error: "",
     data: null,
@@ -160,7 +160,7 @@ export const GetPaginatedProductAsync = async  (page  : number = 0, pageSize : n
     handleError(error, result);
   }
 
-  return result;
+  return paginatedResult;
 };
 
 export const Searchproducts = async (

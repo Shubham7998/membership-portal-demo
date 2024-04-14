@@ -32,7 +32,7 @@ export default function ShowProductUtility() {
     const numbers = [...Array(npage + 1).keys()].slice(1);
 
     async function prevPage(e: any) {
-        await GetPaginatedProductAsync(0, 4);
+        
         e.preventDefault();
         if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
@@ -54,6 +54,7 @@ export default function ShowProductUtility() {
 
     const fetchData = async () => {
         try {
+            
             const result = await GetProductAsync();
             console.log(result.data);
             setProductInfo(result.data);
