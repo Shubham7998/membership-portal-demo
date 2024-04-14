@@ -41,13 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ShowProduct() {
 
-
-  const { handleDelete, productInfo, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled } = ShowProductUtility();
-
-  const navigate = useNavigate();
-
-
-
+  const { handleDelete, productInfo, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate } = ShowProductUtility();
   return (
     <>
       <Box height={30} />
@@ -109,11 +103,11 @@ export default function ShowProduct() {
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
             <ButtonGroup color="primary" aria-label="navigation">
               <Button onClick={(e) => prevPage(e)} disabled={prevPageDisabled()} sx={{
-                '&:disabled': {
-                  backgroundColor: 'grey',
-                  color: 'primary',
-                  // border : 1 
-                },
+                // '&:disabled': {
+                //   backgroundColor: 'grey',
+                //   color: 'primary',
+                //   // border : 1 
+                // },
               }}>Prev</Button>
 
               {
@@ -124,31 +118,8 @@ export default function ShowProduct() {
               <Button onClick={(e) => nextPage(e)} disabled={nextPageDisabled()}>Next</Button>
             </ButtonGroup>
           </div>
-          {/* <NavContainer>
-            <NavList>
-              <NavItem>
-                <Button onClick={(e) => prevPage(e)} >
-                  Prev
-                </Button>
-              </NavItem>
-              {numbers.map((n, i) => (
-                <NavItem key={i}>
-                  <Button onClick={(e) => changeCurrentPage(n, e)}>
-                    {n}
-                  </Button>
-                </NavItem>
-              ))}
-              <NavItem>
-                <Button onClick={(e) => nextPage(e)} >
-                  Next
-                </Button>
-              </NavItem>
-            </NavList>
-          </NavContainer> */}
         </Box>
       </Box>
     </>
   );
 }
-// disabled={prevPageDisabled}
-// disabled={nextPageDisabled}

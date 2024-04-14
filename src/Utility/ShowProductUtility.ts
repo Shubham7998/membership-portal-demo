@@ -88,5 +88,5 @@ export default function ShowProductUtility() {
     const handleEdit = (id: number) => {
         navigate(`/product/${id}`)
     }
-    return { handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers ,prevPageDisabled,nextPageDisabled}
+    return { navigate,handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers ,prevPageDisabled,nextPageDisabled}
 }
