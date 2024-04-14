@@ -75,7 +75,6 @@ export default function ProductUtility(id: number) {
     };
 
     const handleSubmit = async () => {
-        alert("save");
         if (isValidate()) {
             console.log("isValidate");
             try {
@@ -106,9 +105,8 @@ export default function ProductUtility(id: number) {
     };
 
     const isValidate = () => {
-        const newErrors: ParameterErrorModel[] = [];
 
-        if (productInfo.productName === "") {
+        if (productInfo.productName.trim() === "") {
             newErrors.push({
                 parameterName: "productName",
                 errorMessage: "Enter product name",
@@ -120,7 +118,7 @@ export default function ProductUtility(id: number) {
         //         errorMessage: "Enter valid product name",
         //     });
         // }
-        if (productInfo.price < 0) {
+        if (productInfo.price < 1) {
             newErrors.push({
                 parameterName: "price",
                 errorMessage: "Price Must be Grater than Zero",

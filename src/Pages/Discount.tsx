@@ -1,86 +1,99 @@
-import { Alert, Button, Grid, Paper, Snackbar, TextField } from '@mui/material'
 import React from 'react'
+import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from '@mui/material'
 import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
-
-export default function Product() {
-
+import DiscountUtility from '../Utility/DiscountUtility';
+export default function Discount() {
     const { id = 0 } = useParams();
+    
 
     const {
-        productInfo,
-        errors,
-        onInputChangeproduct,
-        handelShowList,
-        snackbarOpen,
-        handleTextChange,
-        handleNumberChange,
-        handleSnackbarClose,
-        snackbarMessage,
-        snackbarPosition,
-        snackbarSeverity,
-        handleSubmit,
-    } = ProductUtility(+id);
+    handleNumberChange, handleSelectChange, 
+    handleSubmit, discoutInfo, 
+    onInputChangeDiscount,errors,
+    snackbarOpen,
+    snackbarPosition, handleSnackbarClose,
+    snackbarSeverity,snackbarMessage} = DiscountUtility(+id);
 
     return (
         <div>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
-            <SideNav />
-            <Grid item xs={3} sm={6} md={3}>
-                <Paper elevation={3} style={{ padding: 20 }}>
-                    <Grid container spacing={2} justifyContent="center">
-                        <h1> {productInfo.id === 0 ? "Add Product" : "Update Product"} </h1>
-                        <Grid item xs={12}>
+                <SideNav />
+                <Grid item xs={3} sm={6} md={3}>
+                    <Paper elevation={3} style={{ padding: 20 }}>
+                        <Grid container spacing={2} justifyContent="center">
+                            <h1> {id === 0 ? "Add Discount" : "Update Discount"} </h1>
+                            <Grid item xs={12} >
                                 <TextField
                                     fullWidth
-                                    id="productName"
-                                    name="productName"
-                                    label="Product Name"
+                                    id="discountCode"
+                                    name="discountCode"
                                     size='small'
+                                    label="Discount Code"
                                     variant="outlined"
                                     autoComplete="off"
                                     inputProps={{ maxLength: 100 }}
-                                    value={productInfo.productName}
-                                    onChange={onInputChangeproduct}
+                                    value={discoutInfo.discountCode}
+                                    onChange={onInputChangeDiscount}
                                     helperText={
                                         errors.find(
-                                            (error) => error.parameterName === "productName"
+                                            (error) => error.parameterName === "discountCode"
                                         )?.errorMessage || ""
                                     }
                                     error={
                                         !!errors.find(
-                                            (error) => error.parameterName === "productName"
+                                            (error) => error.parameterName === "Discount"
                                         )
                                     }
+                                   
                                 />
                             </Grid>
 
                             <Grid item xs={12} >
                                 <TextField
-                                    id="price"
-                                    name="price"
+                                    id="discountAmount"
+                                    name="discountAmount"
                                     type="number"
+                                    label="Discount Amount"
                                     size='small'
-                                    label="Price"
                                     variant="outlined"
                                     autoComplete="off"
                                     fullWidth
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
-                                    value={productInfo.price}
+                                    value={discoutInfo.discountAmount}
                                     onChange={handleNumberChange}
                                     helperText={
                                         errors.find(
-                                            (error) => error.parameterName === "price"
+                                            (error) => error.parameterName === "discountAmount"
                                         )?.errorMessage || ""
                                     }
                                     error={
                                         !!errors.find(
-                                            (error) => error.parameterName === "price"
+                                            (error) => error.parameterName === "discountAmount"
                                         )
                                     }
                                 />
+                            </Grid>
+                            <Grid item xs={12} >
+                                <FormControl fullWidth >
+                                    <InputLabel id="isDiscountInPercentage">Discount In Percentage</InputLabel>
+                                    <Select
+                                        labelId="isDiscountInPercentage"
+                                        id="isDiscountInPercentage"
+                                        size='small'
+                                        value={discoutInfo.isDiscountInPercentage.toString()}
+                                        label="Discount In Percentage"
+                                        name='isDiscountInPercentage'
+                                        required
+                                        onChange={handleSelectChange}    
+                                    >
+                                        <MenuItem value={0}>Yes</MenuItem>
+                                        <MenuItem value={-1}>No</MenuItem>
+                                        
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={5}>
                                 <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
@@ -106,4 +119,3 @@ export default function Product() {
         </div>
     )
 }
-
