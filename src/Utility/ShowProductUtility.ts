@@ -19,24 +19,35 @@ export default function ShowProductUtility() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchData();
-    }, [])
 
+
+    const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 5;
-    const lastIndex = currentPage * recordsPerPage;
-    const firstIndex = lastIndex - recordsPerPage;
-    const records = productInfo.slice(firstIndex, lastIndex);
-    const npage = Math.ceil(productInfo.length / recordsPerPage);
-    const numbers = [...Array(npage + 1).keys()].slice(1);
+    const npage = Math.ceil(totalPages / recordsPerPage);
+    const numbers = [];
+    for (let i = 1; i <= npage; i++) {
+        numbers.push(i);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [currentPage])
 
     async function prevPage(e: any) {
-        
+
         e.preventDefault();
         if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
         }
+    }
+    function prevPageDisabled() : boolean {
+        
+        return currentPage === 1;
+    }
+    function nextPageDisabled() : boolean {
+        
+        return currentPage === npage;
     }
 
     function nextPage(e: any): void {
@@ -54,10 +65,10 @@ export default function ShowProductUtility() {
 
     const fetchData = async () => {
         try {
-            
-            const result = await GetProductAsync();
-            console.log(result.data);
-            setProductInfo(result.data);
+
+            const result = await GetPaginatedProductAsync(currentPage, recordsPerPage);
+            setTotalPages(result.totalPages);
+            setProductInfo(result.dataArray);
 
         } catch (error) {
             console.log(error);
@@ -75,7 +86,7 @@ export default function ShowProductUtility() {
     }
 
     const handleEdit = (id: number) => {
-        navigate(`/user/${id}`)
+        navigate(`/product/${id}`)
     }
-    return { handleDelete, productInfo, handleEdit , prevPage, nextPage, currentPage, changeCurrentPage,numbers, records}
+    return { handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers ,prevPageDisabled,nextPageDisabled}
 }

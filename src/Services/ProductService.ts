@@ -43,9 +43,10 @@ export const UpdateProductAsync = async (
     };
   
     try {
-      const response = await axios.put(`${API_URL}/product/${productId}`, updatedInfo);
+      const response = await axios.put(`${API_URL}product/${productId}`, updatedInfo);
       result.data = response.data;
       result.errorCode = response.status + "";
+      alert(JSON.stringify(result))
     } catch (error) {
       handleError(error, result);
     }

@@ -82,7 +82,7 @@ export default function ProductUtility(id: number) {
                 if (productInfo.id !== 0) {
                     console.log("Updateproductinfo")
                     var response = await UpdateProductAsync(productInfo.id, productInfo);
-                    setSnackbarMessage("Product added successfully");
+                    setSnackbarMessage("Product updated successfully");
                 }
                 else {
                     alert("Createproductinfo");
@@ -113,12 +113,13 @@ export default function ProductUtility(id: number) {
                 parameterName: "productName",
                 errorMessage: "Enter product name",
             });
-        } else if (!isValidName(productInfo.productName)) {
-            newErrors.push({
-                parameterName: "productName",
-                errorMessage: "Enter valid product name",
-            });
-        }
+        } 
+        // else if (!isValidName(productInfo.productName)) {
+        //     newErrors.push({
+        //         parameterName: "productName",
+        //         errorMessage: "Enter valid product name",
+        //     });
+        // }
         if (productInfo.price < 0) {
             newErrors.push({
                 parameterName: "price",
