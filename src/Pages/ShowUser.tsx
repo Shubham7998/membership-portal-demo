@@ -8,8 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
-import SideNav from './SideNav';
-import Navbar from './Navbar';
+import SideNav from './HelpingPages/SideNav';
+import Navbar from './HelpingPages/Navbar';
 import { UserModel } from '../Models/UserModel';
 import { useEffect, useState } from 'react';
 import { DeleteUserService, GetAllUserService } from '../Services/UserService';
@@ -18,6 +18,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
+import { ConfirmationModal } from './HelpingPages/ConfirmationModel';
+import Swal from 'sweetalert2';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -30,6 +32,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+    backgroundColor: '#2196f3', // Blue color
+    color: theme.palette.common.white,
+}));
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
@@ -40,22 +47,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
+const handleConfirmation = () => {
+    // Handle confirmation logic here
+    console.log("Confirmed!");
+  };
 
 
 export default function ShowUser() {
 
-    const {handleDelete, userInfo, handleEdit} = ShowUserUtility();
+    const { handleDelete, userInfo, handleEdit } = ShowUserUtility();
+
+    
+
+    const handleSwirl = () => {
+        Swal.fire({
+          title: "Do you want to save the changes?",
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: "Save",
+          denyButtonText: `Don't save`
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Saved!", "", "success");
+          } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+          }
+        });
+      };
 
     return (
         <>
             <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
-                <Box component="main" sx={{ margin :6, flexGrow: 1, p: 3 }}>
+                <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 700}} aria-label="customized table">
+                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead  >
-                                <TableRow color="primary" >
+                                <TableRow  >
                                     <StyledTableCell align="left">Sr. No.</StyledTableCell>
                                     <StyledTableCell align="left">First Name </StyledTableCell>
                                     <StyledTableCell align="left">Last Name</StyledTableCell>
@@ -75,8 +104,8 @@ export default function ShowUser() {
                                         <StyledTableCell align="left">{user.lastName}</StyledTableCell>
                                         <StyledTableCell align="left">{user.email}</StyledTableCell>
                                         <StyledTableCell align="left">{user.contactNumber}</StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleDelete(user.id)}><DeleteIcon color="primary" sx={{cursor: 'pointer'}}/></StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleEdit(user.id)}><EditIcon color="primary" sx={{cursor: 'pointer'}}/></StyledTableCell>
+                                        <StyledTableCell align="left" ><DeleteIcon onClick={() => handleDelete(user.id)} color="primary" sx={{border : 'none'}}></DeleteIcon></StyledTableCell>
+                                        <StyledTableCell align="left" ><EditIcon color="primary" sx={{ cursor: 'pointer' }} onClick={() => handleEdit(user.id)}/></StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>

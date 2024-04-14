@@ -6,3 +6,4 @@ export interface UserModel{
     password : string,
     contactNumber : string
 }
+

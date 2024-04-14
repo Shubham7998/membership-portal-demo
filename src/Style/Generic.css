@@ -1,0 +1,23 @@
+.your-custom-class {
+    font-size: 20;
+    width: 400px; 
+    height: 130px; 
+  }
+
+  .your-custom-class .swal2-title {
+    /* Custom styles for title */
+    font-size: 20px; /*title text size */
+  }
+  
+  .your-custom-class .swal2-content {
+    /* Custom styles for content */
+    font-size: 16px; /*  content text size */
+  }
+  
+  .your-custom-class .swal2-confirm,
+  .your-custom-class .swal2-deny,
+  .your-custom-class .swal2-cancel {
+    /* for buttons */
+    font-size: 16px; /* E button text size */
+  }
+  

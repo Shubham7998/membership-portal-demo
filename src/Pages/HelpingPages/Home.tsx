@@ -2,7 +2,7 @@ import React from 'react';
 import SideNav from './SideNav';
 import Grid from '@mui/material/Grid';
 import Navbar from './Navbar';
-import '../Dash.css';
+import "../../Dash.css";
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
