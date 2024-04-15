@@ -356,7 +356,7 @@ export default function SideNav() {
                 <ListItemText primary="Tax" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('showtaxes')}>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showtaxes')}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
