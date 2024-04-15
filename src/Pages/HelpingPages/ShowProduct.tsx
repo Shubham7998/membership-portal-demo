@@ -64,14 +64,14 @@ export default function ShowProduct() {
                   style={{ height: 40 }}
                   labelId="productName"
                   id="productName"
-                  value={productInfoSearch.productName} //{subscriberInfo.genderId.toString()}
+                  value={productInfoSearch.productName.toString()} 
                   label="Product Name"
                   name='productName'
                   required
                   onChange={handleSelectChange}
                 >
                   <MenuItem value={""} >---Select Product Name---</MenuItem>
-                  {productInfo?.map((product, key) => (
+                  {productInfo?.map((product) => (
                     <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
                   ))}
                 </Select>

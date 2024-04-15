@@ -137,9 +137,13 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                     <TableBody>
                         {data?.map((item: any, index) => (
                             <StyledTableRow key={index}>
-                                {Object.values(item).map((value: any, idx) => (
+                                <StyledTableCell align="left">
+                                    {++index}
+                                </StyledTableCell>
+                                {Object.entries(item).map(([key, value] : any, idx) => (
+                                    key !== "id" && 
                                     <StyledTableCell key={idx} align="left">
-                                        {value} 
+                                        {value}
                                     </StyledTableCell>
                                 ))}
                                 {!isSearchMode && (

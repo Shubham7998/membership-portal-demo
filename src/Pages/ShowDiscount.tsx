@@ -9,6 +9,8 @@ export default function ShowDiscount() {
     const { handleDelete, discountInfo, handleEdit } = ShowDiscountUtility();
     const discountDataHeader = ["Sr. No.", "Discount Code", "Discount Amount", "IsDiscountInPercentage"]
 
+    console.log("discount info")
+    console.log(discountInfo)
     return (
         <>
             <Box height={30} />

@@ -12,9 +12,7 @@ export default function Product() {
         productInfo,
         errors,
         onInputChangeproduct,
-        handelShowList,
         snackbarOpen,
-        handleTextChange,
         handleNumberChange,
         handleSnackbarClose,
         snackbarMessage,
@@ -26,12 +24,12 @@ export default function Product() {
     return (
         <div>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
-            <SideNav />
-            <Grid item xs={3} sm={6} md={3}>
-                <Paper elevation={3} style={{ padding: 20 }}>
-                    <Grid container spacing={2} justifyContent="center">
-                        <h1> {productInfo.id === 0 ? "Add Product" : "Update Product"} </h1>
-                        <Grid item xs={12}>
+                <SideNav />
+                <Grid item xs={3} sm={6} md={3}>
+                    <Paper elevation={3} style={{ padding: 20 }}>
+                        <Grid container spacing={2} justifyContent="center">
+                            <h1> {productInfo.id === 0 ? "Add Product" : "Update Product"} </h1>
+                            <Grid item xs={12}>
                                 <TextField
                                     fullWidth
                                     id="productName"

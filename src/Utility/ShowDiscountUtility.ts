@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { DiscountModel } from '../Models/DiscountModel';
 import { useNavigate } from 'react-router-dom';
 import { handleSwirl } from '../Generics/Swirl';
-import { SubscriberModel } from '../Models/SubscriberModel';
-import { GetSubscriberAsync, DeleteSubscriberByIdAsync } from '../Services/SubscriberService';
 import { DeleteDiscountAsync, GetDiscountAsync } from '../Services/DiscontService';
 
 export default function ShowDiscountUtility() {

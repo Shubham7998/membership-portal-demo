@@ -7,10 +7,10 @@ import DiscountUtility from '../Utility/DiscountUtility';
 import TaxUtility from '../Utility/TaxUtility';
 export default function Tax() {
     const { id = 0 } = useParams();
-    
 
-    const { taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity }
-    = TaxUtility(+id);
+
+    const { taxInfo,  handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity }
+        = TaxUtility(+id);
 
     return (
         <div>
@@ -43,7 +43,7 @@ export default function Tax() {
                                             (error) => error.parameterName === "cgst"
                                         )
                                     }
-                                   
+
                                 />
                             </Grid>
 
@@ -76,16 +76,12 @@ export default function Tax() {
                                 <TextField
                                     id="totalTax"
                                     name="totalTax"
-                                    label="SGST %"
+                                    label="Total Tax %"
                                     size='small'
                                     variant="outlined"
-                                    autoComplete="off"
                                     fullWidth
                                     disabled
-                                    aria-label="Demo number input"
-                                    placeholder="Type a number…"
                                     value={Number(taxInfo.sgst) + Number(taxInfo.cgst)}
-                                    onChange={handleNumberChange}
                                 />
                             </Grid>
                             <Grid item xs={5}>

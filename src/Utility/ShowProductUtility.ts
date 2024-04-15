@@ -11,7 +11,7 @@ export default function ShowProductUtility() {
 
     const initialValue: ProductModel = {
         id: 0,
-        productName: '',
+        productName: "",
         price: 0
     }
 

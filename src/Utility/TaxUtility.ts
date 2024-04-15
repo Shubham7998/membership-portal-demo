@@ -50,6 +50,7 @@ export default function TaxUtility(id: number) {
         if (id > 0) {
             try {
                 const result = await GetTaxByIdAsync(id);
+                setTaxInfo(result.data)
                 console.log("result.errorCode = " + result.errorCode)
                 if (result.errorCode == "200") {
                     console.log("result.errorCode = " + result.errorCode)
@@ -69,7 +70,6 @@ export default function TaxUtility(id: number) {
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.currentTarget;
         setTaxInfo(prev => ({ ...prev, [name]: value }));
-        // isValidate();
         if (errors.some(error => error.parameterName === name)) {
             const updatedErrors = errors.filter(error => error.parameterName !== name);
             setErrors(updatedErrors);
@@ -78,7 +78,7 @@ export default function TaxUtility(id: number) {
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        if (/^\d*$/.test(value)) {
+        if (/^\d*$/.test(value) && (Number(value) < 15)) {
             setTaxInfo(prevState => ({ ...prevState, [name]: value }));
         }
         if (errors.some(error => error.parameterName === name)) {
@@ -95,13 +95,13 @@ export default function TaxUtility(id: number) {
 
     const isValidate = () => {
 
-        if(taxInfo.cgst === 0){
+        if(taxInfo.cgst === 0 || taxInfo.cgst.toString().trim() === ""){
             newErrors.push({
                 parameterName: "cgst",
                 errorMessage: "Please enter a cgst"
             })
         }
-        if(taxInfo.sgst === 0){
+        if(taxInfo.sgst === 0 || taxInfo.cgst.toString().trim() === ""){
             newErrors.push({
                 parameterName: "sgst",
                 errorMessage: "Please enter a sgst"
