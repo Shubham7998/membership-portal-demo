@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import ShowSubscriberUtility from '../Utility/ShowSubscriberUtility';
+import GenericList from './GenericList';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -53,6 +54,7 @@ export default function ShowSubscriber() {
 
     const { navigate, handleDelete, subscriberInfo, handleEdit } = ShowSubscriberUtility();
 
+    const subscriberDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No.", "Gender"]
 
 
     return (
@@ -61,7 +63,7 @@ export default function ShowSubscriber() {
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
-                        <h1 style={{ display: 'flex', justifyContent : 'center', marginBottom: 10 }}>Subscriber List</h1>
+                    <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
                         <Button
                             size="small"
@@ -70,46 +72,49 @@ export default function ShowSubscriber() {
                             onClick={() => navigate("/subscriber")}
                             style={{ alignItems: "right" }}
                         >
-                            Add <AddCircleOutlineRoundedIcon />
+                        Add 
+                        <AddCircleOutlineRoundedIcon />
                         </Button>
                     </div>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                            <TableHead  >
-                                <TableRow  >
-                                    <StyledTableCell align="left">Sr. No.</StyledTableCell>
-                                    <StyledTableCell align="left">First Name </StyledTableCell>
-                                    <StyledTableCell align="left">Last Name</StyledTableCell>
-                                    <StyledTableCell align="left">Email</StyledTableCell>
-                                    <StyledTableCell align="left">Contact No.</StyledTableCell>
-                                    <StyledTableCell align="left">Gender</StyledTableCell>
-                                    <StyledTableCell align="left">Delete</StyledTableCell>
-                                    <StyledTableCell align="left">Edit</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {subscriberInfo?.map((subscriber, index) => (
-                                    <StyledTableRow key={index}>
-                                        <StyledTableCell align="left" component="th" scope="row">
-                                            {++index}
-                                        </StyledTableCell>
-                                        <StyledTableCell align="left">{subscriber.firstName}</StyledTableCell>
-                                        <StyledTableCell align="left">{subscriber.lastName}</StyledTableCell>
-                                        <StyledTableCell align="left">{subscriber.email}</StyledTableCell>
-                                        <StyledTableCell align="left">{subscriber.contactNumber}</StyledTableCell>
-                                        <StyledTableCell align="left">{subscriber.genderId}</StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleDelete(subscriber.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                                        <StyledTableCell align="left" onClick={() => handleEdit(subscriber.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+
+                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} />
                 </Box>
-                </Box>
+            </Box>
 
 
         </>
     );
 }
 
+{/* <TableContainer component={Paper}>
+    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead  >
+            <TableRow  >
+                <StyledTableCell align="left">Sr. No.</StyledTableCell>
+                <StyledTableCell align="left">First Name </StyledTableCell>
+                <StyledTableCell align="left">Last Name</StyledTableCell>
+                <StyledTableCell align="left">Email</StyledTableCell>
+                <StyledTableCell align="left">Contact No.</StyledTableCell>
+                <StyledTableCell align="left">Gender</StyledTableCell>
+                <StyledTableCell align="left">Delete</StyledTableCell>
+                <StyledTableCell align="left">Edit</StyledTableCell>
+            </TableRow>
+        </TableHead>
+        <TableBody>
+            {subscriberInfo?.map((subscriber, index) => (
+                <StyledTableRow key={index}>
+                    <StyledTableCell align="left" component="th" scope="row">
+                        {++index}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">{subscriber.firstName}</StyledTableCell>
+                    <StyledTableCell align="left">{subscriber.lastName}</StyledTableCell>
+                    <StyledTableCell align="left">{subscriber.email}</StyledTableCell>
+                    <StyledTableCell align="left">{subscriber.contactNumber}</StyledTableCell>
+                    <StyledTableCell align="left">{subscriber.genderId}</StyledTableCell>
+                    <StyledTableCell align="left" onClick={() => handleDelete(subscriber.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                    <StyledTableCell align="left" onClick={() => handleEdit(subscriber.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
+                </StyledTableRow>
+            ))}
+        </TableBody>
+    </Table>
+</TableContainer> */}

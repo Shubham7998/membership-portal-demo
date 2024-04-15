@@ -296,6 +296,86 @@ export default function SideNav() {
                 <ListItemText primary="Table" sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/discount')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Discount" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showdiscounts')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Show Discount" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/tax')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tax" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('showtaxes')}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: isOpen ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: isOpen ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Show tax" sx={{ opacity: isOpen ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
         </List>
         
         
