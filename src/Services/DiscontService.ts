@@ -3,7 +3,7 @@ import { DiscountModel } from "../Models/DiscountModel";
 import ResponseModel from "../Models/ResponseModel";
 import API_URL from "../Generics/URL_Config";
 
-
+const URL = `${API_URL}discount`;
 
 export const CreateDiscountAsync = async (
     discountInfo: DiscountModel
@@ -14,9 +14,11 @@ export const CreateDiscountAsync = async (
         message: "",
         errorCode: "",
     };
+    alert(JSON.stringify(discountInfo));
+    alert(URL)
 
     await axios
-        .post(`${API_URL}discout`, discountInfo)
+        .post(URL, discountInfo)
         .then(function (response) {
             result.data = response.data;
         })
@@ -36,9 +38,9 @@ export const UpdateDiscountAsync = async (
         message: "",
         errorCode: "",
     };
-
+    alert(URL)
     await axios
-        .put(`${API_URL}discout/${id}`, discountInfo)
+        .put(`URL/${id}`, discountInfo)
         .then(function (response) {
             result.data = response.data;
         })
@@ -58,8 +60,10 @@ export const GetDiscountByIdAsync = async (
         errorCode: "",
     };
 
+    alert(`${URL}/${id}`)
+
     await axios
-        .get(`${API_URL}discout/${id}`)
+        .get(`${URL}/${id}`)
         .then(function (response) {
             result.data = response.data;
         })
@@ -80,7 +84,7 @@ export const DeleteDiscountAsync = async (
     };
 
     await axios
-        .delete(`${API_URL}discout/${id}`)
+        .delete(`${API_URL}discount/${id}`)
         .then(function (response) {
             result.data = response.data;
         })
@@ -100,7 +104,7 @@ export const GetDiscountAsync = async (
     };
 
     await axios
-        .get(`${API_URL}discout`)
+        .get(`${API_URL}discount`)
         .then(function (response) {
             result.data = response.data;
         })

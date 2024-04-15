@@ -44,7 +44,7 @@ export default function ShowProductUtility() {
 
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 15;
+    const recordsPerPage = 3;
     const npage = Math.ceil(totalPages / recordsPerPage);
     const numbers = [];
     for (let i = 1; i <= npage; i++) {

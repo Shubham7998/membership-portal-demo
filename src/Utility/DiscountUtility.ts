@@ -93,14 +93,14 @@ export default function DiscountUtility(id : number) {
             console.log("isValidate");
             try {
                 if (discoutInfo.id !== 0) {
-                    console.log("Updateproductinfo")
+                    console.log("Update discount info")
                     var response = await UpdateDiscountAsync(discoutInfo, discoutInfo.id);
-                    setSnackbarMessage("Product updated successfully");
+                    setSnackbarMessage("Discount updated successfully");
                 }
                 else {
                     alert("Createproductinfo");
                     await CreateDiscountAsync(discoutInfo);
-                    setSnackbarMessage("Product data created successfully");
+                    setSnackbarMessage("Discount data created successfully");
                 }
                 setDiscountInfo(initialValue);
                 setSnackbarSeverity("success");
@@ -119,23 +119,16 @@ export default function DiscountUtility(id : number) {
     };
 
     const isValidate = () => {
-
         if (discoutInfo.discountCode.trim() === "") {
             newErrors.push({
-                parameterName: "productName",
-                errorMessage: "Enter product name",
+                parameterName: "discountCode",
+                errorMessage: "Enter Discount name",
             });
         } 
-        // else if (!isValidName(productInfo.productName)) {
-        //     newErrors.push({
-        //         parameterName: "productName",
-        //         errorMessage: "Enter valid product name",
-        //     });
-        // }
         if (discoutInfo.discountAmount < 1) {
             newErrors.push({
                 parameterName: "price",
-                errorMessage: "Price Must be Grater than Zero",
+                errorMessage: "Discount Amount Must be Grater than Zero",
             });
         }
         setErrors(newErrors);
