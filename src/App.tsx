@@ -17,6 +17,7 @@ import ShowProduct from './Pages/HelpingPages/ShowProduct';
 import Product from './Pages/Product';
 import { TablePaginationActions } from './Helptxt/TableComp';
 import Discount from './Pages/Discount';
+import GenericList from './Pages/GenericList';
 
 function App() {
   return (
@@ -41,8 +42,10 @@ function App() {
           
           
           <Route path='/discount' element={<Discount />}></Route>
+          <Route path='/discount/:id' element={<Discount />}></Route>
           
           <Route path='/table' element={<TablePaginationActions />}></Route>
+         {/* // <Route path='/gen' element={<GenericList data={null}/>}></Route> */}
           <Route path='/helpme' element={<HelperComponents />}></Route>
           <Route path='/helpme2' element={<Helpme2 />}></Route>
         </Route>

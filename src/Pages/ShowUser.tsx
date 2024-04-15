@@ -20,6 +20,7 @@ import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import { ConfirmationModal } from './HelpingPages/ConfirmationModel';
 import Swal from 'sweetalert2';
+import GenericList from './GenericList';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -57,6 +58,11 @@ export default function ShowUser() {
 
     const { handleDelete, userInfo, handleEdit } = ShowUserUtility();
 
+    ShowAlert();
+    function ShowAlert() {
+        console.log("data-show")
+        console.log(userInfo)
+    }
     
 
     const handleSwirl = () => {
@@ -75,9 +81,13 @@ export default function ShowUser() {
         });
       };
 
+      const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
+
+    //   export default function GenericList({ data }: GenericListProps, {handleDelete} : any, {handleEdit} : any) {
+
     return (
         <>
-            <Box height={30} />
+            {/* <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
@@ -112,7 +122,9 @@ export default function ShowUser() {
                         </Table>
                     </TableContainer>
                 </Box>
-            </Box>
+            </Box> */}
+
+            <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit= {handleEdit} handleDelete = {handleDelete} isSearchMode={false}/>
 
 
         </>

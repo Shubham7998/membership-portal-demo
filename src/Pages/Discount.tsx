@@ -89,8 +89,8 @@ export default function Discount() {
                                         required
                                         onChange={handleSelectChange}    
                                     >
-                                        <MenuItem value={0}>Yes</MenuItem>
-                                        <MenuItem value={-1}>No</MenuItem>
+                                        <MenuItem value={"true"}>Yes</MenuItem>
+                                        <MenuItem value={"false"}>No</MenuItem>
                                         
                                     </Select>
                                 </FormControl>
