@@ -1,57 +1,7 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
 import SideNav from './HelpingPages/SideNav';
-import Navbar from './HelpingPages/Navbar';
-import { UserModel } from '../Models/UserModel';
-import { useEffect, useState } from 'react';
-import { DeleteUserService, GetAllUserService } from '../Services/UserService';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
-import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
-import { ConfirmationModal } from './HelpingPages/ConfirmationModel';
-import Swal from 'sweetalert2';
 import GenericList from './GenericList';
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
-
-const StyledTableHead = styled(TableHead)(({ theme }) => ({
-    backgroundColor: '#2196f3', // Blue color
-    color: theme.palette.common.white,
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
-
-const handleConfirmation = () => {
-    // Handle confirmation logic here
-    console.log("Confirmed!");
-  };
 
 
 export default function ShowUser() {
@@ -63,30 +13,26 @@ export default function ShowUser() {
         console.log("data-show")
         console.log(userInfo)
     }
-    
 
-    const handleSwirl = () => {
-        Swal.fire({
-          title: "Do you want to save the changes?",
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: "Save",
-          denyButtonText: `Don't save`
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
-          } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
-          }
-        });
-      };
+  const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Password","Contact No."]
 
-      const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
-
-    //   export default function GenericList({ data }: GenericListProps, {handleDelete} : any, {handleEdit} : any) {
 
     return (
         <>
+
+            <Box height={30} />
+            <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
+                <SideNav />
+                <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
+                    <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>User List</h1>
+                    <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+                </Box>
+            </Box>
+        </>
+    );
+}
+
+
             {/* <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
@@ -123,11 +69,3 @@ export default function ShowUser() {
                     </TableContainer>
                 </Box>
             </Box> */}
-
-            <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit= {handleEdit} handleDelete = {handleDelete} isSearchMode={false}/>
-
-
-        </>
-    );
-}
-

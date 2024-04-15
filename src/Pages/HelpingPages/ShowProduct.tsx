@@ -21,6 +21,7 @@ import { GetPaginatedProductAsync, GetProductAsync } from '../../Services/Produc
 import ShowProductUtility from '../../Utility/ShowProductUtility';
 import SideNav from './SideNav';
 import { Theme } from '@mui/material/styles';
+import GenericList from '../GenericList';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,8 +45,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function ShowProduct() {
+  const productDataHeader = ["Sr. No.", "Product Name", "Product Price"]
 
-  const {removeDuplicates, handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate, handleSelectChange } = ShowProductUtility();
+  const { removeDuplicates, handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate, handleSelectChange } = ShowProductUtility();
   return (
     <>
       <Box height={30} />
@@ -116,7 +118,7 @@ export default function ShowProduct() {
             </Box>
 
           </div>
-          <TableContainer component={Paper}>
+          {/* <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
@@ -140,22 +142,9 @@ export default function ShowProduct() {
                 ))}
               </TableBody>
             </Table>
-          </TableContainer>
-          {/* <nav>
-            <ul>
-              <li>
-                <a href="#" onClick={(e) => prevPage(e)}>Prev</a>
-              </li>
-              {
-                numbers.map((n, i) => (
-                  <li key={i}><a href="#" onClick={(e) => changeCurrentPage(n, e)}>{n}</a></li>
-                ))
-              }
-              <li>
-                <a href="#" onClick={(e) => nextPage(e)}>Next</a>
-              </li>
-            </ul>
-          </nav> */}
+          </TableContainer> */}
+          <GenericList data={productInfo} dataHeader={productDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
             <ButtonGroup color="primary" aria-label="navigation">
               <Button onClick={(e) => prevPage(e)} disabled={prevPageDisabled()} sx={{

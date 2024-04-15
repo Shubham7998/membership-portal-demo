@@ -96,7 +96,6 @@ export function UserUtility(id: number) {
     const handleSelectChange = (event: any) => {
         const { name, value } = event.target;
         setUserInfo(prev => ({ ...prev, [name]: value }));
-        // isValidate();
     };
 
     const isValidate = () => {

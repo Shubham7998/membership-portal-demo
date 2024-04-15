@@ -76,8 +76,7 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
 
     return (
         <>
-            <Box height={30} />
-            <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <TableContainer component={Paper}>
@@ -92,10 +91,8 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                                     {!isSearchMode ? handleButtons.map((btn, index) => (
                                         <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
                                     )) : ""}
-
                                 </TableRow>
                             </TableHead>
-
                             <TableBody>
                                 {data?.map((item: any, index) => (
                                     <StyledTableRow key={index}>
@@ -107,7 +104,6 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                                         <StyledTableCell align="left">{item.email || item.isDiscountInPercentage || item.totalTax}</StyledTableCell>
                                         <StyledTableCell align="left">{item.contactNumber}</StyledTableCell>
                                         <StyledTableCell align="left">{item.genderId}</StyledTableCell>
-
                                         {!isSearchMode && (
                                             <StyledTableCell align="left">
                                                 <EditIcon onClick={() => handleEdit(item.id)} color="primary" sx={{ cursor: 'pointer' }} />
@@ -124,7 +120,43 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                         </Table>
                     </TableContainer>
                 </Box>
-            </Box>
+            </Box> */}
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+
+                    <TableHead>
+                        <TableRow>
+                            {dataHeader.map((data, index) => (
+                                <StyledTableCell key={index} align="left">{data}</StyledTableCell>
+                            ))}
+                            {!isSearchMode ? handleButtons.map((btn, index) => (
+                                <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
+                            )) : ""}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {data?.map((item: any, index) => (
+                            <StyledTableRow key={index}>
+                                {Object.values(item).map((value: any, idx) => (
+                                    <StyledTableCell key={idx} align="left">
+                                        {value} 
+                                    </StyledTableCell>
+                                ))}
+                                {!isSearchMode && (
+                                    <StyledTableCell align="left">
+                                        <EditIcon onClick={() => handleEdit(item.id)} color="primary" sx={{ cursor: 'pointer' }} />
+                                    </StyledTableCell>
+                                )}
+                                {!isSearchMode && (
+                                    <StyledTableCell align="left">
+                                        <DeleteIcon onClick={() => handleDelete(item.id)} color="primary" sx={{ cursor: 'pointer' }} />
+                                    </StyledTableCell>
+                                )}
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </>
     );
 }
@@ -139,3 +171,12 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
 {/* <StyledTableCell align="left">
                                             <EditIcon onClick={() => handleEdit(item.id)} color="primary" sx={{ cursor: 'pointer' }} />
                                         </StyledTableCell> */}
+// scope="row"
+
+{/* <StyledTableCell align="left">
+                                    {item.firstName || item.productName || item.discountCode || item.sgst || item.gender}
+                                    </StyledTableCell>
+                                <StyledTableCell align="left">{item.lastName || item.price || item.discountAmount || item.cgst}</StyledTableCell>
+                                <StyledTableCell align="left">{item.email || item.isDiscountInPercentage || item.totalTax}</StyledTableCell>
+                                <StyledTableCell align="left">{item.contactNumber}</StyledTableCell>
+                                <StyledTableCell align="left">{item.genderId}</StyledTableCell> */}
