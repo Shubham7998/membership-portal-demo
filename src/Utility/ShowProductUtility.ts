@@ -4,14 +4,14 @@ import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { DeleteUserService, GetAllUserService } from '../Services/UserService';
-import { DeleteProductAsync, GetPaginatedProductAsync, GetProductAsync } from '../Services/ProductService';
+import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../Services/ProductService';
 import { handleSwirl } from '../Generics/Swirl';
 
 export default function ShowProductUtility() {
 
     const initialValue: ProductModel = {
         id: 0,
-        productName: "",
+        productName: "0",
         price: 0
     }
 
@@ -32,15 +32,42 @@ export default function ShowProductUtility() {
 
     const navigate = useNavigate();
 
-    const handleSelectChange = (
+    const  handleSelectChange = async(
         event: SelectChangeEvent) => {
         const name = event.target.name;
         const value = event.target.value;
     
-        setProductInfoSearch((prevState) => ({ ...prevState, [name]: value })); 
+        //  await setSelectData();
 
-        
-      };
+         await setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
+         async function setSelectData () {
+            await setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
+         } 
+
+        console.log(productInfoSearch.price + " " +  productInfoSearch.productName);
+        console.log(productInfoSearch)
+        if(productInfoSearch.price !==0 && productInfoSearch.productName !== "0"){
+            fetchAdvanceSearchData();
+        }else{
+            fetchSearchData();
+        }
+    };
+
+    const fetchAdvanceSearchData = async () => {
+        const result = await AdvanceSearchProductAsync(productInfoSearch);
+        setProductInfo(result.data);
+    } 
+    const fetchSearchData = async () => {
+        var result;
+        if(productInfoSearch.price === 0){
+
+            result = await SearchProductAsync(productInfoSearch.productName);
+        }else{
+            result = await SearchProductAsync(productInfoSearch.price.toString());
+
+        }
+        setProductInfo(result.data);
+    } 
 
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);

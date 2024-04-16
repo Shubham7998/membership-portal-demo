@@ -57,22 +57,23 @@ export default function ShowProduct() {
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
           <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
 
-            <Grid item xs={12} sx={{ marginRight: 5 }}>
+            <Grid item xs={12} sx={{ marginRight: 5, marginLeft : 10 }}>
               <FormControl fullWidth >
                 <InputLabel id="productName">Product Name</InputLabel>
                 <Select
                   style={{ height: 40 }}
                   labelId="productName"
                   id="productName"
-                  value={productInfoSearch.productName.toString()} 
+                  value={productInfoSearch.productName} 
                   label="Product Name"
                   name='productName'
                   required
                   onChange={handleSelectChange}
+                  defaultValue='0'
                 >
-                  <MenuItem value={""} >---Select Product Name---</MenuItem>
+                  <MenuItem value={'0'} >---Select Product Name---</MenuItem>
                   {productInfo?.map((product) => (
-                    <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
+                    <MenuItem key={product.id} value={product.productName}>{product.productName}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -90,9 +91,9 @@ export default function ShowProduct() {
                   required
                   onChange={handleSelectChange}
                 >
-                  <MenuItem value={0}>---Select Product Price---</MenuItem>
+                  <MenuItem value={'0'}>---Select Product Price---</MenuItem>
                   {productInfo?.map((product, key) => (
-                    <MenuItem key={product.id} value={product.id}>{product.price}</MenuItem>
+                    <MenuItem key={product.id} value={product.price}>{product.price}</MenuItem>
                   ))}
                 </Select>
               </FormControl>

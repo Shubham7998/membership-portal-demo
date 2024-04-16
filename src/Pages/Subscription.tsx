@@ -8,13 +8,28 @@ import {
 } from "@mui/material";
 import SideNav from './HelpingPages/SideNav';
 import SubscriptionUtility from '../Utility/SubscriptionUtility';
+import dayjs, { Dayjs } from 'dayjs';
+// import { DesktopDatePicker, LocalizationProvider, MobileDatePicker, StaticDatePicker } from '@mui/x-date-pickers';
+// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+
+
 
 export default function Subscription() {
     const { id = 0 } = useParams();
 
 
     const { errors, handleSubmit, handleNumberChange, handleTextChange, genders, handleSelectChange, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity } = SubscriberUtility(+id);
-    const { subscriberInfo, navigate , subscriptionInfo, productInfo, discountInfo} = SubscriptionUtility(+id);
+    const { subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo } = SubscriptionUtility(+id);
 
     return (
         <>
@@ -23,143 +38,77 @@ export default function Subscription() {
                 <Grid item xs={3} sm={6} md={3}>
                     <Paper elevation={3} style={{ padding: 20 }}>
                         <Grid container spacing={2} justifyContent="center">
-                            <h1>Subscriber</h1>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    id="firstName"
-                                    label="First Name"
-                                    variant="outlined"
-                                    size="small" // Set size to "small"
-                                    name="firstName"
-                                    onChange={(e) => handleTextChange(e)}
-                                  //  value={subscriberInfo.firstName}
-                                    required
-                                    helperText={
-                                        errors.find(
-                                            (error) => error.parameterName === "firstName"
-                                        )?.errorMessage || ""
-                                    }
-                                    error={
-                                        !!errors.find(
-                                            (error) => error.parameterName === "firstName"
-                                        )
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    variant="outlined"
-                                    size="small"
-                                    name='lastName'
-                                    required
-                                    onChange={(e) => handleTextChange(e)}
-                                  //  value={subscriberInfo.lastName}
-                                    helperText={
-                                        errors.find(
-                                            (error) => error.parameterName === "lastName"
-                                        )?.errorMessage || ""
-                                    }
-                                    error={
-                                        !!errors.find(
-                                            (error) => error.parameterName === "lastName"
-                                        )
-                                    }
-                                />
-                            </Grid>
+                            <h1>Subscription</h1>
                             <Grid item xs={12} >
                                 <FormControl fullWidth >
-                                    <InputLabel id="genderId">Gender</InputLabel>
+                                    <InputLabel id="subscriberId">Select Subscriber</InputLabel>
                                     <Select
                                         style={{ height: 40 }}
-                                        labelId="genderId"
-                                        id="genderId"
-                                      //  value={subscriberInfo.genderId.toString()}
-                                        label="Gender"
-                                        name='genderId'
+                                        labelId="subscriberId"
+                                        id="subscriberId"
+                                        value={subscriptionInfo.subscriberId.toString()}
+                                        label="Select Subscriber"
+                                        name='subscriberId'
                                         required
-                                        onChange={handleChange}    
+                                        onChange={handleChange}
                                     >
-                                        <MenuItem value={-1}>---Select Gender---</MenuItem>
-                                        {genders?.map((gender, key) => (
-                                            <MenuItem key={gender.id} value={gender.id}>{gender.genderName}</MenuItem>
+                                        <MenuItem value={0}>---Select Subscriber---</MenuItem>
+                                        {subscriberInfo?.map((subscriber, key) => (
+                                            <MenuItem key={subscriber.id} value={subscriber.id}>{subscriber.firstName + " " + subscriber.lastName}</MenuItem>
                                         ))}
+
                                     </Select>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} >
                                 <FormControl fullWidth >
-                                    <InputLabel id="genderId">Gender</InputLabel>
+                                    <InputLabel id="productId">Select Product</InputLabel>
                                     <Select
                                         style={{ height: 40 }}
-                                        labelId="genderId"
-                                        id="genderId"
+                                        labelId="productId"
+                                        id="productId"
                                         value={subscriptionInfo.productId.toString()}
-                                        label="Gender"
-                                        name='genderId'
+                                        label="Select Product"
+                                        name='productId'
                                         required
-                                        onChange={handleChange}    
+                                        onChange={handleChange}
                                     >
-                                        <MenuItem value={-1}>---Select product---</MenuItem>
+                                        <MenuItem value={0}>---Select Product---</MenuItem>
                                         {productInfo?.map((product, key) => (
-                                            <MenuItem key={product.id} value={product.id}>Product Name = {product.productName} Product Price ={product.price}</MenuItem>
+                                            <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
                                         ))}
+
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    id="email"
-                                    label="Email"
-                                    variant="outlined"
-                                    size="small"
-                                    name='email'
-                                    onChange={(e) => handleTextChange(e)}
-                                   // value={subscriberInfo.email}
-                                    required
-                                    helperText={
-                                        errors.find(
-                                            (error) => error.parameterName === 'email'
-                                        )?.errorMessage || ""
-                                    }
-                                    error={
-                                        !!errors.find(
-                                            (error) => error.parameterName == "email"
-                                        )
-                                    }
-                                />
+                            <Grid item xs={12} >
+                                <FormControl fullWidth >
+                                    <InputLabel id="discountId">Select Discount Coupon</InputLabel>
+                                    <Select
+                                        style={{ height: 40 }}
+                                        labelId="discountId"
+                                        id="discountId"
+                                        value={subscriptionInfo.discountId.toString()}
+                                        label="Select Discount Coupon"
+                                        name='discountId'
+                                        required
+                                        onChange={handleChange}
+                                    >
+                                        <MenuItem value={0}>---Select Discount Coupon---</MenuItem>
+                                        {discountInfo?.map((discount, key) => (
+                                            <MenuItem key={discount.id} value={discount.id}>{discount.discountCode}</MenuItem>
+                                        ))}
+
+                                    </Select>
+                                </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    id="contactNumber"
-                                    label="Contact Number"
-                                    variant="outlined"
-                                    size="small"
-                                    name='contactNumber'
-                                    onChange={(e) => handleNumberChange(e)}
-                                    //value={subscriberInfo.contactNumber}
-                                    required
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                +91
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                    helperText={errors.find(
-                                        (error) => error.parameterName == "contactNumber"
-                                    )?.errorMessage || ""
-                                    }
-                                    error={
-                                        !!errors.find((error) => error.parameterName === "contactNumber")
-                                    }
-                                />
+                            <Grid item xs={26}>
+                                <FormControl fullWidth >
+                                    
+                                </FormControl>
                             </Grid>
+
+
                             <Grid item xs={5}>
                                 <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
                                     Submit
