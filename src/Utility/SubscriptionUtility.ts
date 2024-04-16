@@ -8,8 +8,18 @@ import { DiscountModel } from '../Models/DiscountModel';
 import { SubscriptionModel } from '../Models/SubscriptionModel';
 import { GetProductAsync } from '../Services/ProductService';
 import { GetDiscountAsync } from '../Services/DiscontService';
+import dayjs, { Dayjs } from 'dayjs';
+import {
+    AutocompleteChangeDetails,
+    AutocompleteChangeReason,
+    SelectChangeEvent,
+    SnackbarOrigin,
+} from "@mui/material";
+import { CreateSubscriptionAsync, GetSubscriptionByIdAsync, UpdateSubscriptionAsync } from '../Services/SubscriptionService';
 
-export default function SubscriptionUtility(id : number) {
+export default function SubscriptionUtility(id: number) {
+    type DateFieldChangeHandler = (name: string, value: Dayjs | null) => void;
+
     const initialValueSubscriber: SubscriberModel = {
         id: 0,
         firstName: '',
@@ -36,15 +46,26 @@ export default function SubscriptionUtility(id : number) {
     }
     const [discountInfo, setDiscountInfo] = useState<DiscountModel[]>([initialValueDiscount]);
 
-    const initialValueSubscription : SubscriptionModel = {
+    function formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`; // This format is compatible with DateOnly in C#
+    }
+
+    // Usage in your code
+    //   const startDateToSend = formatDate(startDate); // Adjust startDate to your actual date variable
+    //   const expiryDateToSend = formatDate(expiryDate);
+
+    const initialValueSubscription: SubscriptionModel = {
         id: 0,
         subscriberId: 0,
         productId: 0,
         discountId: 0,
-        startDate: new Date,
-        expiryDate: new Date,
+        startDate: new Date(),
+        expiryDate: new Date("dd-mm-yy"),
         priceAfterDiscount: 0,
-        taxId: 0,
+        taxId: 2,
         cgst: 0,
         sgst: 0,
         totalTaxPercent: 0,
@@ -53,7 +74,6 @@ export default function SubscriptionUtility(id : number) {
     }
 
     const [subscriptionInfo, setSubscriptionInfo] = useState<SubscriptionModel>(initialValueSubscription)
-
     const navigate = useNavigate();
 
 
@@ -77,11 +97,49 @@ export default function SubscriptionUtility(id : number) {
         setDiscountInfo(fetchDiscountInfo.data);
         console.log("fetchDiscountInfo");
         console.log(fetchDiscountInfo)
+
+        if (id > 0) {
+            const result = await GetSubscriptionByIdAsync(id);
+            setSubscriptionInfo(result.data);
+        }
     }
 
 
+    const handleDateFieldChange = (name: any, value: any) => {
+        setSubscriptionInfo((prevState: any) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
 
-    return { subscriberInfo, navigate , subscriptionInfo, productInfo, discountInfo}
+    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = event.currentTarget;
+        setSubscriptionInfo(prev => ({ ...prev, [name]: value }));
+    }
+
+    const handleSubmit = async () => {
+        alert(JSON.stringify(subscriptionInfo))
+        if (id > 0) {
+            const result = await UpdateSubscriptionAsync(id,subscriptionInfo);
+            setSubscriptionInfo(result.data);
+            console.log(result)
+        } else {
+            const result = await CreateSubscriptionAsync(subscriptionInfo);
+            console.log(result)
+        }
+
+        setSubscriptionInfo(initialValueSubscription);
+    }
+
+    const handleSelectChange = (
+        event: SelectChangeEvent) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        setSubscriptionInfo((prevState) => ({ ...prevState, [name]: value }));
+    };
+
+    return { handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
 
 }
 

@@ -21,15 +21,18 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
 
 
 
 export default function Subscription() {
     const { id = 0 } = useParams();
 
+    const { errors, handleNumberChange, genders, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity } = SubscriberUtility(+id);
+    const { handleTextChange, handleSubmit,handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo } = SubscriptionUtility(+id);
 
-    const { errors, handleSubmit, handleNumberChange, handleTextChange, genders, handleSelectChange, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity } = SubscriberUtility(+id);
-    const { subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo } = SubscriptionUtility(+id);
+
 
     return (
         <>
@@ -50,9 +53,9 @@ export default function Subscription() {
                                         label="Select Subscriber"
                                         name='subscriberId'
                                         required
-                                        onChange={handleChange}
+                                        onChange={handleSelectChange}
                                     >
-                                        <MenuItem value={0}>---Select Subscriber---</MenuItem>
+                                        <MenuItem value={0}>Select Subscriber</MenuItem>
                                         {subscriberInfo?.map((subscriber, key) => (
                                             <MenuItem key={subscriber.id} value={subscriber.id}>{subscriber.firstName + " " + subscriber.lastName}</MenuItem>
                                         ))}
@@ -71,9 +74,9 @@ export default function Subscription() {
                                         label="Select Product"
                                         name='productId'
                                         required
-                                        onChange={handleChange}
+                                        onChange={handleSelectChange}
                                     >
-                                        <MenuItem value={0}>---Select Product---</MenuItem>
+                                        <MenuItem value={0}>Select Product</MenuItem>
                                         {productInfo?.map((product, key) => (
                                             <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
                                         ))}
@@ -92,9 +95,9 @@ export default function Subscription() {
                                         label="Select Discount Coupon"
                                         name='discountId'
                                         required
-                                        onChange={handleChange}
+                                        onChange={handleSelectChange}
                                     >
-                                        <MenuItem value={0}>---Select Discount Coupon---</MenuItem>
+                                        <MenuItem value={0}>Select Discount Coupon</MenuItem>
                                         {discountInfo?.map((discount, key) => (
                                             <MenuItem key={discount.id} value={discount.id}>{discount.discountCode}</MenuItem>
                                         ))}
@@ -102,17 +105,37 @@ export default function Subscription() {
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={26}>
-                                <FormControl fullWidth >
-                                    
-                                </FormControl>
+                            <Grid item xs={12}>
+                                <InputLabel id="startDate">Select Start Date</InputLabel>
+                                <TextField
+                                    fullWidth
+                                    id="startDate"
+                                    variant="outlined"
+                                    size="small"
+                                    name='startDate'
+                                    type='date'
+                                    value={subscriptionInfo.startDate}
+                                    onChange={handleTextChange}
+                                />
                             </Grid>
-
-
+                            <Grid item xs={12}>
+                                <InputLabel id="expiryDate">Select Start Date</InputLabel>
+                                <TextField
+                                    fullWidth
+                                    id="expiryDate"
+                                    variant="outlined"
+                                    size="small"
+                                    name='expiryDate'
+                                    type='date'
+                                    value={subscriptionInfo.expiryDate}
+                                    onChange={handleTextChange}
+                                />
+                            </Grid>
                             <Grid item xs={5}>
                                 <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
                                     Submit
                                 </Button>
+
                             </Grid>
                         </Grid>
                     </Paper>

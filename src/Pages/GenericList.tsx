@@ -35,15 +35,50 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontSize: 14,
     },
 }));
-
+export interface SubscriptionModel {
+    id : number,
+    subscriberId : number,
+    productId : number,
+    productName? : string,
+    productPrice? : number,
+    discountId : number,
+    discountCode? : string,
+    discountAmount? : string,
+    startDate : Date,
+    expiryDate : Date,
+    priceAfterDiscount : number,
+    taxId : number,
+    cgst : number,
+    sgst : number,
+    totalTaxPercent : number,
+    taxAmount : number,
+    finalAmount : number
+}
 const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
 const subscriberDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No.", "Gender"]
 const productDataHeader = ["Sr. No.", "Product Name", "Product Price"]
 const discountDataHeader = ["Sr. No.", "Discount Code", "Discount Amount", "IsDiscountInPercentage"]
 const taxDataHeader = ["Sr. No.", "SGST", "CGST", "Total Tax"]
 const genderDataHeader = ["Sr. No.", "Gender"];
+const subscriptionDataHeader = ["Sr. No.", "Subscriber Id","Product Id", "Product Name",
+    "Product Price", "Discount Id", "Discount Id", "Discount Amount", "Start Date", 
+    "Expiry Date", "Price After Discount", "Tax Id", "CGST%", "SGST%", "Total tax Percent",
+    "Tax Amount", "Final Amount"
+];
 
-
+// productPrice? : number,
+//     discountId : number,
+//     discountCode? : string,
+//     discountAmount? : string,
+//     startDate : Date,
+//     expiryDate : Date,
+//     priceAfterDiscount : number,
+//     taxId : number,
+//     cgst : number,
+//     sgst : number,
+//     totalTaxPercent : number,
+//     taxAmount : number,
+//     finalAmount : number
 const handleButtons = ["Edit", "Delete"];
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({

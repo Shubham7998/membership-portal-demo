@@ -1,39 +1,47 @@
-import React from 'react';
-import { Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
+import { Grid, FormControl, InputLabel, TextField } from '@mui/material';
 
-interface Product {
-  id: number;
-  productName: string;
-}
+export default function YourComponent() {
+  const [startDate, setStartDate] = useState('');
 
-interface Props {
-  productInfo: Product[];
-  productInfoSearch: { productName: string };
-  handleSelectChange: (event: React.ChangeEvent<{ name?: string; value: unknown }>) => void;
-}
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStartDate(event.target.value);
+  };
 
-const YourComponent: React.FC<Props> = ({ productInfo, productInfoSearch, handleSelectChange }) => {
   return (
-    <Grid item xs={12} sx={{ marginRight: 5 }}>
-      <FormControl fullWidth>
-        <InputLabel id="productName-label">Product Name</InputLabel>
-        <Select
-          labelId="productName-label"
-          id="productName"
-          value={productInfoSearch.productName.toString()} 
-          label="Product Name"
-          name='productName'
-          required
-          onChange={handleSelectChange}
-        >
-          <MenuItem value={""} >---Select Product Name---</MenuItem>
-          {productInfo?.map((product) => (
-            <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <Grid container>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <InputLabel id="startDate">Select Start Date</InputLabel>
+          <TextField
+            fullWidth
+            id="startDate"
+            variant="outlined"
+            size="small"
+            name='startDate'
+            type='date'
+            value={startDate}
+            onChange={handleTextChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </FormControl>
+      </Grid>
     </Grid>
   );
 }
 
-export default YourComponent;
+// Assuming you have a function to format the date in the desired format
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`; // This format is compatible with DateOnly in C#
+}
+
+// Usage in your code
+const startDateToSend = formatDate(startDate); // Adjust startDate to your actual date variable
+const expiryDateToSend = formatDate(expiryDate); // Adjust expiryDate to your actual date variable
+
+// Now you can send startDateToSend and expiryDateToSend to the backend

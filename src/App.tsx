@@ -22,6 +22,7 @@ import ShowDiscount from './Pages/ShowDiscount';
 import ShowTax from './Pages/ShowTax';
 import Tax from './Pages/Tax';
 import Subscription from './Pages/Subscription';
+import ShowSubscriptions from './Pages/ShowSubscriptions';
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
 
           <Route path='/subscription' element={<Subscription />}></Route>
           <Route path='/subscription/:id' element={<Subscription />}></Route>
-          <Route path='/showsubscriptions' element={<ShowSubscriber />}></Route>
+          <Route path='/showsubscriptions' element={<ShowSubscriptions />}></Route>
           
           <Route path='/product' element={<Product />}></Route>
           <Route path='/product/:id' element={<Product />}></Route>
