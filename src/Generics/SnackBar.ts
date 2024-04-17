@@ -23,4 +23,8 @@ export default function SnackBar() {
 
         setSnackbarOpen(false);
     };
+
+    
+
+    return {setSnackbarMessage}
 }

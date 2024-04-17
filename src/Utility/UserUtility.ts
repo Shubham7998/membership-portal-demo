@@ -56,12 +56,14 @@ export function UserUtility(id: number) {
         if (id > 0) {
             try {
                 const result = await GetUserService(id);
-                console.log("result.errorCode = "+ result.errorCode )
+                console.log("result.errorCode = "+ result.errorCode)
+
                 if(result.errorCode == "200"){
                     console.log("result.errorCode = "+ result.errorCode )
                     if(result != null){
                         setUserInfo(result.data);
                         console.log(result.data);
+                        
                     }
                 }
             } catch (error) {
@@ -220,13 +222,14 @@ export function UserUtility(id: number) {
                     console.log(result.data);
                     setSnackbarMessage("User added successfully");
                 }
+                
                 setSnackbarOpen(true);
                 setSnackbarSeverity("success");
                 setErrors(newErrors);
 
                 //Navigate to another page after 2 seconds
                 setTimeout(() => {
-                    //navigate(`/showusers`); 
+                    navigate(`/showusers`); 
                 }, 1000);
             } catch (error) {
                 console.log(error)
