@@ -11,6 +11,7 @@ import { DeleteTaxAsync, GetTaxAsync } from '../Services/TaxService';
 export default function ShowTaxUtility() {
     const initialValue : TaxModel = {
         id: 0,
+        stateName : "",
         sgst: 0,
         cgst: 0,
         totalTax : 0

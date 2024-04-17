@@ -9,6 +9,7 @@ import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
 export default function TaxUtility(id: number) {
     let initialValue: TaxModel = {
         id: 0,
+        stateName : "",
         sgst: 0,
         cgst: 0,
         totalTax: 0

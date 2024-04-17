@@ -6,7 +6,7 @@ import ShowTaxUtility from '../Utility/ShowTaxUtility';
 
 export default function ShowTax() {
     const { handleDelete, taxInfo, handleEdit } = ShowTaxUtility();
-    const taxDataHeader = ["Sr. No.", "SGST", "CGST", "Total Tax"];
+    const taxDataHeader = ["Sr. No.",  "State Name","SGST", "CGST", "Total Tax"];
 
     console.log("taxinfo")
     console.log(taxInfo)

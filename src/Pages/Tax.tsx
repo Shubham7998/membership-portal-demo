@@ -10,6 +10,7 @@ import OnChangeFields from '../Generics/OnChangeFields';
 export default function Tax() {
     const { id = 0 } = useParams();
 
+    
 
     const { taxInfo, handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
         = TaxUtility(+id);
