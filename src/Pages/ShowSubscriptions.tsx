@@ -4,6 +4,7 @@ import SideNav from './HelpingPages/SideNav';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import GenericList from './GenericList';
 import ShowSubcriptionUtility from '../Utility/ShowSubcriptionUtility';
+import GenericFloatingTable from './GenericFloatingTable';
 export default function ShowSubscriptions() {
 
     const { subscriptionInfo, handleEdit, handleDelete } = ShowSubcriptionUtility();
@@ -14,12 +15,8 @@ export default function ShowSubscriptions() {
         "Tax Amount", "Final Amount"
     ];
 
-
-
-
     return (
         <>
-
             <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />

@@ -23,6 +23,7 @@ import ShowTax from './Pages/ShowTax';
 import Tax from './Pages/Tax';
 import Subscription from './Pages/Subscription';
 import ShowSubscriptions from './Pages/ShowSubscriptions';
+import GenericFloatingTable from './Pages/GenericFloatingTable';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
          {/* // <Route path='/gen' element={<GenericList data={null}/>}></Route> */}
           <Route path='/helpme' element={<HelperComponents />}></Route>
           <Route path='/helpme2' element={<Helpme2 />}></Route>
+
         </Route>
       </Routes>
     </BrowserRouter>

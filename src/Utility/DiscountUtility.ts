@@ -89,16 +89,19 @@ export default function DiscountUtility(id : number) {
     }
 
     const handleSubmit = async () => {
+        alert(discoutInfo)
         if (isValidate()) {
             console.log("isValidate");
             try {
                 if (discoutInfo.id !== 0) {
                     console.log("Update discount info")
                     var response = await UpdateDiscountAsync(discoutInfo, discoutInfo.id);
+                    alert(response.data);
+                    alert("wth")
                     setSnackbarMessage("Discount updated successfully");
                 }
                 else {
-                    alert("Createproductinfo");
+                    alert("Create discount info");
                     await CreateDiscountAsync(discoutInfo);
                     setSnackbarMessage("Discount data created successfully");
                 }

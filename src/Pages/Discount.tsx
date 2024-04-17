@@ -6,7 +6,6 @@ import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
 export default function Discount() {
     const { id = 0 } = useParams();
-    
 
     const {
     handleNumberChange, handleSelectChange, 

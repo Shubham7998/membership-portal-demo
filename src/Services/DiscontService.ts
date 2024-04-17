@@ -23,7 +23,7 @@ export const CreateDiscountAsync = async (
             result.data = response.data;
         })
         .catch(function (error) {
-            handleError(error, result);
+          //  handleError(error, result);
             alert(JSON.stringify(error));
         })
     return result;
@@ -40,7 +40,7 @@ export const UpdateDiscountAsync = async (
     };
     alert(URL)
     await axios
-        .put(`URL/${id}`, discountInfo)
+        .put(`${URL}/${id}`, discountInfo)
         .then(function (response) {
             result.data = response.data;
         })

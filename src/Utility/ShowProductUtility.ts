@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { ProductModel } from '../Models/ProductModel'
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import { DeleteUserService, GetAllUserService } from '../Services/UserService';
 import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../Services/ProductService';
 import { handleSwirl } from '../Generics/Swirl';
 
@@ -39,18 +37,18 @@ export default function ShowProductUtility() {
     
         //  await setSelectData();
 
-         await setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
-         async function setSelectData () {
-            await setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
-         } 
+        setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
+        //  async function setSelectData () {
+        //     await setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
+        //  } 
 
-        console.log(productInfoSearch.price + " " +  productInfoSearch.productName);
-        console.log(productInfoSearch)
-        if(productInfoSearch.price !==0 && productInfoSearch.productName !== "0"){
-            fetchAdvanceSearchData();
-        }else{
-            fetchSearchData();
-        }
+        // console.log(productInfoSearch.price + " " +  productInfoSearch.productName);
+        // console.log(productInfoSearch)
+        // if(productInfoSearch.price !==0 && productInfoSearch.productName !== "0"){
+        //     fetchAdvanceSearchData();
+        // }else{
+        //     fetchSearchData();
+        // }
     };
 
     const fetchAdvanceSearchData = async () => {
@@ -114,9 +112,11 @@ export default function ShowProductUtility() {
     const fetchData = async () => {
         try {
 
-            const result = await GetPaginatedProductAsync(currentPage, recordsPerPage);
-            setTotalPages(result.totalPages);
-            setProductInfo(result.dataArray);
+           // const result = await GetPaginatedProductAsync(currentPage, recordsPerPage);
+            // setTotalPages(result.totalPages);
+            // setProductInfo(result.dataArray);
+            const result = await GetProductAsync();
+            setProductInfo(result.data);
 
         } catch (error) {
             console.log(error);

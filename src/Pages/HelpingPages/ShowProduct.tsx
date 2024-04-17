@@ -48,6 +48,8 @@ export default function ShowProduct() {
   const productDataHeader = ["Sr. No.", "Product Name", "Product Price"]
 
   const { removeDuplicates, handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate, handleSelectChange } = ShowProductUtility();
+
+  console.log(productInfo)
   return (
     <>
       <Box height={30} />
@@ -55,7 +57,7 @@ export default function ShowProduct() {
         <SideNav />
         <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
-          <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
+          {/* <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
 
             <Grid item xs={12} sx={{ marginRight: 5, marginLeft : 10 }}>
               <FormControl fullWidth >
@@ -118,7 +120,7 @@ export default function ShowProduct() {
               </Button>
             </Box>
 
-          </div>
+          </div> */}
           {/* <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -146,7 +148,7 @@ export default function ShowProduct() {
           </TableContainer> */}
           <GenericList data={productInfo} dataHeader={productDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
             <ButtonGroup color="primary" aria-label="navigation">
               <Button onClick={(e) => prevPage(e)} disabled={prevPageDisabled()} sx={{
                 // '&:disabled': {
@@ -163,7 +165,7 @@ export default function ShowProduct() {
               }
               <Button onClick={(e) => nextPage(e)} disabled={nextPageDisabled()}>Next</Button>
             </ButtonGroup>
-          </div>
+          </div> */}
         </Box>
       </Box>
     </>
