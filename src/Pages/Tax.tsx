@@ -5,11 +5,12 @@ import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
 import TaxUtility from '../Utility/TaxUtility';
+import GenericSnackbar from '../Generics/Snackbar/SnackBar';
 export default function Tax() {
     const { id = 0 } = useParams();
 
 
-    const { taxInfo,  handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity }
+    const { taxInfo,  handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
         = TaxUtility(+id);
 
     return (
@@ -91,17 +92,12 @@ export default function Tax() {
 
                             </Grid>
                         </Grid>
-                        <Snackbar
+                        <GenericSnackbar
                             open={snackbarOpen}
-                            autoHideDuration={6000}
                             onClose={handleSnackbarClose}
+                            severity={snackbarSeverity}
                             message={snackbarMessage}
-                            anchorOrigin={snackbarPosition}>
-                            <Alert onClose={handleSnackbarClose}
-                                severity={snackbarSeverity}>
-                                {snackbarMessage}
-                            </Alert>
-                        </Snackbar>
+                        />
                     </Paper>
                 </Grid>
             </Grid>

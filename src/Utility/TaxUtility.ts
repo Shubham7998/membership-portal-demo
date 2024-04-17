@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CreateTaxAsync, GetTaxAsync, GetTaxByIdAsync, UpdateTaxAsync } from '../Services/TaxService';
 import { SnackbarOrigin } from '@mui/material';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
+import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
 
 export default function TaxUtility(id: number) {
     let initialValue: TaxModel = {
@@ -20,27 +21,8 @@ export default function TaxUtility(id: number) {
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-    const [snackbarMessage, setSnackbarMessage] = React.useState("");
-    const [snackbarPosition, setSnackbarPosition] =
-        React.useState<SnackbarOrigin>({
-            vertical: "top",
-            horizontal: "center",
-        });
-    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
-        "success" | "error" | "info" | "warning"
-    >();
+    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar } = SnackBarGeneric();
 
-    const handleSnackbarClose = (
-        event: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-
-        setSnackbarOpen(false);
-    };
 
     useEffect(() => {
         fetchData();
@@ -90,7 +72,6 @@ export default function TaxUtility(id: number) {
     const handleSelectChange = (event: any) => {
         const { name, value } = event.target;
         setTaxInfo(prev => ({ ...prev, [name]: value }));
-        // isValidate();
     };
 
     const isValidate = () => {
@@ -121,32 +102,27 @@ export default function TaxUtility(id: number) {
                     var result = await UpdateTaxAsync(taxInfo, id);
                     alert(result.data);
                     console.log(result.data);
-                    setSnackbarMessage("Tax updated successfully");
+                    displaySnackbar("Tax updated successfully", "success");
                 } else {
                     var result = await CreateTaxAsync(taxInfo);
                     alert(result.data);
                     console.log(result.data);
-                    setSnackbarMessage("Tax added successfully");
+                    displaySnackbar("Tax added successfully", "success");
                 }
-                setSnackbarOpen(true);
-                setSnackbarSeverity("success");
                 setErrors(newErrors);
 
-                //Navigate to another page after 2 seconds
                 setTimeout(() => {
                     navigate(`/showtaxes`); 
                 }, 1000);
             } catch (error) {
+                displaySnackbar(String(error), "info");
                 console.log(error)
-
             }
         } else {
-            setSnackbarMessage("Fields marked in red are required");
-            setSnackbarOpen(true);
-            setSnackbarSeverity("error");
+            displaySnackbar("Fields marked in red are required","error");
             setErrors(newErrors);
         }
     }
-    return { taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity };
+    return { taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 
 }

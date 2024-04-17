@@ -12,6 +12,7 @@ import { userInfo } from 'os';
 import { isValidName, removeSpace, isValidEmailAddress, isValidContactNumber, isValidPassword } from '../Generics/Validations';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { CreateSubscriberAsync, GetSubscriberAsync, GetSubscriberByIdAsync, UpdateSubscriberAsync } from '../Services/SubscriberService';
+import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
 
 export default function SubscriberUtility(id: number) {
 
@@ -39,27 +40,7 @@ export default function SubscriberUtility(id: number) {
     console.log("use effect")
   }, [id])
 
-  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-  const [snackbarMessage, setSnackbarMessage] = React.useState("");
-  const [snackbarPosition, setSnackbarPosition] =
-    React.useState<SnackbarOrigin>({
-      vertical: "top",
-      horizontal: "center",
-    });
-  const [snackbarSeverity, setSnackbarSeverity] = React.useState<
-    "success" | "error" | "info" | "warning"
-  >();
-
-  const handleSnackbarClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackbarOpen(false);
-  };
+  const {displaySnackbar ,handleSnackbarClose, snackbarOpen,snackbarMessage, snackbarSeverity} = SnackBarGeneric();
 
   async function fetchData() {
     try {
@@ -130,21 +111,18 @@ export default function SubscriberUtility(id: number) {
         const response = await UpdateSubscriberAsync(subscriberInfo, id);
         console.log("response data  update ");
         console.log(response);
-        setSnackbarMessage("Subscriber details updated successfully");
+        displaySnackbar("Subscriber details updated successfully","success");
       } else {
         alert("add");
         subscriberInfo.genderId += 1;
         const response = await CreateSubscriberAsync(subscriberInfo);
         console.log("response data added");
         console.log(response);
-        setSnackbarMessage("Subscriber details added successfully");
+        displaySnackbar("Subscriber details added successfully","success");
       }
-      setSnackbarSeverity("success");
     } else {
-      setSnackbarMessage("Please field mendatory fields");
-      setSnackbarSeverity("error");
+      displaySnackbar("Please field mendatory fields","error");
     }
-    setSnackbarOpen(true);
     setErrors(newErrors);
 
   }
@@ -246,7 +224,7 @@ export default function SubscriberUtility(id: number) {
 
     return newErrors.length === 0;
   };
-  return { errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity }
+  return { errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
 }
 
 

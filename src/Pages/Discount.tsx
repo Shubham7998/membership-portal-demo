@@ -4,16 +4,18 @@ import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
+import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+
 export default function Discount() {
     const { id = 0 } = useParams();
 
     const {
-    handleNumberChange, handleSelectChange, 
-    handleSubmit, discoutInfo, 
-    onInputChangeDiscount,errors,
-    snackbarOpen,
-    snackbarPosition, handleSnackbarClose,
-    snackbarSeverity,snackbarMessage} = DiscountUtility(+id);
+        handleNumberChange, handleSelectChange,
+        handleSubmit, discoutInfo,
+        onInputChangeDiscount, errors,
+        snackbarOpen,
+        handleSnackbarClose,
+        snackbarSeverity, snackbarMessage, handleSelectBooleanChange } = DiscountUtility(+id);
 
     return (
         <div>
@@ -45,7 +47,7 @@ export default function Discount() {
                                             (error) => error.parameterName === "Discount"
                                         )
                                     }
-                                   
+
                                 />
                             </Grid>
 
@@ -86,11 +88,11 @@ export default function Discount() {
                                         label="Discount In Percentage"
                                         name='isDiscountInPercentage'
                                         required
-                                        onChange={handleSelectChange}    
+                                        onChange={handleSelectBooleanChange}
                                     >
                                         <MenuItem value={"true"}>Yes</MenuItem>
                                         <MenuItem value={"false"}>No</MenuItem>
-                                        
+
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -101,7 +103,7 @@ export default function Discount() {
 
                             </Grid>
                         </Grid>
-                        <Snackbar
+                         {/* <Snackbar
                             open={snackbarOpen}
                             autoHideDuration={6000}
                             onClose={handleSnackbarClose}
@@ -111,7 +113,13 @@ export default function Discount() {
                                 severity={snackbarSeverity}>
                                 {snackbarMessage}
                             </Alert>
-                        </Snackbar>
+                        </Snackbar>   */}
+                        <GenericSnackbar
+                            open={snackbarOpen}
+                            onClose={handleSnackbarClose}
+                            severity={snackbarSeverity}
+                            message={snackbarMessage}
+                        />
                     </Paper>
                 </Grid>
             </Grid>

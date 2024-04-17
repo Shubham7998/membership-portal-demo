@@ -1,14 +1,10 @@
 import React from 'react'
 import { SnackbarOrigin } from "@mui/material";
 
-export default function SnackBar() {
+export default function SnackBarGeneric() {
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
     const [snackbarMessage, setSnackbarMessage] = React.useState("");
-    const [snackbarPosition, setSnackbarPosition] =
-        React.useState<SnackbarOrigin>({
-            vertical: "top",
-            horizontal: "center",
-        });
+    
     const [snackbarSeverity, setSnackbarSeverity] = React.useState<
         "success" | "error" | "info" | "warning"
     >();
@@ -20,11 +16,14 @@ export default function SnackBar() {
         if (reason === "clickaway") {
             return;
         }
-
         setSnackbarOpen(false);
     };
 
-    
+    function displaySnackbar(message: string, severity: React.SetStateAction<"success" | "error" | "info" | "warning" | undefined>) {
+        setSnackbarMessage(message);
+        setSnackbarOpen(true);
+        setSnackbarSeverity(severity);
+    }
 
-    return {setSnackbarMessage}
+    return { setSnackbarMessage, setSnackbarOpen, setSnackbarSeverity, handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar }
 }

@@ -4,10 +4,11 @@ import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { GetProductByIdAsync } from '../Services/ProductService';
 import { CreateDiscountAsync, GetDiscountByIdAsync, UpdateDiscountAsync } from '../Services/DiscontService';
+import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
 
-export default function DiscountUtility(id : number) {
+export default function DiscountUtility(id: number) {
 
-    let initialValue : DiscountModel = {
+    let initialValue: DiscountModel = {
         id: 0,
         discountCode: '',
         discountAmount: 0,
@@ -46,30 +47,17 @@ export default function DiscountUtility(id : number) {
     const handleSelectChange = (event: SelectChangeEvent) => {
         const val = event.target.value;
         const name = event.target.name;
-    
+
         setDiscountInfo(prev => ({ ...prev, [name]: val }));
-      };
-
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-    const [snackbarMessage, setSnackbarMessage] = React.useState("");
-    const [snackbarPosition, setSnackbarPosition] =
-        React.useState<SnackbarOrigin>({
-            vertical: "top",
-            horizontal: "center",
-        });
-    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
-        "success" | "error" | "info" | "warning"
-    >();
-
-    const handleSnackbarClose = (
-        event: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setSnackbarOpen(false);
     };
+    const handleSelectBooleanChange = (event: SelectChangeEvent) => {
+        const val = event.target.value;
+        const name = event.target.name;
+        const value = val === "true";
+        setDiscountInfo(prev => ({ ...prev, [name]: value }));
+    };
+
+    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar } = SnackBarGeneric();
 
     useEffect(() => {
         fetchData();
@@ -98,25 +86,19 @@ export default function DiscountUtility(id : number) {
                     var response = await UpdateDiscountAsync(discoutInfo, discoutInfo.id);
                     alert(response.data);
                     alert("wth")
-                    setSnackbarMessage("Discount updated successfully");
+                    displaySnackbar("Discount updated successfully", "success");
                 }
                 else {
                     alert("Create discount info");
                     await CreateDiscountAsync(discoutInfo);
-                    setSnackbarMessage("Discount data created successfully");
+                    displaySnackbar("Discount added successfully", "success");
                 }
                 setDiscountInfo(initialValue);
-                setSnackbarSeverity("success");
-                setSnackbarOpen(true);
             } catch (error) {
-                // setSnackbarMessage("Fields marked in red are required");
-                // setSnackbarSeverity("warning");
                 console.error("Error  in saving Product information:", error);
             }
         } else {
-            setSnackbarMessage("Fields marked in red are required");
-            setSnackbarOpen(true);
-            setSnackbarSeverity("error");
+            displaySnackbar("Fields marked in red are required", "error");
             setErrors(newErrors);
         }
     };
@@ -127,7 +109,7 @@ export default function DiscountUtility(id : number) {
                 parameterName: "discountCode",
                 errorMessage: "Enter Discount name",
             });
-        } 
+        }
         if (discoutInfo.discountAmount < 1) {
             newErrors.push({
                 parameterName: "price",
@@ -138,10 +120,12 @@ export default function DiscountUtility(id : number) {
         return newErrors.length === 0;
     };
 
-    return {handleNumberChange, handleSelectChange, 
-        handleSubmit, discoutInfo, 
-        onInputChangeDiscount,errors,
-        snackbarOpen,handleSnackbarClose,
-        snackbarPosition, 
-        snackbarSeverity,snackbarMessage}
+    return {
+        handleNumberChange, handleSelectChange,
+        handleSubmit, discoutInfo,
+        onInputChangeDiscount, errors,
+        snackbarOpen, handleSnackbarClose,
+         handleSelectBooleanChange,
+        snackbarSeverity, snackbarMessage
+    }
 }

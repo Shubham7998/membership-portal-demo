@@ -9,17 +9,15 @@ import {
 import SideNav from './HelpingPages/SideNav';
 import SubscriptionUtility from '../Utility/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
+import GenericSnackbar from '../Generics/Snackbar/SnackBar';
 
 
 
 
 export default function Subscription() {
     const { id = 0 } = useParams();
-
-    const { errors, handleNumberChange, genders, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity } = SubscriberUtility(+id);
-    const { handleTextChange, handleSubmit,handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo } = SubscriptionUtility(+id);
-
-
+    const { errors, handleNumberChange, genders, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo } = SubscriptionUtility(+id);
 
     return (
         <>
@@ -128,16 +126,12 @@ export default function Subscription() {
                     </Paper>
                 </Grid>
             </Grid>
-            <Snackbar
+            <GenericSnackbar
                 open={snackbarOpen}
-                autoHideDuration={6000}
                 onClose={handleSnackbarClose}
+                severity={snackbarSeverity}
                 message={snackbarMessage}
-                anchorOrigin={snackbarPosition}>
-                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
+            />
         </>
     );
 }

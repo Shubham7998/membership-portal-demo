@@ -4,7 +4,8 @@ import { CreateUserService, GetUserService, UpdateUserService } from '../Service
 import { useNavigate } from 'react-router-dom';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { isValidContactNumber, isValidEmailAddress, isValidName, isValidPassword, removeSpace } from '../Generics/Validations';
-import { SnackbarOrigin } from "@mui/material";
+import { Snackbar, SnackbarOrigin } from "@mui/material";
+import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
 
 export function UserUtility(id: number) {
     const initialValue: UserModel = {
@@ -16,8 +17,6 @@ export function UserUtility(id: number) {
         contactNumber: ''
     }
 
-
-
     const navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState<UserModel>(initialValue);
@@ -26,27 +25,7 @@ export function UserUtility(id: number) {
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-    const [snackbarMessage, setSnackbarMessage] = React.useState("");
-    const [snackbarPosition, setSnackbarPosition] =
-        React.useState<SnackbarOrigin>({
-            vertical: "top",
-            horizontal: "center",
-        });
-    const [snackbarSeverity, setSnackbarSeverity] = React.useState<
-        "success" | "error" | "info" | "warning"
-    >();
-
-    const handleSnackbarClose = (
-        event: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-
-        setSnackbarOpen(false);
-    };
+    const {displaySnackbar ,handleSnackbarClose, snackbarOpen,snackbarMessage, snackbarSeverity} = SnackBarGeneric();
 
     useEffect(() => {
         fetchData();
@@ -63,7 +42,7 @@ export function UserUtility(id: number) {
                     if(result != null){
                         setUserInfo(result.data);
                         console.log(result.data);
-                        
+
                     }
                 }
             } catch (error) {
@@ -211,23 +190,16 @@ export function UserUtility(id: number) {
         if (isValidate()) {
             try {
                 if (id > 0) {
-                    alert("update");
                     var result = await UpdateUserService(userInfo, id);
-                    alert(result.data);
                     console.log(result.data);
-                    setSnackbarMessage("User updated successfully");
+                    displaySnackbar("User updated successfully","success")
                 } else {
                     var result = await CreateUserService(userInfo);
-                    alert(result.data);
                     console.log(result.data);
-                    setSnackbarMessage("User added successfully");
+                    displaySnackbar("User added successfully","success")
                 }
-                
-                setSnackbarOpen(true);
-                setSnackbarSeverity("success");
                 setErrors(newErrors);
 
-                //Navigate to another page after 2 seconds
                 setTimeout(() => {
                     navigate(`/showusers`); 
                 }, 1000);
@@ -236,12 +208,10 @@ export function UserUtility(id: number) {
 
             }
         } else {
-            setSnackbarMessage("Fields marked in red are required");
-            setSnackbarOpen(true);
-            setSnackbarSeverity("error");
+            displaySnackbar("Fields marked in red are required","error")
             setErrors(newErrors);
         }
     }
 
-    return { userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity };
+    return { setUserInfo,userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 }

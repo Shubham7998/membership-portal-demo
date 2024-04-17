@@ -3,6 +3,7 @@ import React from 'react'
 import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
+import GenericSnackbar from '../Generics/Snackbar/SnackBar';
 
 export default function Product() {
 
@@ -16,7 +17,6 @@ export default function Product() {
         handleNumberChange,
         handleSnackbarClose,
         snackbarMessage,
-        snackbarPosition,
         snackbarSeverity,
         handleSubmit,
     } = ProductUtility(+id);
@@ -87,17 +87,12 @@ export default function Product() {
 
                             </Grid>
                         </Grid>
-                        <Snackbar
+                        <GenericSnackbar
                             open={snackbarOpen}
-                            autoHideDuration={6000}
                             onClose={handleSnackbarClose}
+                            severity={snackbarSeverity}
                             message={snackbarMessage}
-                            anchorOrigin={snackbarPosition}>
-                            <Alert onClose={handleSnackbarClose}
-                                severity={snackbarSeverity}>
-                                {snackbarMessage}
-                            </Alert>
-                        </Snackbar>
+                        />
                     </Paper>
                 </Grid>
             </Grid>

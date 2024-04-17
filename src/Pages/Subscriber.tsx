@@ -7,12 +7,13 @@ import {
     MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert
 } from "@mui/material";
 import SideNav from './HelpingPages/SideNav';
+import GenericSnackbar from '../Generics/Snackbar/SnackBar';
 
 export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarPosition, snackbarSeverity } = SubscriberUtility(+id);
+    const { errors, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
 
     return (
         <>
@@ -79,7 +80,7 @@ export default function Subscriber() {
                                         label="Gender"
                                         name='genderId'
                                         required
-                                        onChange={handleChange}    
+                                        onChange={handleChange}
                                     >
                                         <MenuItem value={-1}>---Select Gender---</MenuItem>
                                         {genders?.map((gender, key) => (
@@ -147,16 +148,12 @@ export default function Subscriber() {
                     </Paper>
                 </Grid>
             </Grid>
-            <Snackbar
+            <GenericSnackbar
                 open={snackbarOpen}
-                autoHideDuration={6000}
                 onClose={handleSnackbarClose}
+                severity={snackbarSeverity}
                 message={snackbarMessage}
-                anchorOrigin={snackbarPosition}>
-                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
+            />
         </>
     );
 }

@@ -140,7 +140,6 @@ export default function SubscriptionUtility(id: number) {
     };
 
     return { handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
-
 }
 
 
