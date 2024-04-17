@@ -10,6 +10,7 @@ import SideNav from './HelpingPages/SideNav';
 import SubscriptionUtility from '../Utility/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
 import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import OnChangeFields from '../Generics/OnChangeFields';
 
 
 
@@ -17,8 +18,13 @@ import GenericSnackbar from '../Generics/Snackbar/SnackBar';
 export default function Subscription() {
     const { id = 0 } = useParams();
     const { errors, handleNumberChange, genders, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
-    const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo } = SubscriptionUtility(+id);
-
+    const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo,setSubscriptionInfo } = SubscriptionUtility(+id);
+    const {
+        onSelectFieldChange,
+        onDateFieldChange,
+        onTextFieldChange,
+        onNumberFieldChange
+    } =  OnChangeFields();
     return (
         <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
@@ -37,8 +43,9 @@ export default function Subscription() {
                                         value={subscriptionInfo.subscriberId.toString()}
                                         label="Select Subscriber"
                                         name='subscriberId'
+                                        disabled = { id != 0}
                                         required
-                                        onChange={handleSelectChange}
+                                        onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriptionInfo)}
                                     >
                                         <MenuItem value={0}>Select Subscriber</MenuItem>
                                         {subscriberInfo?.map((subscriber, key) => (
@@ -59,8 +66,7 @@ export default function Subscription() {
                                         label="Select Product"
                                         name='productId'
                                         required
-                                        onChange={handleSelectChange}
-                                    >
+                                        onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriptionInfo)}                                    >
                                         <MenuItem value={0}>Select Product</MenuItem>
                                         {productInfo?.map((product, key) => (
                                             <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
@@ -80,7 +86,7 @@ export default function Subscription() {
                                         label="Select Discount Coupon"
                                         name='discountId'
                                         required
-                                        onChange={handleSelectChange}
+                                        onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriptionInfo)}
                                     >
                                         <MenuItem value={0}>Select Discount Coupon</MenuItem>
                                         {discountInfo?.map((discount, key) => (
@@ -100,7 +106,7 @@ export default function Subscription() {
                                     name='startDate'
                                     type='date'
                                     value={subscriptionInfo.startDate}
-                                    onChange={handleTextChange}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -113,7 +119,7 @@ export default function Subscription() {
                                     name='expiryDate'
                                     type='date'
                                     value={subscriptionInfo.expiryDate}
-                                    onChange={handleTextChange}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
                                 />
                             </Grid>
                             <Grid item xs={5}>

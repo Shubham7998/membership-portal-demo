@@ -139,7 +139,7 @@ export default function SubscriptionUtility(id: number) {
         setSubscriptionInfo((prevState) => ({ ...prevState, [name]: value }));
     };
 
-    return { handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
+    return { setSubscriptionInfo,handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
 }
 
 

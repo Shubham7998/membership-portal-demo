@@ -125,7 +125,7 @@ export default function DiscountUtility(id: number) {
         handleSubmit, discoutInfo,
         onInputChangeDiscount, errors,
         snackbarOpen, handleSnackbarClose,
-         handleSelectBooleanChange,
+         handleSelectBooleanChange,setDiscountInfo,
         snackbarSeverity, snackbarMessage
     }
 }

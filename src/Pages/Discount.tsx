@@ -5,17 +5,24 @@ import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
 import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import OnChangeFields from '../Generics/OnChangeFields';
 
 export default function Discount() {
     const { id = 0 } = useParams();
 
     const {
-        handleNumberChange, handleSelectChange,
-        handleSubmit, discoutInfo,
-        onInputChangeDiscount, errors,
-        snackbarOpen,
+        handleSubmit, discoutInfo, errors,
+        snackbarOpen, setDiscountInfo,
         handleSnackbarClose,
         snackbarSeverity, snackbarMessage, handleSelectBooleanChange } = DiscountUtility(+id);
+
+    const {
+        onSelectFieldChange,
+        onDateFieldChange,
+        onTextFieldChange,
+        onNumberFieldChange
+    } = OnChangeFields();
+
 
     return (
         <div>
@@ -36,7 +43,7 @@ export default function Discount() {
                                     autoComplete="off"
                                     inputProps={{ maxLength: 100 }}
                                     value={discoutInfo.discountCode}
-                                    onChange={onInputChangeDiscount}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setDiscountInfo)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "discountCode"
@@ -64,7 +71,7 @@ export default function Discount() {
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
                                     value={discoutInfo.discountAmount}
-                                    onChange={handleNumberChange}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChange(event, setDiscountInfo)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "discountAmount"
@@ -92,7 +99,6 @@ export default function Discount() {
                                     >
                                         <MenuItem value={"true"}>Yes</MenuItem>
                                         <MenuItem value={"false"}>No</MenuItem>
-
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -103,7 +109,7 @@ export default function Discount() {
 
                             </Grid>
                         </Grid>
-                         {/* <Snackbar
+                        {/* <Snackbar
                             open={snackbarOpen}
                             autoHideDuration={6000}
                             onClose={handleSnackbarClose}

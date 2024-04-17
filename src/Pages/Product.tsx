@@ -4,12 +4,14 @@ import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import OnChangeFields from '../Generics/OnChangeFields';
 
 export default function Product() {
 
     const { id = 0 } = useParams();
 
     const {
+        setProductInfo,
         productInfo,
         errors,
         onInputChangeproduct,
@@ -20,6 +22,13 @@ export default function Product() {
         snackbarSeverity,
         handleSubmit,
     } = ProductUtility(+id);
+
+    const {
+        onSelectFieldChange,
+        onDateFieldChange,
+        onTextFieldChange,
+        onNumberFieldChange
+    } =  OnChangeFields();
 
     return (
         <div>
@@ -40,7 +49,7 @@ export default function Product() {
                                     autoComplete="off"
                                     inputProps={{ maxLength: 100 }}
                                     value={productInfo.productName}
-                                    onChange={onInputChangeproduct}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setProductInfo)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "productName"
@@ -67,7 +76,7 @@ export default function Product() {
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
                                     value={productInfo.price}
-                                    onChange={handleNumberChange}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChange(event, setProductInfo)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "price"

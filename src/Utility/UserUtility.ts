@@ -74,11 +74,6 @@ export function UserUtility(id: number) {
         }
     };
 
-    const handleSelectChange = (event: any) => {
-        const { name, value } = event.target;
-        setUserInfo(prev => ({ ...prev, [name]: value }));
-    };
-
     const isValidate = () => {
 
         if (userInfo.firstName.trim() === "") {
@@ -142,7 +137,6 @@ export function UserUtility(id: number) {
                 parameterName: "contactNumber",
                 errorMessage: "Please enter a mobile number"
             })
-            console.log("Contact Number")
         }
         else if (userInfo.contactNumber.length != 10) {
             newErrors.push({
@@ -213,5 +207,5 @@ export function UserUtility(id: number) {
         }
     }
 
-    return { setUserInfo,userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    return { setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity  };
 }

@@ -123,6 +123,6 @@ export default function TaxUtility(id: number) {
             setErrors(newErrors);
         }
     }
-    return { taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    return { setTaxInfo,taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 
 }

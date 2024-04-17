@@ -15,7 +15,7 @@ export default function ProductUtility(id: number) {
         price: 0,
     };
 
-    const [productInfo, SetProductInfo] = useState<ProductModel>(initialValue);
+    const [productInfo, setProductInfo] = useState<ProductModel>(initialValue);
 
     const newErrors: ParameterErrorModel[] = [];
 
@@ -32,7 +32,7 @@ export default function ProductUtility(id: number) {
             if (id > 0) {
                 const response = await GetProductByIdAsync(id);
                 if (response.data) {
-                    SetProductInfo(response.data);
+                    setProductInfo(response.data);
                 }
             }
         } catch (error) {
@@ -44,7 +44,7 @@ export default function ProductUtility(id: number) {
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         if (/^\d*$/.test(value)) {
-            SetProductInfo(prevState => ({ ...prevState, [name]: value }));
+            setProductInfo(prevState => ({ ...prevState, [name]: value }));
         }
         if (errors.some(error => error.parameterName === name)) {
             const updatedErrors = errors.filter(error => error.parameterName !== name);
@@ -66,7 +66,7 @@ export default function ProductUtility(id: number) {
                     await CreateProductAsync(productInfo);
                     displaySnackbar("Product added successfully","success");
                 }
-                SetProductInfo(initialValue);
+                setProductInfo(initialValue);
             } catch (error) {
                 console.error("Error  in saving Product information:", error);
             }
@@ -107,7 +107,7 @@ export default function ProductUtility(id: number) {
     const onInputChangeproduct = (event: React.ChangeEvent<HTMLInputElement>) => {
         var name = event.currentTarget.name;
         var newValue = event.currentTarget.value;
-        SetProductInfo((prev) => ({ ...prev, [name]: newValue }));
+        setProductInfo((prev) => ({ ...prev, [name]: newValue }));
 
         setErrors((prevErrors) => {
             const newErrors = prevErrors.filter((error) => error.parameterName !== name);
@@ -117,7 +117,7 @@ export default function ProductUtility(id: number) {
 
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.currentTarget;
-        SetProductInfo(prev => ({ ...prev, [name]: value }));
+        setProductInfo(prev => ({ ...prev, [name]: value }));
         if (errors.some(error => error.parameterName === name)) {
             const updatedErrors = errors.filter(error => error.parameterName !== name);
             setErrors(updatedErrors);
@@ -126,6 +126,7 @@ export default function ProductUtility(id: number) {
 
 
     return {
+        setProductInfo,
         productInfo,
         onInputChangeproduct,
         handelShowList,

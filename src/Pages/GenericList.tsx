@@ -60,12 +60,6 @@ interface GenericListProps {
 }
 export default function GenericList({ data, handleDelete, handleEdit, dataHeader, isSearchMode }: GenericListProps) {
 
-    ShowAlert();
-    function ShowAlert() {
-        console.log("data")
-        console.log(data)
-    }
-
     return (
         <>
             <TableContainer component={Paper}>

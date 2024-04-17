@@ -8,13 +8,19 @@ import {
 } from "@mui/material";
 import SideNav from './HelpingPages/SideNav';
 import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import OnChangeFields from '../Generics/OnChangeFields';
 
 export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
-
+    const { errors, handleSubmit,  subscriberInfo,  genders, setSubscriberInfo,  snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const {
+        onSelectFieldChange,
+        onDateFieldChange,
+        onTextFieldChange,
+        onNumberFieldChange
+    } =  OnChangeFields();
     return (
         <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
@@ -31,7 +37,7 @@ export default function Subscriber() {
                                     variant="outlined"
                                     size="small" // Set size to "small"
                                     name="firstName"
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriberInfo)}
                                     value={subscriberInfo.firstName}
                                     required
                                     helperText={
@@ -55,7 +61,7 @@ export default function Subscriber() {
                                     size="small"
                                     name='lastName'
                                     required
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriberInfo)}
                                     value={subscriberInfo.lastName}
                                     helperText={
                                         errors.find(
@@ -80,8 +86,8 @@ export default function Subscriber() {
                                         label="Gender"
                                         name='genderId'
                                         required
-                                        onChange={handleChange}
-                                    >
+                                        onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriberInfo)}
+                                        >
                                         <MenuItem value={-1}>---Select Gender---</MenuItem>
                                         {genders?.map((gender, key) => (
                                             <MenuItem key={gender.id} value={gender.id}>{gender.genderName}</MenuItem>
@@ -97,7 +103,7 @@ export default function Subscriber() {
                                     variant="outlined"
                                     size="small"
                                     name='email'
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriberInfo)}
                                     value={subscriberInfo.email}
                                     required
                                     helperText={
@@ -120,7 +126,7 @@ export default function Subscriber() {
                                     variant="outlined"
                                     size="small"
                                     name='contactNumber'
-                                    onChange={(e) => handleNumberChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChange(event, setSubscriberInfo)}
                                     value={subscriberInfo.contactNumber}
                                     required
                                     InputProps={{

@@ -17,11 +17,8 @@ import OnChangeFields from '../Generics/OnChangeFields';
 export default function User() {
 
     const { id = 0 } = useParams();
-    const {setUserInfo, userInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = UserUtility(+id);
-    const {
-        onSelectFieldChange,
-        onDateFieldChange,
-        onTextFieldChange,
+    const {setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = UserUtility(+id);
+    const {onTextFieldChange,
         onNumberFieldChange
     } =  OnChangeFields();
 
@@ -42,7 +39,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='firstName'
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
                                     value={userInfo.firstName}
                                     required
                                     helperText={
@@ -67,7 +64,7 @@ export default function User() {
                                     size="small"
                                     name='lastName'
                                     required
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
                                     value={userInfo.lastName}
                                     helperText={
                                         errors.find(
@@ -89,7 +86,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='email'
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
                                     value={userInfo.email}
                                     required
                                     helperText={
@@ -139,7 +136,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='password'
-                                    onChange={(e) => handleTextChange(e)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
                                     value={userInfo.password}
                                     required
                                     helperText={errors.find(

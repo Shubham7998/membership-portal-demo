@@ -6,12 +6,17 @@ import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
 import TaxUtility from '../Utility/TaxUtility';
 import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import OnChangeFields from '../Generics/OnChangeFields';
 export default function Tax() {
     const { id = 0 } = useParams();
 
 
-    const { taxInfo,  handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
+    const { taxInfo, handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
         = TaxUtility(+id);
+
+    const { 
+        onNumberFieldChange
+    } = OnChangeFields();
 
     return (
         <div>
@@ -44,10 +49,8 @@ export default function Tax() {
                                             (error) => error.parameterName === "cgst"
                                         )
                                     }
-
                                 />
                             </Grid>
-
                             <Grid item xs={12} >
                                 <TextField
                                     id="sgst"
