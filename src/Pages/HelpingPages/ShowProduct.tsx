@@ -54,23 +54,37 @@ export default function ShowProduct() {
     <>
       <Box height={30} />
       <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
-                <SideNav />
-                <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
-                    <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            color="primary"
-                            onClick={() => navigate("/product")}
-                            style={{ alignItems: "right" }}
-                        >
-                            Add
-                            <AddCircleOutlineRoundedIcon />
-                        </Button>
-                    </div>
+        <SideNav />
+        <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
+          <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+            <Button
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/product")}
+              style={{ alignItems: "right" }}
+            >
+              Add
+              <AddCircleOutlineRoundedIcon />
+            </Button>
+          </div>
+
           <GenericList data={productInfo} dataHeader={productDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
 
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+            <ButtonGroup color="primary" aria-label="navigation">
+              <Button onClick={(e) => prevPage(e)} disabled={prevPageDisabled()} sx={{
+              }}>Prev</Button>
+
+              {
+                numbers.map((n, i) => (
+                  <Button key={i} onClick={(e) => changeCurrentPage(n, e)}>{n}</Button>
+                ))
+              }
+              <Button onClick={(e) => nextPage(e)} disabled={nextPageDisabled()}>Next</Button>
+            </ButtonGroup>
+          </div>
         </Box>
       </Box>
     </>

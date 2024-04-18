@@ -138,7 +138,8 @@ export default function ProductUtility(id: number) {
         handleSnackbarClose,
         snackbarMessage,
         snackbarSeverity,
-        errors,handleSubmit
+        errors,handleSubmit,
+        navigate
     };
 }
 

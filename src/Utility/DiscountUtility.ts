@@ -122,7 +122,7 @@ export default function DiscountUtility(id: number) {
         return newErrors.length === 0;
     };
 
-    return {
+    return {navigate,
         handleNumberChange, handleSelectChange,
         handleSubmit, discoutInfo,
         onInputChangeDiscount, errors,

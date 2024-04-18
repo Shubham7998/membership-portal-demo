@@ -72,6 +72,18 @@ export default function SubscriptionUtility(id: number) {
         taxAmount: 0,
         finalAmount: 0
     }
+    // Assuming startDate is your starting date and daysToAdd is the number of days you want to add
+    function addDays(startDate: Date, daysToAdd: number): Date {
+        const endDate = new Date(startDate.getTime());
+        endDate.setDate(startDate.getDate() + daysToAdd);
+        return endDate;
+    }
+
+    // Example usage:
+    const startDate = new Date(); // Your starting date
+    const daysToAdd = 7; // Number of days to add
+    const expiryDate = addDays(startDate, daysToAdd);
+    console.log(expiryDate);
 
     const [subscriptionInfo, setSubscriptionInfo] = useState<SubscriptionModel>(initialValueSubscription)
     const navigate = useNavigate();
@@ -115,12 +127,30 @@ export default function SubscriptionUtility(id: number) {
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.currentTarget;
         setSubscriptionInfo(prev => ({ ...prev, [name]: value }));
+
+        if(name === "startDate"){
+
+            const date = new Date(value); // Assuming value is a valid date string
+            let startDate: Date = new Date();
+            startDate.setDate(date.getDate() + 20); // Add 20 days to the provided date
+            // alert(startDate)
+            // alert(date);
+            console.log(startDate)
+            console.log(date)
+            const daysToAdd = 7; // Number of days to add
+            const expiryDate = addDays(startDate, daysToAdd);
+            // alert(expiryDate);
+            console.log(expiryDate);
+            
+            subscriptionInfo.expiryDate = expiryDate;            
+        }
     }
+    
 
     const handleSubmit = async () => {
         alert(JSON.stringify(subscriptionInfo))
         if (id > 0) {
-            const result = await UpdateSubscriptionAsync(id,subscriptionInfo);
+            const result = await UpdateSubscriptionAsync(id, subscriptionInfo);
             setSubscriptionInfo(result.data);
             console.log(result)
         } else {
@@ -139,7 +169,7 @@ export default function SubscriptionUtility(id: number) {
         setSubscriptionInfo((prevState) => ({ ...prevState, [name]: value }));
     };
 
-    return { setSubscriptionInfo,handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
+    return { setSubscriptionInfo, handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
 }
 
 

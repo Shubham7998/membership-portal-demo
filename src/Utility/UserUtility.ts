@@ -207,5 +207,5 @@ export function UserUtility(id: number) {
         }
     }
 
-    return { setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity  };
+    return { navigate,setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity  };
 }

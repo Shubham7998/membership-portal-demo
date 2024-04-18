@@ -30,7 +30,7 @@ export default function ShowUser() {
                             size="small"
                             variant="contained"
                             color="primary"
-                            onClick={() => navigate("/subscriber")}
+                            onClick={() => navigate("/user")}
                             style={{ alignItems: "right" }}
                         >
                             Add

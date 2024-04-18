@@ -39,16 +39,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 2,
     },
 }));
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
+        whiteSpace: 'pre-line', // Enable text wrapping
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
     },
 }));
+
+// const StyledTableCell = styled(TableCell)(({ theme }) => ({
+//     [`&.${tableCellClasses.head}`]: {
+//         backgroundColor: theme.palette.common.black,
+//         color: theme.palette.common.white,
+//     },
+//     [`&.${tableCellClasses.body}`]: {
+//         fontSize: 14,
+//     },
+// }));
 
 
 interface GenericListProps {
@@ -63,10 +73,10 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
     return (
         <>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <Table sx={{ minWidth: 700 }}  aria-label="customized table">
                     <caption>A basic table example with a caption</caption>
-                    <TableHead>
-                        <TableRow>
+                    <TableHead >
+                        <TableRow >
                             {dataHeader.map((data, index) => (
                                 <StyledTableCell key={index} align="left">{data}</StyledTableCell>
                             ))}
@@ -83,7 +93,7 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                                     {++index}
                                 </StyledTableCell>
                                 {Object.entries(item).map(([key, value]: any, idx) => (
-                                    key !== "id" &&
+                                    key !== "id" && key != "productId" && key != "discountId" && key != 'priceAfterDiscount' && key != 'taxId' &&
                                     <StyledTableCell key={idx} align="left">
                                         {value}
                                     </StyledTableCell>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from '@mui/material'
+import { Alert, Button, CardActions, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from '@mui/material'
 import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
@@ -13,7 +13,7 @@ export default function Discount() {
     const {
         handleSubmit, discoutInfo, errors,
         snackbarOpen, setDiscountInfo,
-        handleSnackbarClose,
+        handleSnackbarClose,navigate,
         snackbarSeverity, snackbarMessage, handleSelectBooleanChange } = DiscountUtility(+id);
 
     const {
@@ -103,9 +103,25 @@ export default function Discount() {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={5}>
-                                <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
-                                    Submit
-                                </Button>
+                                <CardActions style={{ justifyContent: "center", padding: 5 }}>
+
+                                    <Button onClick={handleSubmit}
+                                        variant="contained"
+                                        color="primary"
+                                        style={{  marginRight: 12 }}
+                                        fullWidth
+                                    >
+                                        Submit
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => navigate("/showdiscounts")}
+                                        fullWidth
+                                    >
+                                        List
+                                    </Button>
+                                </CardActions>
 
                             </Grid>
                         </Grid>

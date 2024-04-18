@@ -17,8 +17,45 @@ export default function TaxUtility(id: number) {
     const navigate = useNavigate();
 
     const [taxInfo, setTaxInfo] = useState<TaxModel>(initialValue);
-
     const newErrors: ParameterErrorModel[] = [];
+    const States: string[] = [
+        'Andhra Pradesh',
+        'Arunachal Pradesh',
+        'Assam',
+        'Bihar',
+        'Chhattisgarh',
+        'Goa',
+        'Gujarat',
+        'Haryana',
+        'Himachal Pradesh',
+        'Jharkhand',
+        'Karnataka',
+        'Kerala',
+        'Madhya Pradesh',
+        'Maharashtra',
+        'Manipur',
+        'Meghalaya',
+        'Mizoram',
+        'Nagaland',
+        'Odisha',
+        'Punjab',
+        'Rajasthan',
+        'Sikkim',
+        'Tamil Nadu',
+        'Telangana',
+        'Tripura',
+        'Uttar Pradesh',
+        'Uttarakhand',
+        'West Bengal',
+        'Andaman and Nicobar Islands',
+        'Chandigarh',
+        'Dadra and Nagar Haveli and Daman and Diu',
+        'Delhi',
+        'Lakshadweep',
+        'Puducherry'
+    ];
+    const [indianStates, setIndianStates] = useState([""]);
+
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
@@ -28,17 +65,19 @@ export default function TaxUtility(id: number) {
     useEffect(() => {
         fetchData();
     }, [])
-
     const fetchData = async () => {
         if (id > 0) {
             try {
                 const result = await GetTaxByIdAsync(id);
                 setTaxInfo(result.data)
+                console.log(result)
+                console.log(taxInfo)
                 console.log("result.errorCode = " + result.errorCode)
                 if (result.errorCode == "200") {
                     console.log("result.errorCode = " + result.errorCode)
                     if (result != null) {
                         setTaxInfo(result.data);
+                        console.log("tax info")
                         console.log(result.data);
                     }
                 }
@@ -46,6 +85,13 @@ export default function TaxUtility(id: number) {
                 console.log(error);
             }
         } else {
+            const result = await GetTaxAsync();
+            console.log(result.data)
+            const taxStates = result.data.map((item: { stateName: any; }) => item.stateName);
+            const states : any = States.filter(state => !taxStates.includes(state));
+            setIndianStates(states);
+            console.log("Indian Stated")
+            console.log(indianStates)
             setTaxInfo(initialValue);
         }
     }
@@ -77,6 +123,12 @@ export default function TaxUtility(id: number) {
 
     const isValidate = () => {
 
+        if(taxInfo.stateName === ""){
+            newErrors.push({
+                parameterName: "stateName",
+                errorMessage: "Please select state name"
+            })
+        }
         if(taxInfo.cgst === 0 || taxInfo.cgst.toString().trim() === ""){
             newErrors.push({
                 parameterName: "cgst",
@@ -96,6 +148,7 @@ export default function TaxUtility(id: number) {
     };
 
     async function handleSubmit() {
+        console.log(taxInfo)
         if (isValidate()) {
             try {
                 if (id > 0) {
@@ -124,6 +177,6 @@ export default function TaxUtility(id: number) {
             setErrors(newErrors);
         }
     }
-    return { setTaxInfo,taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    return { navigate,indianStates,setTaxInfo,taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 
 }
