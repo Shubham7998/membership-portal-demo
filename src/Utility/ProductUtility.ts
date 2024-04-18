@@ -66,7 +66,9 @@ export default function ProductUtility(id: number) {
                     await CreateProductAsync(productInfo);
                     displaySnackbar("Product added successfully","success");
                 }
-                setProductInfo(initialValue);
+                setTimeout(() => {
+                    navigate(`/showproducts`)
+                },1000)
             } catch (error) {
                 console.error("Error  in saving Product information:", error);
             }

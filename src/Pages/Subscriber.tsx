@@ -9,18 +9,19 @@ import {
 import SideNav from './HelpingPages/SideNav';
 import GenericSnackbar from '../Generics/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
+import CustomHelperText from '../Generics/Components/CustomHelperText';
 
 export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors, handleSubmit,  subscriberInfo,  genders, setSubscriberInfo,  snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const { errors, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
     const {
         onSelectFieldChange,
         onDateFieldChange,
         onTextFieldChange,
         onNumberFieldChange
-    } =  OnChangeFields();
+    } = OnChangeFields();
     return (
         <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
@@ -86,13 +87,22 @@ export default function Subscriber() {
                                         label="Gender"
                                         name='genderId'
                                         required
+                                        
+                                        error={
+                                            !!errors.find(
+                                                (error) => error.parameterName === "genderId"
+                                            )
+                                        }
                                         onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriberInfo)}
-                                        >
+                                    >
                                         <MenuItem value={-1}>---Select Gender---</MenuItem>
                                         {genders?.map((gender, key) => (
                                             <MenuItem key={gender.id} value={gender.id}>{gender.genderName}</MenuItem>
                                         ))}
                                     </Select>
+                                    {errors.find(error => error.parameterName === "genderId") && (
+                                        <CustomHelperText children={"Please select gender"}/>                                    
+                                    )}
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>

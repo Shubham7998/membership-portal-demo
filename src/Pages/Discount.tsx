@@ -51,7 +51,7 @@ export default function Discount() {
                                     }
                                     error={
                                         !!errors.find(
-                                            (error) => error.parameterName === "Discount"
+                                            (error) => error.parameterName === "discountCode"
                                         )
                                     }
 

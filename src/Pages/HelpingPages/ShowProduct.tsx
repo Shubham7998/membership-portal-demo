@@ -54,118 +54,23 @@ export default function ShowProduct() {
     <>
       <Box height={30} />
       <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
-        <SideNav />
-        <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
-          <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
-
-            <Grid item xs={12} sx={{ marginRight: 5, marginLeft : 10 }}>
-              <FormControl fullWidth >
-                <InputLabel id="productName">Product Name</InputLabel>
-                <Select
-                  style={{ height: 40 }}
-                  labelId="productName"
-                  id="productName"
-                  value={productInfoSearch.productName} 
-                  label="Product Name"
-                  name='productName'
-                  required
-                  onChange={handleSelectChange}
-                  defaultValue='0'
-                >
-                  <MenuItem value={'0'} >---Select Product Name---</MenuItem>
-                  {productInfo?.map((product) => (
-                    <MenuItem key={product.id} value={product.productName}>{product.productName}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sx={{ marginRight: 5 }}>
-              <FormControl fullWidth >
-                <InputLabel id="price">Product Price</InputLabel>
-                <Select
-                  style={{ height: 40 }}
-                  labelId="price"
-                  id="price"
-                  value={productInfoSearch.price.toString()}
-                  label="Product Price"
-                  name='price'
-                  required
-                  onChange={handleSelectChange}
-                >
-                  <MenuItem value={'0'}>---Select Product Price---</MenuItem>
-                  {productInfo?.map((product, key) => (
-                    <MenuItem key={product.id} value={product.price}>{product.price}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sx={{ marginRight: 5 }}>
-              <Button size="small"
-                variant="contained"
-                color="primary"
-                sx={{ padding: 1 }}
-              ><SearchIcon /> Search</Button>
-            </Grid>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', flexGrow: 1 }}>
-
-              <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                onClick={() => navigate("/product")}
-                style={{ alignItems: "right" }}
-              >
-                Add <AddCircleOutlineRoundedIcon />
-              </Button>
-            </Box>
-
-          </div> */}
-          {/* <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Sr no</StyledTableCell>
-                  <StyledTableCell align="center">Product Name</StyledTableCell>
-                  <StyledTableCell align="center">Product Price</StyledTableCell>
-                  <StyledTableCell align="center">Edit</StyledTableCell>
-                  <StyledTableCell align="center">Delete</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-
-                {productInfo?.map((data, index) => (
-                  <StyledTableRow key={index}>
-                    <StyledTableCell align="center">{data.id}</StyledTableCell>
-                    <StyledTableCell align="center">{data.productName}</StyledTableCell>
-                    <StyledTableCell align="center">{data.price}</StyledTableCell>
-                    <StyledTableCell align="center" onClick={() => handleEdit(data.id)}><EditIcon color="primary" sx={{ cursor: 'pointer', alignItems: 'left' }} /></StyledTableCell>
-                    <StyledTableCell align="center" onClick={() => handleDelete(data.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer> */}
+                <SideNav />
+                <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
+                    <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+                        <Button
+                            size="small"
+                            variant="contained"
+                            color="primary"
+                            onClick={() => navigate("/product")}
+                            style={{ alignItems: "right" }}
+                        >
+                            Add
+                            <AddCircleOutlineRoundedIcon />
+                        </Button>
+                    </div>
           <GenericList data={productInfo} dataHeader={productDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
 
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-            <ButtonGroup color="primary" aria-label="navigation">
-              <Button onClick={(e) => prevPage(e)} disabled={prevPageDisabled()} sx={{
-                // '&:disabled': {
-                //   backgroundColor: 'grey',
-                //   color: 'primary',
-                //   // border : 1 
-                // },
-              }}>Prev</Button>
-
-              {
-                numbers.map((n, i) => (
-                  <Button key={i} onClick={(e) => changeCurrentPage(n, e)}>{n}</Button>
-                ))
-              }
-              <Button onClick={(e) => nextPage(e)} disabled={nextPageDisabled()}>Next</Button>
-            </ButtonGroup>
-          </div> */}
         </Box>
       </Box>
     </>

@@ -22,8 +22,8 @@ const productDataHeader = ["Sr. No.", "Product Name", "Product Price"]
 const discountDataHeader = ["Sr. No.", "Discount Code", "Discount Amount", "IsDiscountInPercentage"]
 const taxDataHeader = ["Sr. No.", "SGST", "CGST", "Total Tax"]
 const genderDataHeader = ["Sr. No.", "Gender"];
-const subscriptionDataHeader = ["Sr. No.", "Subscriber Id","Product Id", "Product Name",
-    "Product Price", "Discount Id", "Discount Id", "Discount Amount", "Start Date", 
+const subscriptionDataHeader = ["Sr. No.", "Subscriber Id", "Product Id", "Product Name",
+    "Product Price", "Discount Id", "Discount Id", "Discount Amount", "Start Date",
     "Expiry Date", "Price After Discount", "Tax Id", "CGST%", "SGST%", "Total tax Percent",
     "Tax Amount", "Final Amount"
 ];
@@ -41,13 +41,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
 }));
 
 
@@ -64,7 +64,7 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
         <>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <caption>A basic table example with a caption</caption>
+                    <caption>A basic table example with a caption</caption>
                     <TableHead>
                         <TableRow>
                             {dataHeader.map((data, index) => (
@@ -77,12 +77,13 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                     </TableHead>
                     <TableBody>
                         {data?.map((item: any, index) => (
+
                             <StyledTableRow key={index}>
                                 <StyledTableCell align="left">
                                     {++index}
                                 </StyledTableCell>
-                                {Object.entries(item).map(([key, value] : any, idx) => (
-                                    key !== "id" && 
+                                {Object.entries(item).map(([key, value]: any, idx) => (
+                                    key !== "id" &&
                                     <StyledTableCell key={idx} align="left">
                                         {value}
                                     </StyledTableCell>

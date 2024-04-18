@@ -65,7 +65,7 @@ export const UpdateProductAsync = async (
     };
   
     try {
-      const response = await axios.delete(`${API_URL}/product/${id}`);
+      const response = await axios.delete(`${API_URL}product/${id}`);
       result.data = response.data;
       result.errorCode = response.status + "";
     } catch (error) {

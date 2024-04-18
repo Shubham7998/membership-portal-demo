@@ -41,7 +41,7 @@ export default function ShowDiscountUtility() {
         }
     }
 
-    return { handleDelete, discountInfo, handleEdit }
+    return { handleDelete, discountInfo, handleEdit,navigate }
 }
 
 
