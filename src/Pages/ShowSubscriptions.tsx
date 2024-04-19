@@ -30,10 +30,10 @@ export default function ShowSubscriptions() {
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscription List</h1>
                     <AddButton path={"/subscription"} />
-                    {subscriptionInfo === null ?
+                    {/* {subscriptionInfo === null ?
                         <GenericList data={subscriptionInfo} dataHeader={subscriptionDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
                         : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
-                    }
+                    } */}
                 </Box>
             </Box>
         </>

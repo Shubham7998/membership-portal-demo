@@ -20,7 +20,7 @@ export default function ShowTax() {
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Tax List</h1>
                     <AddButton path={"/tax"} />
-                    <GenericList data={taxInfo} dataHeader={taxDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+                    {/* <GenericList data={taxInfo} dataHeader={taxDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} /> */}
                 </Box>
             </Box>
         </>

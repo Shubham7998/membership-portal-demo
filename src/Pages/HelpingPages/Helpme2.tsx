@@ -18,7 +18,7 @@ import { UserModel } from '../../Models/UserModel';
 
 
 const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
-const productDataHeader = [ "Product Name", "Product Price"]
+const productDataHeader = ["Product Name", "Product Price"]
 
 
 const handleButtons = ["Edit", "Delete"];
@@ -49,21 +49,20 @@ interface GenericListProps {
     handleEdit: (id: number) => void;
     dataHeader: string[],
     isSearchMode: boolean,
-    tableName : string[],
-    handleSorting : (tableName : string, sortOrder : string) => void
+    tableName: string[],
+    handleSorting: (tableName: string, sortOrder: string) => void
 }
 
 
-export default function GenericList2({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName,handleSorting}: GenericListProps) {
+export default function GenericList2({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName, handleSorting }: GenericListProps) {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-    
-    function handleSort(data : string): void {
+    function handleSort(data: string): void {
         const normalizedColumnName = data.toLowerCase().replace(/\s+/g, '');
 
-        console.log( normalizedColumnName);
+        console.log(normalizedColumnName);
         setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-        handleSorting( data,sortOrder); 
+        handleSorting(data, sortOrder);
     }
 
     return (
@@ -73,9 +72,9 @@ export default function GenericList2({ data, handleDelete, handleEdit, dataHeade
                     <caption>A basic table example with a caption</caption>
                     <TableHead >
                         <TableRow >
-                        <StyledTableCell align="left">Sr No</StyledTableCell>
+                            <StyledTableCell align="left">Sr No</StyledTableCell>
                             {dataHeader.map((data, index) => (
-                                    <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left">{data}<span>{ sortOrder ==='asc' ? ' ▲' : ' ▼'}</span></StyledTableCell> 
+                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left">{data}<span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
                             ))}
                             {!isSearchMode ? handleButtons.map((btn, index) => (
                                 <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
@@ -84,15 +83,14 @@ export default function GenericList2({ data, handleDelete, handleEdit, dataHeade
                     </TableHead>
                     <TableBody>
                         {data?.map((item: any, index) => (
-
                             <StyledTableRow key={index}>
                                 <StyledTableCell align="left">
                                     {++index}
                                 </StyledTableCell>
                                 {Object.entries(item).map(([key, value]: any, idx) => (
-                                    key !== "id" && key != "productId" && 
+                                    key !== "id" && key != "productId" &&
                                     key != "discountId" && key != 'priceAfterDiscount'
-                                     && key != 'taxId' && key != 'genderId' &&
+                                    && key != 'taxId' && key != 'genderId' &&
                                     <StyledTableCell key={idx} align="left">
                                         {value}
                                     </StyledTableCell>

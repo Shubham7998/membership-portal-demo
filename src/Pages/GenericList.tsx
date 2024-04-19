@@ -48,21 +48,21 @@ interface GenericListProps {
     handleDelete: (id: number) => void;
     handleEdit: (id: number) => void;
     dataHeader: string[],
-    isSearchMode: boolean
+    isSearchMode: boolean,
+    tableName: string[],
+    handleSorting: (tableName: string, sortOrder: string) => void
 }
 
 
-export default function GenericList({ data, handleDelete, handleEdit, dataHeader, isSearchMode }: GenericListProps) {
+export default function GenericList({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName, handleSorting }: GenericListProps) {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-    console.log(data[0]);
-    
-    function handleSort(index : Number, data : string): void {
+    function handleSort(data: string): void {
         const normalizedColumnName = data.toLowerCase().replace(/\s+/g, '');
 
-        console.log(index, normalizedColumnName);
+        console.log(normalizedColumnName);
         setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-        
+        handleSorting(data, sortOrder);
     }
 
     return (
@@ -72,9 +72,9 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                     <caption>A basic table example with a caption</caption>
                     <TableHead >
                         <TableRow >
-                        <StyledTableCell align="left">Sr No</StyledTableCell>
+                            <StyledTableCell align="left">Sr No</StyledTableCell>
                             {dataHeader.map((data, index) => (
-                                <StyledTableCell onClick={() => handleSort(++index, data)} key={index} align="left">{data}{index}<span>{ sortOrder ==='asc' ? ' ▲' : ' ▼'}</span></StyledTableCell> 
+                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left">{data}<span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
                             ))}
                             {!isSearchMode ? handleButtons.map((btn, index) => (
                                 <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
@@ -83,15 +83,14 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                     </TableHead>
                     <TableBody>
                         {data?.map((item: any, index) => (
-
                             <StyledTableRow key={index}>
                                 <StyledTableCell align="left">
                                     {++index}
                                 </StyledTableCell>
                                 {Object.entries(item).map(([key, value]: any, idx) => (
-                                    key !== "id" && key != "productId" && 
+                                    key !== "id" && key != "productId" &&
                                     key != "discountId" && key != 'priceAfterDiscount'
-                                     && key != 'taxId' && key != 'genderId' &&
+                                    && key != 'taxId' && key != 'genderId' &&
                                     <StyledTableCell key={idx} align="left">
                                         {value}
                                     </StyledTableCell>
@@ -114,15 +113,3 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
         </>
     );
 }
-
-
-// Sort in descending order of discountAmount
-// const sortedData = [...data].sort((a, b) => {
-//     return b.discountAmount - a.discountAmount;
-// });
-
-// // Assuming 'data' is your array of objects
-// const sortedData = [...data].sort((a, b) => {
-//     // Compare discountAmount property of objects 'a' and 'b'
-//     return a.discountAmount - b.discountAmount;
-// });

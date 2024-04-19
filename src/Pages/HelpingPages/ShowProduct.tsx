@@ -45,7 +45,7 @@ export default function ShowProduct() {
         <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
           <AddButton path={"/product"} />
-          <GenericList data={productInfo} dataHeader={productDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+          {/* <GenericList data={productInfo} dataHeader={productDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} /> */}
           <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
         </Box>
       </Box>
