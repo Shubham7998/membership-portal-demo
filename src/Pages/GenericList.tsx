@@ -54,7 +54,7 @@ interface GenericListProps {
 }
 
 
-export default function GenericList({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName, handleSorting }: GenericListProps) {
+export default function GenericList2({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName, handleSorting }: GenericListProps) {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     function handleSort(data: string): void {

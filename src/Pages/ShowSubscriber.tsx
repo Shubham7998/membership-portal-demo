@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import SideNav from './HelpingPages/SideNav';
 import Navbar from './HelpingPages/Navbar';
 import { UserModel } from '../Models/UserModel';
@@ -26,42 +26,17 @@ import GenericList2 from './HelpingPages/Helpme2';
 import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
 import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
 import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
-
-const StyledTableHead = styled(TableHead)(({ theme }) => ({
-    backgroundColor: '#2196f3', // Blue color
-    color: theme.palette.common.white,
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+import SearchComponent from '../Generics/Components/SearchComponents/SearchComponent';
 
 
 export default function ShowSubscriber() {
 
-    const {handleSorting,handleSnackbarClose,
-        snackbarMessage,snackbarOpen,
-        snackbarSeverity, navigate, handleDelete, subscriberInfo, handleEdit,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  } = ShowSubscriberUtility();
+    const { handleSorting, handleSnackbarClose,
+        snackbarMessage, snackbarOpen,
+        snackbarSeverity, navigate, handleDelete, subscriberInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, searchSubscriberInfo } = ShowSubscriberUtility();
 
-    const subscriberDataHeader = [ "First Name", "Last Name",  "Contact No.","Email", "Gender"]
-    const sortColumn = ["firstName", "lastName","contactNumber","email","genderId",];
+    const subscriberDataHeader = ["First Name", "Last Name", "Contact No.", "Email", "Gender"]
+    const sortColumn = ["firstName", "lastName", "contactNumber", "email", "genderId",];
 
     return (
         <>
@@ -71,7 +46,38 @@ export default function ShowSubscriber() {
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
                     <AddButton path={"/subscriber"} />
-                    <GenericList  data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting}/>
+
+                    <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+
+
+                        {/* Second version with searchSubscriberInfo */}
+                        {subscriberDataHeader.map((header, index) => (
+                            <TextField
+                                key={index}
+                                select
+                                label={header}
+                                // value={filterValues[index]}
+                                // onChange={(e) => handleFilterChange(index, e.target.value)}
+                                variant="outlined"
+                                style={{ minWidth: '150px' }}
+                            >
+                                <MenuItem value="">All</MenuItem>
+                                {searchSubscriberInfo.map((option, idx) => (
+                                    <MenuItem key={idx} value={option.id}>
+                                        {option.lastName}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        ))}
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+
+                        <SearchComponent />
+                        <SearchComponent />
+                        <SearchComponent />
+                    </Box>
+
+                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
                     {/* <GenericSnackbar
                             open={snackbarOpen}

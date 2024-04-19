@@ -17,6 +17,8 @@ export default function ShowSubscriberUtility() {
         genderName: ''
     }
 
+    const [searchSubscriberInfo, setSearchSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
+
     const navigate = useNavigate();
 
     const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
@@ -35,6 +37,7 @@ export default function ShowSubscriberUtility() {
         if(result != null){
             setSubscriberInfo(result.dataArray);
             setTotalPages(result.totalPages);
+            setSearchSubscriberInfo(result.dataArray);
         }
     }
 
@@ -72,7 +75,7 @@ export default function ShowSubscriberUtility() {
     // }
 
     return {handleSorting, handleDelete, subscriberInfo, handleEdit ,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, snackbarOpen,
-        handleSnackbarClose,
+        handleSnackbarClose,searchSubscriberInfo,
         snackbarMessage,
         snackbarSeverity}
 
