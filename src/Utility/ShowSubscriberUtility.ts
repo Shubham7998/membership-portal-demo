@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { SubscriberModel } from '../Models/SubscriberModel';
-import { DeleteSubscriberByIdAsync, GetPaginatedAdvanceSubscriberAsync, GetSubscriberAsync, GetSubscriberSortedAsync } from '../Services/SubscriberService';
+import { DeleteSubscriberByIdAsync, GetPaginatedAdvanceSearchSortingSubscriberAsync, GetPaginatedAdvanceSubscriberAsync, GetSubscriberAsync, GetSubscriberSortedAsync } from '../Services/SubscriberService';
 import { useNavigate } from 'react-router-dom';
 import { handleSwirl } from '../Generics/Swirl';
 import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
 
 export default function ShowSubscriberUtility() {
     const initialValue: SubscriberModel = {
@@ -19,17 +20,19 @@ export default function ShowSubscriberUtility() {
     const navigate = useNavigate();
 
     const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
-    const recordsPerPage = 2;
-    const { setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);
+    const recordsPerPage = 5;
+    const { npage,setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);
+    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
 
     useEffect(() => {
         fetchData();
         console.log("use effect")
-    }, [])
+    }, [currentPage])
 
     async function fetchData() {
-        const result = await GetPaginatedAdvanceSubscriberAsync(currentPage,recordsPerPage,initialValue);
-        if(result){
+        const result = await GetPaginatedAdvanceSearchSortingSubscriberAsync(currentPage,recordsPerPage,"firstName","desc",initialValue);
+        
+        if(result != null){
             setSubscriberInfo(result.dataArray);
             setTotalPages(result.totalPages);
         }
@@ -50,16 +53,28 @@ export default function ShowSubscriberUtility() {
     }
 
     const handleSorting = async (columnName : string, sortOrder : string) => {
-        const result = await GetSubscriberSortedAsync(columnName, sortOrder);
+        // const result = await GetSubscriberSortedAsync(columnName, sortOrder);
+
+        const result = await GetPaginatedAdvanceSearchSortingSubscriberAsync(currentPage,recordsPerPage,columnName,sortOrder,initialValue);
 
         console.log("result")
         console.log(columnName)
-        if(result.data != null){
-            setSubscriberInfo(result.data);
+        if(result != null){
+            setSubscriberInfo(result.dataArray);
+            setTotalPages(result.totalPages);
         }
     }
 
-    return {handleSorting, handleDelete, subscriberInfo, handleEdit ,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, }
+    // if(currentPage == 1){
+    //     displaySnackbar("You are on first page \nPrevious is disabled","error");
+    // }else if(currentPage == npage){
+    //     displaySnackbar("You are on last page \nPrevious is disabled","error");
+    // }
+
+    return {handleSorting, handleDelete, subscriberInfo, handleEdit ,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, snackbarOpen,
+        handleSnackbarClose,
+        snackbarMessage,
+        snackbarSeverity}
 
 }
 

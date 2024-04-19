@@ -24,6 +24,8 @@ import GenericList from './GenericList';
 import AddButton from '../Generics/Components/Buttons/AddButton';
 import GenericList2 from './HelpingPages/Helpme2';
 import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -54,7 +56,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ShowSubscriber() {
 
-    const {handleSorting, navigate, handleDelete, subscriberInfo, handleEdit,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  } = ShowSubscriberUtility();
+    const {handleSorting,handleSnackbarClose,
+        snackbarMessage,snackbarOpen,
+        snackbarSeverity, navigate, handleDelete, subscriberInfo, handleEdit,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  } = ShowSubscriberUtility();
 
     const subscriberDataHeader = [ "First Name", "Last Name",  "Contact No.","Email", "Gender"]
     const sortColumn = ["firstName", "lastName","contactNumber","email","genderId",];
@@ -69,6 +73,12 @@ export default function ShowSubscriber() {
                     <AddButton path={"/subscriber"} />
                     <GenericList2  data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting}/>
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    {/* <GenericSnackbar
+                            open={snackbarOpen}
+                            onClose={handleSnackbarClose}
+                            severity={snackbarSeverity}
+                            message={snackbarMessage}
+                        /> */}
                 </Box>
             </Box>
 

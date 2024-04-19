@@ -37,5 +37,5 @@ export default function PaginationUtility(recordsPerPage : number) {
         setCurrentPage(id);
     }
 
-    return {setTotalPages,currentPage,changeCurrentPage,nextPage,prevPageDisabled,nextPageDisabled,prevPage,numbers}
+    return {npage,setTotalPages,currentPage,changeCurrentPage,nextPage,prevPageDisabled,nextPageDisabled,prevPage,numbers}
 }
