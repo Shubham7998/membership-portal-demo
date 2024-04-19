@@ -89,7 +89,9 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
                                     {++index}
                                 </StyledTableCell>
                                 {Object.entries(item).map(([key, value]: any, idx) => (
-                                    key !== "id" && key != "productId" && key != "discountId" && key != 'priceAfterDiscount' && key != 'taxId' &&
+                                    key !== "id" && key != "productId" && 
+                                    key != "discountId" && key != 'priceAfterDiscount'
+                                     && key != 'taxId' && key != 'genderId' &&
                                     <StyledTableCell key={idx} align="left">
                                         {value}
                                     </StyledTableCell>

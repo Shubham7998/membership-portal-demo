@@ -4,5 +4,6 @@ export interface SubscriberModel {
     lastName : string,
     contactNumber : string,
     email : string,
-    genderId : number
+    genderId : number,
+    genderName? : string
 }

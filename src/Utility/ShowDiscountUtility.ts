@@ -30,8 +30,10 @@ export default function ShowDiscountUtility() {
         // console.log(result);
 
         const result = await GetPaginatedAdvanceDiscountAsync(currentPage, recordsPerPage, initialValue);
-        setTotalPages(result.totalPages);
-        setDiscountInfo(result.dataArray);
+        if (result != null) {
+            setTotalPages(result.totalPages);
+            setDiscountInfo(result.dataArray);
+        }
 
         console.log(discountInfo)
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -8,14 +8,30 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { styled } from '@mui/material/styles';
+import { useState } from 'react';
+import { DiscountModel } from '../../Models/DiscountModel';
+import GenderModel from '../../Models/GenderModel';
+import { ProductModel } from '../../Models/ProductModel';
+import { SubscriberModel } from '../../Models/SubscriberModel';
+import { TaxModel } from '../../Models/TaxModel';
+import { UserModel } from '../../Models/UserModel';
+
+
+const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
+const productDataHeader = [ "Product Name", "Product Price"]
+
+
+const handleButtons = ["Edit", "Delete"];
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
     },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 2,
+    },
 }));
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -28,83 +44,74 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 interface GenericListProps {
-    data: any[];
+    data: UserModel[] | ProductModel[] | SubscriberModel[] | DiscountModel[] | TaxModel[] | GenderModel[];
     handleDelete: (id: number) => void;
     handleEdit: (id: number) => void;
-    dataHeader: string[];
-    isSearchMode: boolean;
+    dataHeader: string[],
+    isSearchMode: boolean,
+    tableName : string[],
+    handleSorting : (tableName : string, sortOrder : string) => void
 }
 
-export default function GenericList2({ data, handleDelete, handleEdit, dataHeader, isSearchMode }: GenericListProps) {
-    const [sortBy, setSortBy] = useState<string>('');
+
+export default function GenericList2({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName,handleSorting}: GenericListProps) {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-    const handleSort = (columnName: string) => {
-        if (sortBy === columnName) {
-            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-        } else {
-            setSortBy(columnName);
-            setSortOrder('asc');
-        }
-    };
+    
+    function handleSort(data : string): void {
+        const normalizedColumnName = data.toLowerCase().replace(/\s+/g, '');
 
-    const sortedData = [...data].sort((a, b) => {
-        if (sortBy) {
-            const aValue = a[sortBy];
-            const bValue = b[sortBy];
-
-            if (typeof aValue === 'string' && typeof bValue === 'string') {
-                return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-            } else {
-                return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-            }
-        }
-        return 0;
-    });
+        console.log( normalizedColumnName);
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        handleSorting( data,sortOrder); 
+    }
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        {dataHeader.map((column, index) => (
-                            <StyledTableCell key={index} align="left" onClick={() => handleSort(column)}>
-                                {column}
-                                {sortBy === column && (
-                                    <span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span>
-                                )}
-                            </StyledTableCell>
-                        ))}
-                        {!isSearchMode && (
-                            <>
-                                <StyledTableCell align="left">Edit</StyledTableCell>
-                                <StyledTableCell align="left">Delete</StyledTableCell>
-                            </>
-                        )}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {sortedData.map((item: any, index) => (
-                        <StyledTableRow key={index}>
-                            {dataHeader.map((column, idx) => (
-                                <StyledTableCell key={idx} align="left">
-                                    {item[column]}
-                                </StyledTableCell>
+        <>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    <caption>A basic table example with a caption</caption>
+                    <TableHead >
+                        <TableRow >
+                        <StyledTableCell align="left">Sr No</StyledTableCell>
+                            {dataHeader.map((data, index) => (
+                                    <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left">{data}<span>{ sortOrder ==='asc' ? ' ▲' : ' ▼'}</span></StyledTableCell> 
                             ))}
-                            {!isSearchMode && (
-                                <>
+                            {!isSearchMode ? handleButtons.map((btn, index) => (
+                                <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
+                            )) : ""}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {data?.map((item: any, index) => (
+
+                            <StyledTableRow key={index}>
+                                <StyledTableCell align="left">
+                                    {++index}
+                                </StyledTableCell>
+                                {Object.entries(item).map(([key, value]: any, idx) => (
+                                    key !== "id" && key != "productId" && 
+                                    key != "discountId" && key != 'priceAfterDiscount'
+                                     && key != 'taxId' && key != 'genderId' &&
+                                    <StyledTableCell key={idx} align="left">
+                                        {value}
+                                    </StyledTableCell>
+                                ))}
+                                {!isSearchMode && (
                                     <StyledTableCell align="left">
                                         <EditIcon onClick={() => handleEdit(item.id)} color="primary" sx={{ cursor: 'pointer' }} />
                                     </StyledTableCell>
+                                )}
+                                {!isSearchMode && (
                                     <StyledTableCell align="left">
                                         <DeleteIcon onClick={() => handleDelete(item.id)} color="primary" sx={{ cursor: 'pointer' }} />
                                     </StyledTableCell>
-                                </>
-                            )}
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                                )}
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
     );
 }

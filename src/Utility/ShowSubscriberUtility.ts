@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { SubscriberModel } from '../Models/SubscriberModel';
-import { DeleteSubscriberByIdAsync, GetSubscriberAsync } from '../Services/SubscriberService';
+import { DeleteSubscriberByIdAsync, GetPaginatedAdvanceSubscriberAsync, GetSubscriberAsync, GetSubscriberSortedAsync } from '../Services/SubscriberService';
 import { useNavigate } from 'react-router-dom';
 import { handleSwirl } from '../Generics/Swirl';
+import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
 
 export default function ShowSubscriberUtility() {
     const initialValue: SubscriberModel = {
@@ -11,12 +12,15 @@ export default function ShowSubscriberUtility() {
         contactNumber: '',
         email: '',
         genderId: -1,
-        lastName: ''
+        lastName: '',
+        genderName: ''
     }
 
     const navigate = useNavigate();
 
     const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
+    const recordsPerPage = 2;
+    const { setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);
 
     useEffect(() => {
         fetchData();
@@ -24,9 +28,11 @@ export default function ShowSubscriberUtility() {
     }, [])
 
     async function fetchData() {
-        const result = await GetSubscriberAsync();
-        setSubscriberInfo(result.data);
-        console.log(result);
+        const result = await GetPaginatedAdvanceSubscriberAsync(currentPage,recordsPerPage,initialValue);
+        if(result){
+            setSubscriberInfo(result.dataArray);
+            setTotalPages(result.totalPages);
+        }
     }
 
     const handleEdit = (id: number) => {
@@ -43,7 +49,17 @@ export default function ShowSubscriberUtility() {
         }
     }
 
-    return { handleDelete, subscriberInfo, handleEdit ,navigate}
+    const handleSorting = async (columnName : string, sortOrder : string) => {
+        const result = await GetSubscriberSortedAsync(columnName, sortOrder);
+
+        console.log("result")
+        console.log(columnName)
+        if(result.data != null){
+            setSubscriberInfo(result.data);
+        }
+    }
+
+    return {handleSorting, handleDelete, subscriberInfo, handleEdit ,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, }
 
 }
 

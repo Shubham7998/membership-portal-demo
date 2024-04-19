@@ -22,6 +22,8 @@ import ShowUserUtility from '../Utility/ShowUserUtility';
 import ShowSubscriberUtility from '../Utility/ShowSubscriberUtility';
 import GenericList from './GenericList';
 import AddButton from '../Generics/Components/Buttons/AddButton';
+import GenericList2 from './HelpingPages/Helpme2';
+import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -52,10 +54,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ShowSubscriber() {
 
-    const { navigate, handleDelete, subscriberInfo, handleEdit } = ShowSubscriberUtility();
+    const {handleSorting, navigate, handleDelete, subscriberInfo, handleEdit,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  } = ShowSubscriberUtility();
 
-    const subscriberDataHeader = [ "First Name", "Last Name", "Email", "Contact No.", "Gender"]
-    const sortColumn = ["firstName", "last","email","genderId","contactNumber"];
+    const subscriberDataHeader = [ "First Name", "Last Name",  "Contact No.","Email", "Gender"]
+    const sortColumn = ["firstName", "lastName","contactNumber","email","genderId",];
 
     return (
         <>
@@ -65,7 +67,8 @@ export default function ShowSubscriber() {
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
                     <AddButton path={"/subscriber"} />
-                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} />
+                    <GenericList2  data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting}/>
+                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
                 </Box>
             </Box>
 
