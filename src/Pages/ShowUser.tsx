@@ -15,7 +15,7 @@ export default function ShowUser() {
         console.log(userInfo)
     }
 
-    const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Password", "Contact No."]
+    const userDataHeader = ["First Name", "Last Name", "Email", "Password", "Contact No."]
 
 
     return (

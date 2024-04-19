@@ -9,11 +9,11 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import AddButton from '../Generics/Components/Buttons/AddButton';
 export default function ShowSubscriptions() {
 
-    const {navigate, subscriptionInfo, handleEdit, handleDelete } = ShowSubcriptionUtility();
+    const { navigate, subscriptionInfo, handleEdit, handleDelete } = ShowSubcriptionUtility();
 
-    const subscriptionDataHeader = ["Sr. No.", "Subscriber Id",  "Product Name",
-        "Product Price",  "Discount Code", "Discount Amount", "Start Date",
-        "Expiry Date",  "CGST%", "SGST%", "Total tax Percent",
+    const subscriptionDataHeader = ["Subscriber Id", "Product Name",
+        "Product Price", "Discount Code", "Discount Amount", "Start Date",
+        "Expiry Date", "CGST%", "SGST%", "Total tax Percent",
         "Tax Amount", "Final Amount"
     ];
     // const subscriptionDataHeader = ["Sr. No.", "Subscriber Id", "Product Id", "Product Name",
@@ -30,7 +30,10 @@ export default function ShowSubscriptions() {
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscription List</h1>
                     <AddButton path={"/subscription"} />
-                    <GenericList data={subscriptionInfo} dataHeader={subscriptionDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+                    {subscriptionInfo === null ?
+                        <GenericList data={subscriptionInfo} dataHeader={subscriptionDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
+                    }
                 </Box>
             </Box>
         </>

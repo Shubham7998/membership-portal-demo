@@ -32,14 +32,16 @@ export default function () {
 
     const fetchData = async () => {
         const result = await GetSubscriptionAsync();
-        setSubscriptionInfo(result.data);
-        console.log(result)
+        if (result.data != null) {
+            setSubscriptionInfo(result.data);
+            console.log(result)
+        }
     }
 
     const handleEdit = (id: number) => {
         navigate(`/subscription/${id}`)
     }
-    
+
     const handleDelete = async (id: number) => {
         const confirmation = await handleSwirl();
         if (confirmation.confirmed) {
@@ -50,5 +52,5 @@ export default function () {
         }
     }
 
-    return {navigate,subscriptionInfo, handleEdit, handleDelete}
+    return { navigate, subscriptionInfo, handleEdit, handleDelete }
 }
