@@ -4,6 +4,7 @@ import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedAdvanceProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../Services/ProductService';
 import { handleSwirl } from '../Generics/Swirl';
+import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
 
 export default function ShowProductUtility() {
 
@@ -68,47 +69,50 @@ export default function ShowProductUtility() {
         setProductInfo(result.data);
     }
 
-    const [totalPages, setTotalPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 10;
-    const npage = Math.ceil(totalPages / recordsPerPage);
-    const numbers = [];
-    for (let i = 1; i <= npage; i++) {
-        numbers.push(i);
-    }
+    // const [totalPages, setTotalPages] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(1);
+    const recordsPerPage = 2;
+    // const npage = Math.ceil(totalPages / recordsPerPage);
+    // const numbers = [];
+    // for (let i = 1; i <= npage; i++) {
+    //     numbers.push(i);
+    // }
+
+   
+
+    // async function prevPage(e: any) {
+
+    //     e.preventDefault();
+    //     if (currentPage !== 1) {
+    //         setCurrentPage(currentPage - 1);
+    //     }
+    // }
+    // function prevPageDisabled(): boolean {
+
+    //     return currentPage === 1;
+    // }
+    // function nextPageDisabled(): boolean {
+
+    //     return currentPage === npage;
+    // }
+
+    // function nextPage(e: any): void {
+    //     e.preventDefault();
+    //     if (currentPage !== npage) {
+    //         setCurrentPage(currentPage + 1);
+    //     }
+    // }
+
+    // function changeCurrentPage(id: number, e: any): void {
+    //     e.preventDefault();
+    //     setCurrentPage(id);
+    // }
+
+    const {setTotalPages,changeCurrentPage,nextPage,prevPageDisabled,nextPageDisabled,prevPage,numbers,currentPage} = PaginationUtility(recordsPerPage);
 
     useEffect(() => {
         fetchData();
     }, [currentPage])
-
-    async function prevPage(e: any) {
-
-        e.preventDefault();
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    }
-    function prevPageDisabled(): boolean {
-
-        return currentPage === 1;
-    }
-    function nextPageDisabled(): boolean {
-
-        return currentPage === npage;
-    }
-
-    function nextPage(e: any): void {
-        e.preventDefault();
-        if (currentPage !== npage) {
-            setCurrentPage(currentPage + 1);
-        }
-    }
-
-    function changeCurrentPage(id: number, e: any): void {
-        e.preventDefault();
-        setCurrentPage(id);
-    }
-
 
     const fetchData = async () => {
         try {
@@ -120,10 +124,6 @@ export default function ShowProductUtility() {
             const result = await GetPaginatedAdvanceProductAsync(currentPage, recordsPerPage, initialValue);
             setTotalPages(result.totalPages);
             setProductInfo(result.dataArray);
-
-            // const result = await GetProductAsync();
-            // setProductInfo(result.data);
-
         } catch (error) {
             console.log(error);
         }

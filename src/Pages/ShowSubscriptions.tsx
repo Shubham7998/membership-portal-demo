@@ -6,6 +6,7 @@ import GenericList from './GenericList';
 import ShowSubcriptionUtility from '../Utility/ShowSubcriptionUtility';
 import GenericFloatingTable from './GenericFloatingTable';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import AddButton from '../Generics/Components/Buttons/AddButton';
 export default function ShowSubscriptions() {
 
     const {navigate, subscriptionInfo, handleEdit, handleDelete } = ShowSubcriptionUtility();
@@ -28,18 +29,7 @@ export default function ShowSubscriptions() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscription List</h1>
-                    <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            color="primary"
-                            onClick={() => navigate("/subscription")}
-                            style={{ alignItems: "right" }}
-                        >
-                            Add
-                            <AddCircleOutlineRoundedIcon />
-                        </Button>
-                    </div>
+                    <AddButton path={"/subscription"} />
                     <GenericList data={subscriptionInfo} dataHeader={subscriptionDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
                 </Box>
             </Box>

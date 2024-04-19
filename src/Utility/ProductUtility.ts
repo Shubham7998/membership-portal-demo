@@ -5,7 +5,7 @@ import { ParameterErrorModel } from "../Models/ParameterErrorModel";
 import { ProductModel } from "../Models/ProductModel";
 import { CreateProductAsync, DeleteProductAsync, GetProductByIdAsync, UpdateProductAsync } from "../Services/ProductService";
 import { isValidName } from "../Generics/Validations";
-import SnackBarGeneric from "../Generics/Snackbar/SnackBarGeneric";
+import SnackBarGeneric from "../Generics/Components/Snackbar/SnackBarGeneric";
 
 export default function ProductUtility(id: number) {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function ProductUtility(id: number) {
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
-    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar } = SnackBarGeneric();
+    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
 
     useEffect(() => {
         fetchData();
@@ -59,21 +59,21 @@ export default function ProductUtility(id: number) {
                 if (productInfo.id !== 0) {
                     console.log("Updateproductinfo")
                     var response = await UpdateProductAsync(productInfo.id, productInfo);
-                    displaySnackbar("Product updated successfully","success");
+                    displaySnackbar("Product updated successfully", "success");
                 }
                 else {
                     alert("Createproductinfo");
                     await CreateProductAsync(productInfo);
-                    displaySnackbar("Product added successfully","success");
+                    displaySnackbar("Product added successfully", "success");
                 }
                 setTimeout(() => {
                     navigate(`/showproducts`)
-                },1000)
+                }, 1000)
             } catch (error) {
                 console.error("Error  in saving Product information:", error);
             }
         } else {
-            displaySnackbar("Fields marked in red are required","error");
+            displaySnackbar("Fields marked in red are required", "error");
             setErrors(newErrors);
         }
     };
@@ -85,7 +85,7 @@ export default function ProductUtility(id: number) {
                 parameterName: "productName",
                 errorMessage: "Enter product name",
             });
-        } 
+        }
         // else if (!isValidName(productInfo.productName)) {
         //     newErrors.push({
         //         parameterName: "productName",
@@ -138,7 +138,7 @@ export default function ProductUtility(id: number) {
         handleSnackbarClose,
         snackbarMessage,
         snackbarSeverity,
-        errors,handleSubmit,
+        errors, handleSubmit,
         navigate
     };
 }

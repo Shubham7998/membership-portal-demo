@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
 import TaxUtility from '../Utility/TaxUtility';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -14,7 +14,7 @@ export default function Tax() {
 
 
 
-    const {navigate, indianStates, taxInfo, handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity, setTaxInfo }
+    const { navigate, indianStates, taxInfo, handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity, setTaxInfo }
         = TaxUtility(+id);
 
     const {
@@ -131,7 +131,7 @@ export default function Tax() {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={() =>navigate("/showtaxes")}
+                                    onClick={() => navigate("/showtaxes")}
                                     fullWidth
                                 >
                                     <VisibilityIcon />

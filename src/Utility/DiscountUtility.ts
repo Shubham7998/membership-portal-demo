@@ -4,7 +4,7 @@ import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { GetProductByIdAsync } from '../Services/ProductService';
 import { CreateDiscountAsync, GetDiscountByIdAsync, UpdateDiscountAsync } from '../Services/DiscontService';
-import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
 import { useNavigate } from 'react-router-dom';
 
 export default function DiscountUtility(id: number) {
@@ -94,7 +94,7 @@ export default function DiscountUtility(id: number) {
                 }
                 setTimeout(() => {
                     navigate(`/showdiscounts`)
-                },1000)
+                }, 1000)
                 // setDiscountInfo(initialValue);
             } catch (error) {
                 console.error("Error  in saving Product information:", error);
@@ -122,7 +122,8 @@ export default function DiscountUtility(id: number) {
         return newErrors.length === 0;
     };
 
-    return {navigate,
+    return {
+        navigate,
         handleNumberChange, handleSelectChange,
         handleSubmit, discoutInfo,
         onInputChangeDiscount, errors,

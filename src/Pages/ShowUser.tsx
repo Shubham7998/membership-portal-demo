@@ -3,6 +3,7 @@ import SideNav from './HelpingPages/SideNav';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import GenericList from './GenericList';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import AddButton from '../Generics/Components/Buttons/AddButton';
 
 export default function ShowUser() {
 
@@ -25,18 +26,7 @@ export default function ShowUser() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>User List</h1>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            color="primary"
-                            onClick={() => navigate("/user")}
-                            style={{ alignItems: "right" }}
-                        >
-                            Add
-                            <AddCircleOutlineRoundedIcon />
-                        </Button>
-                    </div>
+                    <AddButton path={"/user"} />
                     <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
                 </Box>
             </Box>

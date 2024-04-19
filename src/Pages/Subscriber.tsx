@@ -8,7 +8,7 @@ import {
     CardActions
 } from "@mui/material";
 import SideNav from './HelpingPages/SideNav';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 import CustomHelperText from '../Generics/Components/CustomHelperText';
 
@@ -16,7 +16,7 @@ export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors,navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const { errors, navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
     const {
         onSelectFieldChange,
         onDateFieldChange,

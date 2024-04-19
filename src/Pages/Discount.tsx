@@ -4,7 +4,7 @@ import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 
 export default function Discount() {
@@ -13,7 +13,7 @@ export default function Discount() {
     const {
         handleSubmit, discoutInfo, errors,
         snackbarOpen, setDiscountInfo,
-        handleSnackbarClose,navigate,
+        handleSnackbarClose, navigate,
         snackbarSeverity, snackbarMessage, handleSelectBooleanChange } = DiscountUtility(+id);
 
     const {
@@ -108,7 +108,7 @@ export default function Discount() {
                                     <Button onClick={handleSubmit}
                                         variant="contained"
                                         color="primary"
-                                        style={{  marginRight: 12 }}
+                                        style={{ marginRight: 12 }}
                                         fullWidth
                                     >
                                         Submit

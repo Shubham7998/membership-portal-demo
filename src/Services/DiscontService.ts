@@ -2,6 +2,8 @@ import axios from "axios";
 import { DiscountModel } from "../Models/DiscountModel";
 import ResponseModel from "../Models/ResponseModel";
 import API_URL from "../Generics/URL_Config";
+import { PaginatedModel } from "../Models/PaginatedModel";
+import { ProductModel } from "../Models/ProductModel";
 
 const URL = `${API_URL}discount`;
 
@@ -114,7 +116,34 @@ export const GetDiscountAsync = async (
         })
     return result;
 };
-
+export const GetPaginatedAdvanceDiscountAsync = async  (page  : number = 0, pageSize : number = 5, discountInfo : DiscountModel): Promise<PaginatedModel> => {
+    let result: ResponseModel = {
+      error: "",
+      data: null,
+      message: "",
+      errorCode: "",
+    };
+  
+    let paginatedResult : PaginatedModel = {
+      dataArray: null,
+      totalPages: 0
+    }
+    try {
+      const response = await axios.post(`${API_URL}discount/paginated?page=${page}&pageSize=${pageSize}`,discountInfo);
+      paginatedResult.dataArray = response.data.dataArray;
+      paginatedResult.totalPages = response.data.totalPages;
+  
+      console.log(paginatedResult)
+  
+      console.log(response);
+      
+      result.errorCode = response.status + "";
+    } catch (error) {
+      handleError(error, result);
+    }
+  
+    return paginatedResult;
+  };
 const handleError = (error: any, result: ResponseModel) => {
     if (error.response) {
         result.error = error.response.data;

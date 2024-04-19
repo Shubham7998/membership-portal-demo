@@ -11,7 +11,7 @@ import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { error } from 'console';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import VisibilityIcon from '@mui/icons-material/Visibility';

@@ -10,7 +10,7 @@ import {
 import SideNav from './HelpingPages/SideNav';
 import SubscriptionUtility from '../Utility/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 
 
@@ -22,9 +22,7 @@ export default function Subscription() {
     const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo, setSubscriptionInfo } = SubscriptionUtility(+id);
     const {
         onSelectFieldChange,
-        onDateFieldChange,
-        onTextFieldChange,
-        onNumberFieldChange
+        onTextFieldChange
     } = OnChangeFields();
     return (
         <>

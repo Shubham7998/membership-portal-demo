@@ -3,7 +3,7 @@ import React from 'react'
 import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 
 export default function Product() {
@@ -13,7 +13,7 @@ export default function Product() {
     const {
         setProductInfo,
         productInfo,
-        errors,navigate,
+        errors, navigate,
         onInputChangeproduct,
         snackbarOpen,
         handleNumberChange,
@@ -28,14 +28,14 @@ export default function Product() {
         onDateFieldChange,
         onTextFieldChange,
         onNumberFieldChange
-    } =  OnChangeFields();
+    } = OnChangeFields();
 
     return (
         <div>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
                 <SideNav />
                 <Grid item xs={5} sm={8} md={2.8}>
-                    <Paper elevation={3} style={{ padding: 40 , height : 350}}>
+                    <Paper elevation={3} style={{ padding: 40, height: 350 }}>
                         <Grid container spacing={2} justifyContent="center">
                             <h1> {productInfo.id === 0 ? "Add Product" : "Update Product"} </h1>
                             <Grid item xs={12}>
@@ -90,27 +90,27 @@ export default function Product() {
                                 />
                             </Grid>
                             <Grid item xs={5}>
-                            <Grid item xs={5}>
-                                <CardActions style={{ justifyContent: "center", padding: 5 }}>
+                                <Grid item xs={5}>
+                                    <CardActions style={{ justifyContent: "center", padding: 5 }}>
 
-                                    <Button onClick={handleSubmit}
-                                        variant="contained"
-                                        color="primary"
-                                        style={{ marginLeft: 70, marginRight : 12 }}
-                                        fullWidth
-                                    >
-                                        Submit
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => navigate("/showproducts")}
-                                        fullWidth
-                                    >
-                                        List
-                                    </Button>
-                                </CardActions>
-                            </Grid>
+                                        <Button onClick={handleSubmit}
+                                            variant="contained"
+                                            color="primary"
+                                            style={{ marginLeft: 70, marginRight: 12 }}
+                                            fullWidth
+                                        >
+                                            Submit
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => navigate("/showproducts")}
+                                            fullWidth
+                                        >
+                                            List
+                                        </Button>
+                                    </CardActions>
+                                </Grid>
 
                             </Grid>
                         </Grid>

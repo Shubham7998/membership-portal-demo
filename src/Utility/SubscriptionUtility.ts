@@ -130,16 +130,15 @@ export default function SubscriptionUtility(id: number) {
 
         if(name === "startDate"){
 
-            const date = new Date(value); // Assuming value is a valid date string
+            const date = new Date(value); 
             let startDate: Date = new Date();
-            startDate.setDate(date.getDate() + 20); // Add 20 days to the provided date
-            // alert(startDate)
-            // alert(date);
+            startDate.setDate(date.getDate() + 20);
+            
             console.log(startDate)
             console.log(date)
-            const daysToAdd = 7; // Number of days to add
+            const daysToAdd = 7; 
             const expiryDate = addDays(startDate, daysToAdd);
-            // alert(expiryDate);
+            
             console.log(expiryDate);
             
             subscriptionInfo.expiryDate = expiryDate;            
