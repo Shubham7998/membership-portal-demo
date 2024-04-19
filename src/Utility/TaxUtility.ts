@@ -109,6 +109,8 @@ export default function TaxUtility(id: number) {
         const { name, value } = event.target;
         if (/^\d*$/.test(value) && (Number(value) < 15)) {
             setTaxInfo(prevState => ({ ...prevState, [name]: value }));
+        }else{
+            displaySnackbar("Tax cant be greater than 15","warning");
         }
         if (errors.some(error => error.parameterName === name)) {
             const updatedErrors = errors.filter(error => error.parameterName !== name);

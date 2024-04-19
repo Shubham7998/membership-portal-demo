@@ -14,19 +14,12 @@ import { SubscriberModel } from '../Models/SubscriberModel';
 import { DiscountModel } from '../Models/DiscountModel';
 import { TaxModel } from '../Models/TaxModel';
 import GenderModel from '../Models/GenderModel';
+import { useState } from 'react';
 
 
 const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
-const subscriberDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No.", "Gender"]
-const productDataHeader = ["Sr. No.", "Product Name", "Product Price"]
-const discountDataHeader = ["Sr. No.", "Discount Code", "Discount Amount", "IsDiscountInPercentage"]
-const taxDataHeader = ["Sr. No.", "SGST", "CGST", "Total Tax"]
-const genderDataHeader = ["Sr. No.", "Gender"];
-const subscriptionDataHeader = ["Sr. No.", "Subscriber Id", "Product Id", "Product Name",
-    "Product Price", "Discount Id", "Discount Id", "Discount Amount", "Start Date",
-    "Expiry Date", "Price After Discount", "Tax Id", "CGST%", "SGST%", "Total tax Percent",
-    "Tax Amount", "Final Amount"
-];
+const productDataHeader = [ "Product Name", "Product Price"]
+
 
 const handleButtons = ["Edit", "Delete"];
 
@@ -50,17 +43,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-// const StyledTableCell = styled(TableCell)(({ theme }) => ({
-//     [`&.${tableCellClasses.head}`]: {
-//         backgroundColor: theme.palette.common.black,
-//         color: theme.palette.common.white,
-//     },
-//     [`&.${tableCellClasses.body}`]: {
-//         fontSize: 14,
-//     },
-// }));
-
-
 interface GenericListProps {
     data: UserModel[] | ProductModel[] | SubscriberModel[] | DiscountModel[] | TaxModel[] | GenderModel[];
     handleDelete: (id: number) => void;
@@ -68,17 +50,31 @@ interface GenericListProps {
     dataHeader: string[],
     isSearchMode: boolean
 }
+
+
 export default function GenericList({ data, handleDelete, handleEdit, dataHeader, isSearchMode }: GenericListProps) {
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+    console.log(data[0]);
+    
+    function handleSort(index : Number, data : string): void {
+        const normalizedColumnName = data.toLowerCase().replace(/\s+/g, '');
+
+        console.log(index, normalizedColumnName);
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        
+    }
 
     return (
         <>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }}  aria-label="customized table">
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <caption>A basic table example with a caption</caption>
                     <TableHead >
                         <TableRow >
+                        <StyledTableCell align="left">Sr No</StyledTableCell>
                             {dataHeader.map((data, index) => (
-                                <StyledTableCell key={index} align="left">{data}</StyledTableCell>
+                                <StyledTableCell onClick={() => handleSort(++index, data)} key={index} align="left">{data}{index}<span>{ sortOrder ==='asc' ? ' ▲' : ' ▼'}</span></StyledTableCell> 
                             ))}
                             {!isSearchMode ? handleButtons.map((btn, index) => (
                                 <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
@@ -116,3 +112,15 @@ export default function GenericList({ data, handleDelete, handleEdit, dataHeader
         </>
     );
 }
+
+
+// Sort in descending order of discountAmount
+// const sortedData = [...data].sort((a, b) => {
+//     return b.discountAmount - a.discountAmount;
+// });
+
+// // Assuming 'data' is your array of objects
+// const sortedData = [...data].sort((a, b) => {
+//     // Compare discountAmount property of objects 'a' and 'b'
+//     return a.discountAmount - b.discountAmount;
+// });

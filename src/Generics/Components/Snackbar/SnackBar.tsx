@@ -5,7 +5,6 @@ import React from "react";
 
 
 
-const { setSnackbarMessage, setSnackbarOpen, setSnackbarSeverity, handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar } = SnackBarGeneric();
 interface GenericSnackbarProps {
   open: boolean ;
   onClose: (event: React.SyntheticEvent | Event, reason?: string) => void;
@@ -14,13 +13,8 @@ interface GenericSnackbarProps {
 }
 
 
-// // Define initial values
-// const initialSnackbarProps: GenericSnackbarProps = {
-//   open: false,
-//   onClose: () => {}, // You may provide a default handler or leave it empty
-//   severity: "info",
-//   message: ""
-// };
+
+
 
 
 // const {} = SnackBarGeneric();
@@ -34,6 +28,15 @@ function GenericSnackbar({ open, onClose, severity, message }: GenericSnackbarPr
     const [snackbarSeverity, setSnackbarSeverity] = React.useState<
         "success" | "error" | "info" | "warning"
     >();
+
+    // if(open){
+    //   const initialSnackbarProps: GenericSnackbarProps = {
+    //     open: snackbarOpen,
+    //     onClose: handleSnackbarClose, 
+    //     severity: snackbarSeverity,
+    //     message: snackbarMessage
+    //   };
+    // }
 
     
   return (

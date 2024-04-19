@@ -1,5 +1,5 @@
 export interface TaxModel {
-    id : number,
+    id : number ,
     stateName? : string,
     sgst : number,
     cgst : number,

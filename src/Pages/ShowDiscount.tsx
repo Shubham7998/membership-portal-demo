@@ -11,7 +11,7 @@ import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 export default function ShowDiscount() {
 
     const { navigate, handleDelete, discountInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled } = ShowDiscountUtility();
-    const discountDataHeader = ["Sr. No.", "Discount Code", "Discount Amount", "IsDiscountInPercentage"]
+    const discountDataHeader = ["Discount Code", "Discount Amount", "IsDiscountInPercentage"]
 
     console.log("discount info")
     console.log(discountInfo)

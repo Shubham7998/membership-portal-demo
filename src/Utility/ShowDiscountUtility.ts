@@ -6,7 +6,7 @@ import { DeleteDiscountAsync, GetDiscountAsync, GetPaginatedAdvanceDiscountAsync
 import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
 
 export default function ShowDiscountUtility() {
-    const initialValue : DiscountModel = {
+    const initialValue: DiscountModel = {
         id: 0,
         discountCode: '',
         discountAmount: 0,
@@ -16,8 +16,8 @@ export default function ShowDiscountUtility() {
     const navigate = useNavigate();
 
     const [discountInfo, setDiscountInfo] = useState<DiscountModel[]>([initialValue])
-    const recordsPerPage = 2;
-    const {setTotalPages,changeCurrentPage,nextPage,prevPageDisabled,nextPageDisabled,prevPage,numbers,currentPage} = PaginationUtility(recordsPerPage);
+    const recordsPerPage = 4;
+    const { setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);
 
     useEffect(() => {
         fetchData();
@@ -30,15 +30,16 @@ export default function ShowDiscountUtility() {
         // console.log(result);
 
         const result = await GetPaginatedAdvanceDiscountAsync(currentPage, recordsPerPage, initialValue);
-            setTotalPages(result.totalPages);
-            setDiscountInfo(result.dataArray);
-        
+        setTotalPages(result.totalPages);
+        setDiscountInfo(result.dataArray);
+
+        console.log(discountInfo)
     }
 
     const handleEdit = (id: number) => {
         navigate(`/discount/${id}`)
     }
-    
+
     const handleDelete = async (id: number) => {
         const confirmation = await handleSwirl();
         if (confirmation.confirmed) {
@@ -49,7 +50,8 @@ export default function ShowDiscountUtility() {
         }
     }
 
-    return { handleDelete, discountInfo, handleEdit,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  }
+    return { handleDelete, discountInfo, handleEdit, navigate, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, }
 }
+
 
 

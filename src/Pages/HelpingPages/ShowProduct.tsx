@@ -8,6 +8,7 @@ import SideNav from './SideNav';
 import GenericList from '../GenericList';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
+import GenericList2 from './Helpme2';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,7 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function ShowProduct() {
-  const productDataHeader = ["Sr. No.", "Product Name", "Product Price"]
+  const productDataHeader = [ "Product Name", "Product Price"]
 
   const { removeDuplicates, handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, navigate, handleSelectChange } = ShowProductUtility();
 

@@ -61,7 +61,6 @@ function App() {
 
           <Route path='/table' element={<TablePaginationActions />}></Route>
           <Route path='/helpme' element={<HelperComponents />}></Route>
-          <Route path='/helpme2' element={<Helpme2 />}></Route>
 
         </Route>
       </Routes>
