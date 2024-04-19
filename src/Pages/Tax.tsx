@@ -1,20 +1,25 @@
 import React from 'react'
-import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from '@mui/material'
+import { Alert, Button, CardActions, FormControl, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Snackbar, TextField } from '@mui/material'
 import SideNav from './HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
 import ProductUtility from '../Utility/ProductUtility';
 import DiscountUtility from '../Utility/DiscountUtility';
 import TaxUtility from '../Utility/TaxUtility';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
 export default function Tax() {
     const { id = 0 } = useParams();
 
-    const { taxInfo, handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
+
+
+    const { navigate, indianStates, taxInfo, handleNumberChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity, setTaxInfo }
         = TaxUtility(+id);
 
-    const { 
-        onNumberFieldChange
+    const {
+        onNumberFieldChange,
+        onSelectFieldChange
     } = OnChangeFields();
 
     return (
@@ -26,6 +31,31 @@ export default function Tax() {
                         <Grid container spacing={2} justifyContent="center">
                             <h1> {id === 0 ? "Add Tax" : "Update Tax"} </h1>
                             <Grid item xs={12} >
+                                <FormControl fullWidth >
+                                    <InputLabel id="stateName">Select State</InputLabel>
+                                    <Select
+                                        style={{ height: 40 }}
+                                        labelId="stateName"
+                                        id="stateName"
+                                        value={taxInfo.stateName}
+                                        label="Select State"
+                                        name='stateName'
+                                        disabled={id != 0}
+                                        required
+                                        onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setTaxInfo)}
+                                    >
+                                        {taxInfo.stateName === "" ?
+                                            <MenuItem value="">Select State name</MenuItem> :
+                                            <MenuItem value={taxInfo.stateName}>{taxInfo.stateName}</MenuItem>
+                                        }
+                                        {indianStates?.map((state, key) => (
+                                            <MenuItem key={key} value={state}>{state}</MenuItem>
+                                        ))}
+
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} >
                                 <TextField
                                     fullWidth
                                     id="cgst"
@@ -34,6 +64,7 @@ export default function Tax() {
                                     placeholder="Type a number…"
                                     label="CGST %"
                                     variant="outlined"
+                                    defaultValue={""}
                                     autoComplete="off"
                                     inputProps={{ maxLength: 100 }}
                                     value={taxInfo.cgst}
@@ -87,12 +118,26 @@ export default function Tax() {
                                     value={Number(taxInfo.sgst) + Number(taxInfo.cgst)}
                                 />
                             </Grid>
-                            <Grid item xs={5}>
-                                <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
+                            <CardActions style={{ justifyContent: "center", padding: 5 }}>
+
+                                <Button onClick={handleSubmit}
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    style={{ marginRight: 12 }}
+                                >
                                     Submit
                                 </Button>
-
-                            </Grid>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => navigate("/showtaxes")}
+                                    fullWidth
+                                >
+                                    <VisibilityIcon />
+                                    List
+                                </Button>
+                            </CardActions>
                         </Grid>
                         <GenericSnackbar
                             open={snackbarOpen}

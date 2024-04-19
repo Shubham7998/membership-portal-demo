@@ -12,10 +12,12 @@ import { userInfo } from 'os';
 import { isValidName, removeSpace, isValidEmailAddress, isValidContactNumber, isValidPassword } from '../Generics/Validations';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { CreateSubscriberAsync, GetSubscriberAsync, GetSubscriberByIdAsync, UpdateSubscriberAsync } from '../Services/SubscriberService';
-import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { useNavigate } from 'react-router-dom';
 
 export default function SubscriberUtility(id: number) {
 
+  const navigate = useNavigate();
   const genderInitialValue: GenderModel = {
     id: 0,
     genderName: ''
@@ -40,7 +42,7 @@ export default function SubscriberUtility(id: number) {
     console.log("use effect")
   }, [id])
 
-  const {displaySnackbar ,handleSnackbarClose, snackbarOpen,snackbarMessage, snackbarSeverity} = SnackBarGeneric();
+  const { displaySnackbar, handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity } = SnackBarGeneric();
 
   async function fetchData() {
     try {
@@ -111,17 +113,20 @@ export default function SubscriberUtility(id: number) {
         const response = await UpdateSubscriberAsync(subscriberInfo, id);
         console.log("response data  update ");
         console.log(response);
-        displaySnackbar("Subscriber details updated successfully","success");
+        displaySnackbar("Subscriber details updated successfully", "success");
       } else {
         alert("add");
-        subscriberInfo.genderId += 1;
+        // subscriberInfo.genderId += 1;
         const response = await CreateSubscriberAsync(subscriberInfo);
         console.log("response data added");
         console.log(response);
-        displaySnackbar("Subscriber details added successfully","success");
+        displaySnackbar("Subscriber details added successfully", "success");
       }
+      setTimeout(() => {
+        navigate(`/showsubscribers`);
+      }, 1000);
     } else {
-      displaySnackbar("Please field mendatory fields","error");
+      displaySnackbar("Please field mendatory fields", "error");
     }
     setErrors(newErrors);
 
@@ -214,17 +219,17 @@ export default function SubscriberUtility(id: number) {
     }
 
     if (subscriberInfo.genderId === -1) {
-      // newErrors.push({
-      //   parameterName : "genderId",
-      //   errorMessage : "Please select the gender"
-      // })
-      // console.log("gender is not valid")
+      newErrors.push({
+        parameterName: "genderId",
+        errorMessage: "Please select the gender"
+      })
+      console.log("gender is not valid")
     }
     setErrors(newErrors);
 
     return newErrors.length === 0;
   };
-  return { errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
+  return { navigate, errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
 }
 
 

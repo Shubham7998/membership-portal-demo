@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { CreateTaxAsync, GetTaxAsync, GetTaxByIdAsync, UpdateTaxAsync } from '../Services/TaxService';
 import { SnackbarOrigin } from '@mui/material';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
 
 export default function TaxUtility(id: number) {
     let initialValue: TaxModel = {
         id: 0,
-        stateName : "",
+        stateName: "",
         sgst: 0,
         cgst: 0,
         totalTax: 0
@@ -17,28 +17,67 @@ export default function TaxUtility(id: number) {
     const navigate = useNavigate();
 
     const [taxInfo, setTaxInfo] = useState<TaxModel>(initialValue);
-
     const newErrors: ParameterErrorModel[] = [];
+    const States: string[] = [
+        'Andhra Pradesh',
+        'Arunachal Pradesh',
+        'Assam',
+        'Bihar',
+        'Chhattisgarh',
+        'Goa',
+        'Gujarat',
+        'Haryana',
+        'Himachal Pradesh',
+        'Jharkhand',
+        'Karnataka',
+        'Kerala',
+        'Madhya Pradesh',
+        'Maharashtra',
+        'Manipur',
+        'Meghalaya',
+        'Mizoram',
+        'Nagaland',
+        'Odisha',
+        'Punjab',
+        'Rajasthan',
+        'Sikkim',
+        'Tamil Nadu',
+        'Telangana',
+        'Tripura',
+        'Uttar Pradesh',
+        'Uttarakhand',
+        'West Bengal',
+        'Andaman and Nicobar Islands',
+        'Chandigarh',
+        'Dadra and Nagar Haveli and Daman and Diu',
+        'Delhi',
+        'Lakshadweep',
+        'Puducherry'
+    ];
+    const [indianStates, setIndianStates] = useState([""]);
+
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
-    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar } = SnackBarGeneric();
+    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
 
 
     useEffect(() => {
         fetchData();
     }, [])
-
     const fetchData = async () => {
         if (id > 0) {
             try {
                 const result = await GetTaxByIdAsync(id);
                 setTaxInfo(result.data)
+                console.log(result)
+                console.log(taxInfo)
                 console.log("result.errorCode = " + result.errorCode)
                 if (result.errorCode == "200") {
                     console.log("result.errorCode = " + result.errorCode)
                     if (result != null) {
                         setTaxInfo(result.data);
+                        console.log("tax info")
                         console.log(result.data);
                     }
                 }
@@ -46,6 +85,13 @@ export default function TaxUtility(id: number) {
                 console.log(error);
             }
         } else {
+            const result = await GetTaxAsync();
+            console.log(result.data)
+            const taxStates = result.data.map((item: { stateName: any; }) => item.stateName);
+            const states: any = States.filter(state => !taxStates.includes(state));
+            setIndianStates(states);
+            console.log("Indian Stated")
+            console.log(indianStates)
             setTaxInfo(initialValue);
         }
     }
@@ -63,6 +109,8 @@ export default function TaxUtility(id: number) {
         const { name, value } = event.target;
         if (/^\d*$/.test(value) && (Number(value) < 15)) {
             setTaxInfo(prevState => ({ ...prevState, [name]: value }));
+        }else{
+            displaySnackbar("Tax cant be greater than 15","warning");
         }
         if (errors.some(error => error.parameterName === name)) {
             const updatedErrors = errors.filter(error => error.parameterName !== name);
@@ -77,13 +125,19 @@ export default function TaxUtility(id: number) {
 
     const isValidate = () => {
 
-        if(taxInfo.cgst === 0 || taxInfo.cgst.toString().trim() === ""){
+        if (taxInfo.stateName === "") {
+            newErrors.push({
+                parameterName: "stateName",
+                errorMessage: "Please select state name"
+            })
+        }
+        if (taxInfo.cgst === 0 || taxInfo.cgst.toString().trim() === "") {
             newErrors.push({
                 parameterName: "cgst",
                 errorMessage: "Please enter a cgst"
             })
         }
-        if(taxInfo.sgst === 0 || taxInfo.cgst.toString().trim() === ""){
+        if (taxInfo.sgst === 0 || taxInfo.cgst.toString().trim() === "") {
             newErrors.push({
                 parameterName: "sgst",
                 errorMessage: "Please enter a sgst"
@@ -96,6 +150,7 @@ export default function TaxUtility(id: number) {
     };
 
     async function handleSubmit() {
+        console.log(taxInfo)
         if (isValidate()) {
             try {
                 if (id > 0) {
@@ -113,17 +168,17 @@ export default function TaxUtility(id: number) {
                 setErrors(newErrors);
 
                 setTimeout(() => {
-                    navigate(`/showtaxes`); 
+                    navigate(`/showtaxes`);
                 }, 1000);
             } catch (error) {
                 displaySnackbar(String(error), "info");
                 console.log(error)
             }
         } else {
-            displaySnackbar("Fields marked in red are required","error");
+            displaySnackbar("Fields marked in red are required", "error");
             setErrors(newErrors);
         }
     }
-    return { setTaxInfo,taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    return { navigate, indianStates, setTaxInfo, taxInfo, handleTextChange, handleNumberChange, handleSelectChange, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 
 }

@@ -65,7 +65,7 @@ export const UpdateProductAsync = async (
     };
   
     try {
-      const response = await axios.delete(`${API_URL}/product/${id}`);
+      const response = await axios.delete(`${API_URL}product/${id}`);
       result.data = response.data;
       result.errorCode = response.status + "";
     } catch (error) {
@@ -149,6 +149,34 @@ export const GetPaginatedProductAsync = async  (page  : number = 0, pageSize : n
   }
   try {
     const response = await axios.get(`${API_URL}product/paginated?page=${page}&pageSize=${pageSize}`);
+    paginatedResult.dataArray = response.data.dataArray;
+    paginatedResult.totalPages = response.data.totalPages;
+
+    console.log(paginatedResult)
+
+    console.log(response);
+    
+    result.errorCode = response.status + "";
+  } catch (error) {
+    handleError(error, result);
+  }
+
+  return paginatedResult;
+};
+export const GetPaginatedAdvanceProductAsync = async  (page  : number = 0, pageSize : number = 5, productInfo : ProductModel): Promise<PaginatedModel> => {
+  let result: ResponseModel = {
+    error: "",
+    data: null,
+    message: "",
+    errorCode: "",
+  };
+
+  let paginatedResult : PaginatedModel = {
+    dataArray: null,
+    totalPages: 0
+  }
+  try {
+    const response = await axios.post(`${API_URL}product/paginated?page=${page}&pageSize=${pageSize}`,productInfo);
     paginatedResult.dataArray = response.data.dataArray;
     paginatedResult.totalPages = response.data.totalPages;
 

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { ProductModel } from '../Models/ProductModel'
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../Services/ProductService';
+import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedAdvanceProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../Services/ProductService';
 import { handleSwirl } from '../Generics/Swirl';
+import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
 
 export default function ShowProductUtility() {
 
     const initialValue: ProductModel = {
         id: 0,
-        productName: "0",
+        productName: "",
         price: 0
     }
 
@@ -19,9 +20,9 @@ export default function ShowProductUtility() {
     const removeDuplicates = (products: ProductModel[]): ProductModel[] => {
         const uniqueProducts: ProductModel[] = [];
         products.forEach((product) => {
-          if (!uniqueProducts.some((p) => p.productName === product.productName && p.price === product.price)) {
-            uniqueProducts.push(product);
-          }
+            if (!uniqueProducts.some((p) => p.productName === product.productName && p.price === product.price)) {
+                uniqueProducts.push(product);
+            }
         });
         console.log("uniqueProducts")
         console.log(uniqueProducts)
@@ -30,11 +31,11 @@ export default function ShowProductUtility() {
 
     const navigate = useNavigate();
 
-    const  handleSelectChange = async(
+    const handleSelectChange = async (
         event: SelectChangeEvent) => {
         const name = event.target.name;
         const value = event.target.value;
-    
+
         //  await setSelectData();
 
         setProductInfoSearch((prevState) => ({ ...prevState, [name]: value }));
@@ -53,71 +54,76 @@ export default function ShowProductUtility() {
 
     const fetchAdvanceSearchData = async () => {
         const result = await AdvanceSearchProductAsync(productInfoSearch);
+
         setProductInfo(result.data);
-    } 
+    }
     const fetchSearchData = async () => {
         var result;
-        if(productInfoSearch.price === 0){
+        if (productInfoSearch.price === 0) {
 
             result = await SearchProductAsync(productInfoSearch.productName);
-        }else{
+        } else {
             result = await SearchProductAsync(productInfoSearch.price.toString());
 
         }
         setProductInfo(result.data);
-    } 
-
-    const [totalPages, setTotalPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 3;
-    const npage = Math.ceil(totalPages / recordsPerPage);
-    const numbers = [];
-    for (let i = 1; i <= npage; i++) {
-        numbers.push(i);
     }
+
+    // const [totalPages, setTotalPages] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(1);
+    const recordsPerPage = 12;
+    // const npage = Math.ceil(totalPages / recordsPerPage);
+    // const numbers = [];
+    // for (let i = 1; i <= npage; i++) {
+    //     numbers.push(i);
+    // }
+
+   
+
+    // async function prevPage(e: any) {
+
+    //     e.preventDefault();
+    //     if (currentPage !== 1) {
+    //         setCurrentPage(currentPage - 1);
+    //     }
+    // }
+    // function prevPageDisabled(): boolean {
+
+    //     return currentPage === 1;
+    // }
+    // function nextPageDisabled(): boolean {
+
+    //     return currentPage === npage;
+    // }
+
+    // function nextPage(e: any): void {
+    //     e.preventDefault();
+    //     if (currentPage !== npage) {
+    //         setCurrentPage(currentPage + 1);
+    //     }
+    // }
+
+    // function changeCurrentPage(id: number, e: any): void {
+    //     e.preventDefault();
+    //     setCurrentPage(id);
+    // }
+
+    const {setTotalPages,changeCurrentPage,nextPage,prevPageDisabled,nextPageDisabled,prevPage,numbers,currentPage} = PaginationUtility(recordsPerPage);
 
     useEffect(() => {
         fetchData();
     }, [currentPage])
 
-    async function prevPage(e: any) {
-
-        e.preventDefault();
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    }
-    function prevPageDisabled() : boolean {
-        
-        return currentPage === 1;
-    }
-    function nextPageDisabled() : boolean {
-        
-        return currentPage === npage;
-    }
-
-    function nextPage(e: any): void {
-        e.preventDefault();
-        if (currentPage !== npage) {
-            setCurrentPage(currentPage + 1);
-        }
-    }
-
-    function changeCurrentPage(id: number, e: any): void {
-        e.preventDefault();
-        setCurrentPage(id);
-    }
-
-
     const fetchData = async () => {
         try {
 
-           // const result = await GetPaginatedProductAsync(currentPage, recordsPerPage);
+            // const result = await GetPaginatedProductAsync(currentPage, recordsPerPage);
             // setTotalPages(result.totalPages);
             // setProductInfo(result.dataArray);
-            const result = await GetProductAsync();
-            setProductInfo(result.data);
 
+            const result = await GetPaginatedAdvanceProductAsync(currentPage, recordsPerPage, initialValue);
+            setTotalPages(result.totalPages);
+            setProductInfo(result.dataArray);
         } catch (error) {
             console.log(error);
         }
@@ -136,5 +142,5 @@ export default function ShowProductUtility() {
     const handleEdit = (id: number) => {
         navigate(`/product/${id}`)
     }
-    return { handleSelectChange,navigate,handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers ,prevPageDisabled,nextPageDisabled,removeDuplicates}
+    return { handleSelectChange, navigate, handleDelete, productInfo, productInfoSearch, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates }
 }

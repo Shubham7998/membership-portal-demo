@@ -50,5 +50,5 @@ export default function () {
         }
     }
 
-    return {subscriptionInfo, handleEdit, handleDelete}
+    return {navigate,subscriptionInfo, handleEdit, handleDelete}
 }

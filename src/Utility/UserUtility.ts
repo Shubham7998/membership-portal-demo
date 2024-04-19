@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { isValidContactNumber, isValidEmailAddress, isValidName, isValidPassword, removeSpace } from '../Generics/Validations';
 import { Snackbar, SnackbarOrigin } from "@mui/material";
-import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
 
 export function UserUtility(id: number) {
     const initialValue: UserModel = {
@@ -25,7 +25,7 @@ export function UserUtility(id: number) {
 
     const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
-    const {displaySnackbar ,handleSnackbarClose, snackbarOpen,snackbarMessage, snackbarSeverity} = SnackBarGeneric();
+    const { displaySnackbar, handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity } = SnackBarGeneric();
 
     useEffect(() => {
         fetchData();
@@ -35,11 +35,11 @@ export function UserUtility(id: number) {
         if (id > 0) {
             try {
                 const result = await GetUserService(id);
-                console.log("result.errorCode = "+ result.errorCode)
+                console.log("result.errorCode = " + result.errorCode)
 
-                if(result.errorCode == "200"){
-                    console.log("result.errorCode = "+ result.errorCode )
-                    if(result != null){
+                if (result.errorCode == "200") {
+                    console.log("result.errorCode = " + result.errorCode)
+                    if (result != null) {
                         setUserInfo(result.data);
                         console.log(result.data);
 
@@ -48,7 +48,7 @@ export function UserUtility(id: number) {
             } catch (error) {
                 console.log(error);
             }
-        }else{
+        } else {
             setUserInfo(initialValue);
         }
     }
@@ -186,26 +186,26 @@ export function UserUtility(id: number) {
                 if (id > 0) {
                     var result = await UpdateUserService(userInfo, id);
                     console.log(result.data);
-                    displaySnackbar("User updated successfully","success")
+                    displaySnackbar("User updated successfully", "success")
                 } else {
                     var result = await CreateUserService(userInfo);
                     console.log(result.data);
-                    displaySnackbar("User added successfully","success")
+                    displaySnackbar("User added successfully", "success")
                 }
                 setErrors(newErrors);
 
                 setTimeout(() => {
-                    navigate(`/showusers`); 
+                    navigate(`/showusers`);
                 }, 1000);
             } catch (error) {
                 console.log(error)
 
             }
         } else {
-            displaySnackbar("Fields marked in red are required","error")
+            displaySnackbar("Fields marked in red are required", "error")
             setErrors(newErrors);
         }
     }
 
-    return { setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity  };
+    return { navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 }

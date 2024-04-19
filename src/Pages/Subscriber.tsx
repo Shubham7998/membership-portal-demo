@@ -4,23 +4,25 @@ import SubscriberUtility from '../Utility/SubscriberUtility';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
     Paper, Grid, TextField, InputLabel,
-    MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert
+    MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert,
+    CardActions
 } from "@mui/material";
 import SideNav from './HelpingPages/SideNav';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
+import CustomHelperText from '../Generics/Components/CustomHelperText';
 
 export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors, handleSubmit,  subscriberInfo,  genders, setSubscriberInfo,  snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const { errors, navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
     const {
         onSelectFieldChange,
         onDateFieldChange,
         onTextFieldChange,
         onNumberFieldChange
-    } =  OnChangeFields();
+    } = OnChangeFields();
     return (
         <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
@@ -86,13 +88,22 @@ export default function Subscriber() {
                                         label="Gender"
                                         name='genderId'
                                         required
+
+                                        error={
+                                            !!errors.find(
+                                                (error) => error.parameterName === "genderId"
+                                            )
+                                        }
                                         onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriberInfo)}
-                                        >
+                                    >
                                         <MenuItem value={-1}>---Select Gender---</MenuItem>
                                         {genders?.map((gender, key) => (
                                             <MenuItem key={gender.id} value={gender.id}>{gender.genderName}</MenuItem>
                                         ))}
                                     </Select>
+                                    {errors.find(error => error.parameterName === "genderId") && (
+                                        <CustomHelperText children={"Please select gender"} />
+                                    )}
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>
@@ -146,9 +157,25 @@ export default function Subscriber() {
                                 />
                             </Grid>
                             <Grid item xs={5}>
-                                <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
-                                    Submit
-                                </Button>
+                                <CardActions style={{ justifyContent: "center", padding: 5 }}>
+
+                                    <Button onClick={handleSubmit}
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        style={{ marginRight: 12 }}
+                                    >
+                                        Submit
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => navigate("/showsubscribers")}
+                                        fullWidth
+                                    >
+                                        List
+                                    </Button>
+                                </CardActions>
                             </Grid>
                         </Grid>
                     </Paper>

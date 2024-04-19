@@ -21,6 +21,7 @@ import { UserUtility } from '../Utility/UserUtility';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import ShowSubscriberUtility from '../Utility/ShowSubscriberUtility';
 import GenericList from './GenericList';
+import AddButton from '../Generics/Components/Buttons/AddButton';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -64,19 +65,7 @@ export default function ShowSubscriber() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            color="primary"
-                            onClick={() => navigate("/subscriber")}
-                            style={{ alignItems: "right" }}
-                        >
-                        Add 
-                        <AddCircleOutlineRoundedIcon />
-                        </Button>
-                    </div>
-
+                    <AddButton path={"/subscriber"} />
                     <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} />
                 </Box>
             </Box>

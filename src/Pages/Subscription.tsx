@@ -4,12 +4,13 @@ import SubscriberUtility from '../Utility/SubscriberUtility';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
     Paper, Grid, TextField, InputLabel,
-    MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert
+    MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert,
+    CardActions
 } from "@mui/material";
 import SideNav from './HelpingPages/SideNav';
 import SubscriptionUtility from '../Utility/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
-import GenericSnackbar from '../Generics/Snackbar/SnackBar';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
 
 
@@ -18,13 +19,11 @@ import OnChangeFields from '../Generics/OnChangeFields';
 export default function Subscription() {
     const { id = 0 } = useParams();
     const { errors, handleNumberChange, genders, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
-    const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo,setSubscriptionInfo } = SubscriptionUtility(+id);
+    const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo, setSubscriptionInfo } = SubscriptionUtility(+id);
     const {
         onSelectFieldChange,
-        onDateFieldChange,
-        onTextFieldChange,
-        onNumberFieldChange
-    } =  OnChangeFields();
+        onTextFieldChange
+    } = OnChangeFields();
     return (
         <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
@@ -43,7 +42,7 @@ export default function Subscription() {
                                         value={subscriptionInfo.subscriberId.toString()}
                                         label="Select Subscriber"
                                         name='subscriberId'
-                                        disabled = { id != 0}
+                                        disabled={id != 0}
                                         required
                                         onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriptionInfo)}
                                     >
@@ -106,11 +105,12 @@ export default function Subscription() {
                                     name='startDate'
                                     type='date'
                                     value={subscriptionInfo.startDate}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
+                                    // onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
+                                    onChange={handleTextChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <InputLabel id="expiryDate">Select Start Date</InputLabel>
+                                <InputLabel id="expiryDate">Select Expiry Date</InputLabel>
                                 <TextField
                                     fullWidth
                                     id="expiryDate"
@@ -118,14 +118,30 @@ export default function Subscription() {
                                     size="small"
                                     name='expiryDate'
                                     type='date'
-                                    value={subscriptionInfo.expiryDate}
+                                    value={subscriptionInfo.startDate}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
                                 />
                             </Grid>
                             <Grid item xs={5}>
-                                <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
-                                    Submit
-                                </Button>
+                                <CardActions style={{ justifyContent: "center", padding: 5 }}>
+
+                                    <Button onClick={handleSubmit}
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ marginRight: 12 }}
+                                        fullWidth
+                                    >
+                                        Submit
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => navigate("/showsubscriptions")}
+                                        fullWidth
+                                    >
+                                        List
+                                    </Button>
+                                </CardActions>
 
                             </Grid>
                         </Grid>

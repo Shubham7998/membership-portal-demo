@@ -46,7 +46,7 @@ export default function ShowTaxUtility() {
         }
     }
 
-    return { handleDelete, taxInfo, handleEdit }
+    return { navigate,handleDelete, taxInfo, handleEdit }
 }
 
 

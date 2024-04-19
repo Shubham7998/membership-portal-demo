@@ -4,7 +4,8 @@ import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { GetProductByIdAsync } from '../Services/ProductService';
 import { CreateDiscountAsync, GetDiscountByIdAsync, UpdateDiscountAsync } from '../Services/DiscontService';
-import SnackBarGeneric from '../Generics/Snackbar/SnackBarGeneric';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { useNavigate } from 'react-router-dom';
 
 export default function DiscountUtility(id: number) {
 
@@ -14,7 +15,7 @@ export default function DiscountUtility(id: number) {
         discountAmount: 0,
         isDiscountInPercentage: false
     }
-
+    const navigate = useNavigate();
     const [discoutInfo, setDiscountInfo] = useState<DiscountModel>(initialValue);
 
     const newErrors: ParameterErrorModel[] = [];
@@ -57,7 +58,7 @@ export default function DiscountUtility(id: number) {
         setDiscountInfo(prev => ({ ...prev, [name]: value }));
     };
 
-    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity,displaySnackbar } = SnackBarGeneric();
+    const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
 
     useEffect(() => {
         fetchData();
@@ -84,8 +85,6 @@ export default function DiscountUtility(id: number) {
                 if (discoutInfo.id !== 0) {
                     console.log("Update discount info")
                     var response = await UpdateDiscountAsync(discoutInfo, discoutInfo.id);
-                    alert(response.data);
-                    alert("wth")
                     displaySnackbar("Discount updated successfully", "success");
                 }
                 else {
@@ -93,7 +92,10 @@ export default function DiscountUtility(id: number) {
                     await CreateDiscountAsync(discoutInfo);
                     displaySnackbar("Discount added successfully", "success");
                 }
-                setDiscountInfo(initialValue);
+                setTimeout(() => {
+                    navigate(`/showdiscounts`)
+                }, 1000)
+                // setDiscountInfo(initialValue);
             } catch (error) {
                 console.error("Error  in saving Product information:", error);
             }
@@ -112,7 +114,7 @@ export default function DiscountUtility(id: number) {
         }
         if (discoutInfo.discountAmount < 1) {
             newErrors.push({
-                parameterName: "price",
+                parameterName: "discountAmount",
                 errorMessage: "Discount Amount Must be Grater than Zero",
             });
         }
@@ -121,11 +123,12 @@ export default function DiscountUtility(id: number) {
     };
 
     return {
+        navigate,
         handleNumberChange, handleSelectChange,
         handleSubmit, discoutInfo,
         onInputChangeDiscount, errors,
         snackbarOpen, handleSnackbarClose,
-         handleSelectBooleanChange,setDiscountInfo,
+        handleSelectBooleanChange, setDiscountInfo,
         snackbarSeverity, snackbarMessage
     }
 }

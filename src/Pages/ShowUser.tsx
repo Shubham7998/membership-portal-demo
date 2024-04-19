@@ -1,12 +1,13 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import SideNav from './HelpingPages/SideNav';
 import ShowUserUtility from '../Utility/ShowUserUtility';
 import GenericList from './GenericList';
-
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import AddButton from '../Generics/Components/Buttons/AddButton';
 
 export default function ShowUser() {
 
-    const { handleDelete, userInfo, handleEdit } = ShowUserUtility();
+    const { handleDelete, userInfo, handleEdit, navigate } = ShowUserUtility();
 
     ShowAlert();
     function ShowAlert() {
@@ -14,7 +15,7 @@ export default function ShowUser() {
         console.log(userInfo)
     }
 
-  const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Password","Contact No."]
+    const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Password", "Contact No."]
 
 
     return (
@@ -23,8 +24,9 @@ export default function ShowUser() {
             <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
-                <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
+                <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>User List</h1>
+                    <AddButton path={"/user"} />
                     <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
                 </Box>
             </Box>
@@ -33,7 +35,7 @@ export default function ShowUser() {
 }
 
 
-            {/* <Box height={30} />
+{/* <Box height={30} />
             <Box sx={{ display: 'flex', flexDirection: 'horizontal', alignContent: 'center' }}>
                 <SideNav />
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>

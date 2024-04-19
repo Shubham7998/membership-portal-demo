@@ -51,5 +51,5 @@ export default function ShowUserUtility() {
     const handleEdit = (id: number) => {
         navigate(`/user/${id}`)
     }
-    return { handleDelete, userInfo, handleEdit }
+    return { handleDelete, userInfo, handleEdit,navigate }
 }
