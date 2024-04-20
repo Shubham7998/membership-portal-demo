@@ -15,7 +15,7 @@ export default function ShowUser() {
         console.log(userInfo)
     }
 
-    const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Password", "Contact No."]
+    const userDataHeader = ["First Name", "Last Name", "Email", "Password", "Contact No."]
 
 
     return (
@@ -27,7 +27,7 @@ export default function ShowUser() {
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>User List</h1>
                     <AddButton path={"/user"} />
-                    <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+                    {/* <GenericList data={userInfo} dataHeader={userDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} /> */}
                 </Box>
             </Box>
         </>

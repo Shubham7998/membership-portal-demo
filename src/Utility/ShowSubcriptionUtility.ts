@@ -32,8 +32,10 @@ export default function () {
 
     const fetchData = async () => {
         const result = await GetSubscriptionAsync();
-        setSubscriptionInfo(result.data);
+        if(result.data != null){
+            setSubscriptionInfo(result.data);
         console.log(result)
+        }
     }
 
     const handleEdit = (id: number) => {

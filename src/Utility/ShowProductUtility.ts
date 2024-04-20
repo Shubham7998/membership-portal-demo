@@ -71,7 +71,7 @@ export default function ShowProductUtility() {
 
     // const [totalPages, setTotalPages] = useState(0);
     // const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 2;
+    const recordsPerPage = 12;
     // const npage = Math.ceil(totalPages / recordsPerPage);
     // const numbers = [];
     // for (let i = 1; i <= npage; i++) {

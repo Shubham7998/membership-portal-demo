@@ -9,12 +9,7 @@ import { SubscriptionModel } from '../Models/SubscriptionModel';
 import { GetProductAsync } from '../Services/ProductService';
 import { GetDiscountAsync } from '../Services/DiscontService';
 import dayjs, { Dayjs } from 'dayjs';
-import {
-    AutocompleteChangeDetails,
-    AutocompleteChangeReason,
-    SelectChangeEvent,
-    SnackbarOrigin,
-} from "@mui/material";
+import { SelectChangeEvent, } from "@mui/material";
 import { CreateSubscriptionAsync, GetSubscriptionByIdAsync, UpdateSubscriptionAsync } from '../Services/SubscriptionService';
 
 export default function SubscriptionUtility(id: number) {
@@ -63,9 +58,9 @@ export default function SubscriptionUtility(id: number) {
         productId: 0,
         discountId: 0,
         startDate: new Date(),
-        expiryDate: new Date("dd-mm-yy"),
+        expiryDate: new Date(),
         priceAfterDiscount: 0,
-        taxId: 2,
+        taxId: 12,
         cgst: 0,
         sgst: 0,
         totalTaxPercent: 0,
@@ -96,23 +91,33 @@ export default function SubscriptionUtility(id: number) {
 
     async function fetchData() {
         const fetchSubscriberInfo = await GetSubscriberAsync();
-        setSubscriberInfo(fetchSubscriberInfo.data);
-        console.log("fetchSubscriberInfo");
-        console.log(fetchSubscriberInfo);
+        if (fetchSubscriberInfo != null) {
+            setSubscriberInfo(fetchSubscriberInfo.data);
+            console.log("fetchSubscriberInfo");
+            console.log(fetchSubscriberInfo);
 
+        }
         const fetchProductInfo = await GetProductAsync();
-        setProductInfo(fetchProductInfo.data);
-        console.log("fetchProductInfo");
-        console.log(fetchProductInfo)
+        if(fetchProductInfo != null){
+            setProductInfo(fetchProductInfo.data);
+            console.log("fetchProductInfo");
+            console.log(fetchProductInfo)
+        }
 
         const fetchDiscountInfo = await GetDiscountAsync();
-        setDiscountInfo(fetchDiscountInfo.data);
-        console.log("fetchDiscountInfo");
-        console.log(fetchDiscountInfo)
+
+        if(fetchDiscountInfo != null){
+
+            setDiscountInfo(fetchDiscountInfo.data);
+            console.log("fetchDiscountInfo");
+            console.log(fetchDiscountInfo)
+        }
 
         if (id > 0) {
             const result = await GetSubscriptionByIdAsync(id);
-            setSubscriptionInfo(result.data);
+            if(result){
+                setSubscriptionInfo(result.data);
+            }
         }
     }
 
@@ -128,23 +133,23 @@ export default function SubscriptionUtility(id: number) {
         const { name, value } = event.currentTarget;
         setSubscriptionInfo(prev => ({ ...prev, [name]: value }));
 
-        if(name === "startDate"){
+        if (name === "startDate") {
 
-            const date = new Date(value); 
+            const date = new Date(value);
             let startDate: Date = new Date();
             startDate.setDate(date.getDate() + 20);
-            
+
             console.log(startDate)
             console.log(date)
-            const daysToAdd = 7; 
+            const daysToAdd = 7;
             const expiryDate = addDays(startDate, daysToAdd);
-            
+
             console.log(expiryDate);
-            
-            subscriptionInfo.expiryDate = expiryDate;            
+
+            subscriptionInfo.expiryDate = expiryDate;
         }
     }
-    
+
 
     const handleSubmit = async () => {
         alert(JSON.stringify(subscriptionInfo))

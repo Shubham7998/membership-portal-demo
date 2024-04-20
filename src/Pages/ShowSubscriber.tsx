@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Grid, MenuItem, TextField } from '@mui/material';
 import SideNav from './HelpingPages/SideNav';
 import Navbar from './HelpingPages/Navbar';
 import { UserModel } from '../Models/UserModel';
@@ -22,41 +22,35 @@ import ShowUserUtility from '../Utility/ShowUserUtility';
 import ShowSubscriberUtility from '../Utility/ShowSubscriberUtility';
 import GenericList from './GenericList';
 import AddButton from '../Generics/Components/Buttons/AddButton';
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
-
-const StyledTableHead = styled(TableHead)(({ theme }) => ({
-    backgroundColor: '#2196f3', // Blue color
-    color: theme.palette.common.white,
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
-
+import GenericList2 from './HelpingPages/Helpme2';
+import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
+import SearchComponent from '../Generics/Components/SearchComponents/SearchComponent';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import OnChangeFields from '../Generics/OnChangeFields';
+import GenericButton from '../Generics/Components/Buttons/ButtonGeneric';
 
 
 export default function ShowSubscriber() {
 
-    const { navigate, handleDelete, subscriberInfo, handleEdit } = ShowSubscriberUtility();
+    const { handleSorting, handleSnackbarClose,
+        snackbarMessage, snackbarOpen, handleSearchClick,
+        snackbarSeverity, navigate, handleDelete,
+        subscriberInfo, handleEdit, prevPage, nextPage,
+        currentPage, changeCurrentPage, numbers,
+        prevPageDisabled, nextPageDisabled, setSearchSubscriberInfo,
+        handleClear, searchSubscriberInfo } = ShowSubscriberUtility();
 
-    const subscriberDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No.", "Gender"]
+    const {
+        onSelectFieldChange,
+        onDateFieldChange,
+        onTextFieldChange,
+        onNumberFieldChange
+    } = OnChangeFields();
 
+    const subscriberDataHeader = ["First Name", "Last Name", "Contact No.", "Email", "Gender"]
+    const sortColumn = ["firstName", "lastName", "contactNumber", "email", "genderId",];
 
     return (
         <>
@@ -65,8 +59,107 @@ export default function ShowSubscriber() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
-                    <AddButton path={"/subscriber"} />
-                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} />
+
+
+                    <Grid container spacing={2} sx={{marginBottom : 2}}>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="firstName"
+                                name="firstName"
+                                label="First Name"
+                                size='small'
+                                variant="outlined"
+                                autoComplete="off"
+                                //InputLabelProps={{ shrink: subscriberUtility.SubscriberInfo.firstName !==""? true:false }}
+                                inputProps={{ maxLength: 50 }}
+                                value={searchSubscriberInfo.firstName}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="lastName"
+                                name="lastName"
+                                size='small'
+                                label="Last Name"
+                                variant="outlined"
+                                autoComplete="off"
+                                value={searchSubscriberInfo.lastName || ""}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                                inputProps={{ maxLength: 50 }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="email"
+                                name="email"
+                                size='small'
+                                label="Email Address"
+                                variant="outlined"
+                                autoComplete="off"
+                                value={searchSubscriberInfo.email}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="contactNumber"
+                                name="contactNumber"
+                                size='small'
+                                label="Mobile No"
+                                variant="outlined"
+                                value={searchSubscriberInfo.contactNumber}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                                inputProps={{ maxLength: 10 }}
+                            />
+                        </Grid>
+
+                        <Grid item xs={1}>
+                            <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
+                        </Grid>
+                        <Grid item xs={1}>
+                            <GenericButton btnName='Clear' handleSubmit={handleClear} />
+
+                        </Grid>
+                        <Grid item xs={2}>
+                            <AddButton path={"/subscriber"} />
+                        </Grid>
+
+                    </Grid>
+                    {/* <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+
+                        <SearchComponent />
+                        <SearchComponent />
+                        <SearchComponent />
+                    </Box> */}
+
+                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+
                 </Box>
             </Box>
 
@@ -75,35 +168,9 @@ export default function ShowSubscriber() {
     );
 }
 
-{/* <TableContainer component={Paper}>
-    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead  >
-            <TableRow  >
-                <StyledTableCell align="left">Sr. No.</StyledTableCell>
-                <StyledTableCell align="left">First Name </StyledTableCell>
-                <StyledTableCell align="left">Last Name</StyledTableCell>
-                <StyledTableCell align="left">Email</StyledTableCell>
-                <StyledTableCell align="left">Contact No.</StyledTableCell>
-                <StyledTableCell align="left">Gender</StyledTableCell>
-                <StyledTableCell align="left">Delete</StyledTableCell>
-                <StyledTableCell align="left">Edit</StyledTableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {subscriberInfo?.map((subscriber, index) => (
-                <StyledTableRow key={index}>
-                    <StyledTableCell align="left" component="th" scope="row">
-                        {++index}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">{subscriber.firstName}</StyledTableCell>
-                    <StyledTableCell align="left">{subscriber.lastName}</StyledTableCell>
-                    <StyledTableCell align="left">{subscriber.email}</StyledTableCell>
-                    <StyledTableCell align="left">{subscriber.contactNumber}</StyledTableCell>
-                    <StyledTableCell align="left">{subscriber.genderId}</StyledTableCell>
-                    <StyledTableCell align="left" onClick={() => handleDelete(subscriber.id)}><DeleteIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                    <StyledTableCell align="left" onClick={() => handleEdit(subscriber.id)}><EditIcon color="primary" sx={{ cursor: 'pointer' }} /></StyledTableCell>
-                </StyledTableRow>
-            ))}
-        </TableBody>
-    </Table>
-</TableContainer> */}
+{/* <GenericSnackbar
+                            open={snackbarOpen}
+                            onClose={handleSnackbarClose}
+                            severity={snackbarSeverity}
+                            message={snackbarMessage}
+                        /> */}

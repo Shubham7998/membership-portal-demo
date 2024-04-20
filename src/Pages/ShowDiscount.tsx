@@ -11,7 +11,7 @@ import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 export default function ShowDiscount() {
 
     const { navigate, handleDelete, discountInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled } = ShowDiscountUtility();
-    const discountDataHeader = ["Sr. No.", "Discount Code", "Discount Amount", "IsDiscountInPercentage"]
+    const discountDataHeader = ["Discount Code", "Discount Amount", "IsDiscountInPercentage"]
 
     console.log("discount info")
     console.log(discountInfo)
@@ -24,7 +24,7 @@ export default function ShowDiscount() {
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Discount List</h1>
                     <AddButton path={"/discount"} />
-                    <GenericList data={discountInfo} dataHeader={discountDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
+                    {/* <GenericList data={discountInfo} dataHeader={discountDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} /> */}
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
                     {/* <GenericSnackbar /> */}
                 </Box>

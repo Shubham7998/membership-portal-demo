@@ -44,7 +44,6 @@ export default function Tax() {
                                         required
                                         onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setTaxInfo)}
                                     >
-                                        {/* <MenuItem value={""}>Select State name</MenuItem> */}
                                         {taxInfo.stateName === "" ?
                                             <MenuItem value="">Select State name</MenuItem> :
                                             <MenuItem value={taxInfo.stateName}>{taxInfo.stateName}</MenuItem>
@@ -65,6 +64,7 @@ export default function Tax() {
                                     placeholder="Type a number…"
                                     label="CGST %"
                                     variant="outlined"
+                                    defaultValue={""}
                                     autoComplete="off"
                                     inputProps={{ maxLength: 100 }}
                                     value={taxInfo.cgst}
