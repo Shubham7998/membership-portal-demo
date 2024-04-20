@@ -56,11 +56,10 @@ export default function ShowDiscountUtility() {
 
 
         const result = await GetAllAsync(searchDiscountInfo, tableName,currentPage, recordsPerPage, columnName, sortOrder);
-        console.log("result")
+        console.log(searchDiscountInfo, tableName,currentPage, recordsPerPage, columnName, sortOrder)
         console.log(columnName)
         if(result != null){
             setDiscountInfo(result.dataArray);
-           // setTotalPages(result.totalPages);
         }
     }
     const handleClear = () => {

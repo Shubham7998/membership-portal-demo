@@ -1,26 +1,28 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../appStore';
 import HomeIcon from '@mui/icons-material/Home';
+import PeopleIcon from '@mui/icons-material/People';
+import PersonIcon from '@mui/icons-material/Person';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import MailIcon from '@mui/icons-material/Mail';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import { CssBaseline, List } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -54,12 +56,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-
-
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
@@ -79,11 +75,27 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function SideNav() {
   const theme = useTheme();
- // const [open, setOpen] = React.useState(false);
- const updateOpen = useAppStore((state : any)=> state.updateOpen);
- const dOpen = useAppStore((state : any)=> state.dOpen);
+  const updateOpen = useAppStore((state : any) => state.updateOpen);
+  const dOpen = useAppStore((state : any) => state.dOpen);
   const isOpen = typeof dOpen === 'boolean' ? dOpen : false;
   const navigate = useNavigate();
+
+  const menuItems = [
+    { label: 'Home', icon: <HomeIcon />, route: '/' },
+    { label: 'Users', icon: <PeopleIcon />, route: '/user' },
+    { label: 'Show Users', icon: <ViewListIcon />, route: '/showusers' },
+    { label: 'Subscribers', icon: <PersonIcon />, route: '/subscriber' },
+    { label: 'Show Subscribers', icon: <ViewListIcon />, route: '/showsubscribers' },
+    { label: 'Products', icon: <LocalMallIcon />, route: '/product' },
+    { label: 'Show Products', icon: <ViewListIcon />, route: '/showproducts' },
+    { label: 'Discounts', icon: <AttachMoneyIcon />, route: '/discount' },
+    { label: 'Show Discounts', icon: <ViewListIcon />, route: '/showdiscounts' },
+    { label: 'Taxes', icon: <MonetizationOnIcon />, route: '/tax' },
+    { label: 'Show Taxes', icon: <ViewListIcon />, route: '/showtaxes' },
+    { label: 'Subscriptions', icon: <SubscriptionsIcon />, route: '/subscription' },
+    { label: 'Show Subscriptions', icon: <ViewListIcon />, route: '/showsubscriptions' },
+    { label: 'Tables', icon: <TableChartIcon />, route: '/table' },
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -96,7 +108,13 @@ export default function SideNav() {
           </IconButton>
         </DrawerHeader>
         <List>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/')}>
+          {menuItems.map((item, index) => (
+            <ListItem
+              key={index}
+              disablePadding
+              sx={{ display: 'block', '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.08)' } }}
+              onClick={() => navigate(item.route)}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -111,277 +129,14 @@ export default function SideNav() {
                     justifyContent: 'center',
                   }}
                 >
-                 <HomeIcon />
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary="Home" sx={{ opacity: isOpen ? 1 : 0 }} />
+                <ListItemText primary={item.label} sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/user')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="User" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showusers')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Show User" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/subscriber')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Subscriber" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showsubscribers')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Show Subscriber" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/product')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Product" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showproducts')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Show Products" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/discount')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Discount" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showdiscounts')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Show Discount" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/tax')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tax" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showtaxes')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Show tax" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/subscription')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Subscription" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/showsubscriptions')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Show Subscriptions" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate('/table')}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isOpen ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                 <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Table" sx={{ opacity: isOpen ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+          ))}
         </List>
-        
-        
       </Drawer>
-      
     </Box>
   );
 }

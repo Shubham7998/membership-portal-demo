@@ -25,7 +25,6 @@ export default function ShowSubscriberUtility() {
     const recordsPerPage = 5;
     const { npage,setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);
     const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
-    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [searchMode, setSearchMode] = useState(false);
     const tableName = 'subscriber';
     useEffect(() => {
@@ -90,17 +89,12 @@ export default function ShowSubscriberUtility() {
         alert("Handle search cleck")
         searchData();
         setSearchMode(true);
-        setIsButtonEnabled(!isButtonEnabled);
         
       };
-    // if(currentPage == 1){
-    //     displaySnackbar("You are on first page \nPrevious is disabled","error");
-    // }else if(currentPage == npage){
-    //     displaySnackbar("You are on last page \nPrevious is disabled","error");
-    // }
+    
 
     return {handleSorting, handleDelete, subscriberInfo, handleEdit ,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, snackbarOpen,
-        handleSnackbarClose,searchSubscriberInfo,
+        handleSnackbarClose,searchSubscriberInfo,searchMode,
         snackbarMessage,handleClear,setSearchSubscriberInfo,
         snackbarSeverity,handleSearchClick}
 

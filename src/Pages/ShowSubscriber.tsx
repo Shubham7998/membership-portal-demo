@@ -38,7 +38,7 @@ export default function ShowSubscriber() {
         snackbarMessage, snackbarOpen, handleSearchClick,
         snackbarSeverity, navigate, handleDelete,
         subscriberInfo, handleEdit, prevPage, nextPage,
-        currentPage, changeCurrentPage, numbers,
+        currentPage, changeCurrentPage, numbers,searchMode,
         prevPageDisabled, nextPageDisabled, setSearchSubscriberInfo,
         handleClear, searchSubscriberInfo } = ShowSubscriberUtility();
 
@@ -145,7 +145,7 @@ export default function ShowSubscriber() {
                             <AddButton path={"/subscriber"} />
                         </Grid>
                     </Grid>
-                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                    <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
                 </Box>
             </Box>

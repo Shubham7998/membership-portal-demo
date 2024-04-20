@@ -76,7 +76,7 @@ export default function GenericList(
                         <TableRow >
                             <StyledTableCell align="left">Sr No</StyledTableCell>
                             {dataHeader.map((data, index) => (
-                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left" sx={{cursor : "pointer"}}>{data}<span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
+                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="center" sx={{cursor : "pointer"}}>{data} <span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
                             ))}
                             {!isSearchMode ? handleButtons.map((btn, index) => (
                                 <StyledTableCell key={index} align="left">{btn}</StyledTableCell>

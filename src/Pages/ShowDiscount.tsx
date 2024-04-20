@@ -18,7 +18,7 @@ export default function ShowDiscount() {
         nextPageDisabled, handleSearchClick, handleClear,
         handleSorting, searchDiscountInfo, setSearchDiscountInfo } = ShowDiscountUtility();
     const discountDataHeader = ["Discount Code", "Discount Amount", "IsDiscountInPercentage"]
-    const sortColumn = ["discountCode", "discountAmount"];
+    const sortColumn = ["discountCode", "discountAmount","id"];
 
     const {
         onTextFieldChange,
