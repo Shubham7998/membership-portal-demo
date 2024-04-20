@@ -49,7 +49,12 @@ export default function ShowDiscountUtility() {
         }
     }
 
+<<<<<<< HEAD
+    return { handleDelete, discountInfo, handleEdit,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  }
+    
+=======
     return { handleDelete, discountInfo, handleEdit, navigate, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, }
+>>>>>>> 1f98b1a4779b94c1ae2f745293d17ec89d989b7c
 }
 
 
