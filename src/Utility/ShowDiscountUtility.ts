@@ -50,6 +50,7 @@ export default function ShowDiscountUtility() {
     }
 
     return { handleDelete, discountInfo, handleEdit,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled,  }
+    
 }
 
 
