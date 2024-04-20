@@ -192,7 +192,7 @@ export const GetPaginatedAdvanceSubscriberAsync = async (page: number = 0, pageS
 
     return paginatedResult;
 };
-export const GetPaginatedAdvanceSearchSortingSubscriberAsync = async (page: number = 0, pageSize: number = 5, sortColumn: string = "", sortOrder: string = "asc", subscriberInfo: SubscriberModel): Promise<PaginatedModel> => {
+export const GetPaginatedAdvanceSearchSortingSubscriberAsync = async (page: number = 1, pageSize: number = 5, sortColumn: string = "", sortOrder: string = "asc", subscriberInfo: SubscriberModel): Promise<PaginatedModel> => {
     let result: ResponseModel = {
         error: "",
         data: null,

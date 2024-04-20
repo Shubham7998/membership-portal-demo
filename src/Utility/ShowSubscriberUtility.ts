@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { handleSwirl } from '../Generics/Swirl';
 import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
 import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { GetAllAsync } from '../Generics/Services/GenericService';
 
 export default function ShowSubscriberUtility() {
     const initialValue: SubscriberModel = {
@@ -17,10 +18,8 @@ export default function ShowSubscriberUtility() {
         genderName: ''
     }
 
-    const [searchSubscriberInfo, setSearchSubscriberInfo] = useState<SubscriberModel>(initialValue);
-
     const navigate = useNavigate();
-
+    const [searchSubscriberInfo, setSearchSubscriberInfo] = useState<SubscriberModel>(initialValue);
     const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
 
     const recordsPerPage = 5;
@@ -28,14 +27,14 @@ export default function ShowSubscriberUtility() {
     const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [searchMode, setSearchMode] = useState(false);
-    
+    const tableName = 'subscriber';
     useEffect(() => {
         fetchData();
         console.log("use effect")
     }, [currentPage])
 
     async function fetchData() {
-        const result = await GetPaginatedAdvanceSearchSortingSubscriberAsync(currentPage,recordsPerPage,"firstName","desc",initialValue);
+        const result = await GetAllAsync(initialValue, tableName,currentPage, recordsPerPage, "id", "asc");
         
         if(result != null){
             setSubscriberInfo(result.dataArray);
@@ -58,10 +57,9 @@ export default function ShowSubscriberUtility() {
     }
 
     const handleSorting = async (columnName : string, sortOrder : string) => {
-        // const result = await GetSubscriberSortedAsync(columnName, sortOrder);
 
-        const result = await GetPaginatedAdvanceSearchSortingSubscriberAsync(currentPage,recordsPerPage,columnName,sortOrder,initialValue);
 
+        const result = await GetAllAsync(searchSubscriberInfo, tableName,currentPage, recordsPerPage, columnName, sortOrder);
         console.log("result")
         console.log(columnName)
         if(result != null){
@@ -98,8 +96,8 @@ export default function ShowSubscriberUtility() {
         // }
 
         alert(JSON.stringify(searchSubscriberInfo));
-    
-        const  result = await GetPaginatedAdvanceSearchSortingSubscriberAsync(currentPage,recordsPerPage,"firstName","asc", searchSubscriberInfo);
+        const result = await GetAllAsync(searchSubscriberInfo, tableName,currentPage, recordsPerPage, "id", "asc");
+
         console.log(result)
         setSubscriberInfo(result.dataArray);
         setTotalPages(result.totalPages);

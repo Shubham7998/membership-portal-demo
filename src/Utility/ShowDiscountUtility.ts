@@ -25,9 +25,6 @@ export default function ShowDiscountUtility() {
     }, [currentPage])
 
     async function fetchData() {
-        // const result = await GetDiscountAsync();
-        // setDiscountInfo(result.data);
-        // console.log(result);
 
         const result = await GetPaginatedAdvanceDiscountAsync(currentPage, recordsPerPage, initialValue);
         if (result != null) {

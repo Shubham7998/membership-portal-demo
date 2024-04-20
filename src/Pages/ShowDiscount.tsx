@@ -12,7 +12,8 @@ export default function ShowDiscount() {
 
     const { navigate, handleDelete, discountInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled } = ShowDiscountUtility();
     const discountDataHeader = ["Discount Code", "Discount Amount", "IsDiscountInPercentage"]
-
+    const sortColumn = ["discountCode", "discountAmount", "isDiscountInPercentage"];
+    
     console.log("discount info")
     console.log(discountInfo)
     return (

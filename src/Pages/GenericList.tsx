@@ -18,7 +18,7 @@ import { useState } from 'react';
 
 
 const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
-const productDataHeader = [ "Product Name", "Product Price"]
+const productDataHeader = ["Product Name", "Product Price"]
 
 
 const handleButtons = ["Edit", "Delete"];
@@ -54,15 +54,17 @@ interface GenericListProps {
 }
 
 
-export default function GenericList2({ data, handleDelete, handleEdit, dataHeader, isSearchMode, tableName, handleSorting }: GenericListProps) {
+export default function GenericList(
+    {
+        data, handleDelete, handleEdit,
+        dataHeader, isSearchMode, tableName, handleSorting
+    }: GenericListProps) {
+
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-    function handleSort(data: string): void {
-        const normalizedColumnName = data.toLowerCase().replace(/\s+/g, '');
-
-        console.log(normalizedColumnName);
+    function handleSort(tableName: string): void {
         setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-        handleSorting(data, sortOrder);
+        handleSorting(tableName, sortOrder);
     }
 
     return (

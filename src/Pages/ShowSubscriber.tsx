@@ -61,7 +61,7 @@ export default function ShowSubscriber() {
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
 
 
-                    <Grid container spacing={2} sx={{marginBottom : 2}}>
+                    <Grid container spacing={2} sx={{ marginBottom: 2 }}>
                         <Grid item xs={2}>
                             <TextField
                                 fullWidth
@@ -137,29 +137,18 @@ export default function ShowSubscriber() {
                                 inputProps={{ maxLength: 10 }}
                             />
                         </Grid>
-
-                        <Grid item xs={1}>
+                        <Grid item xs={1.2}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>
-                        <Grid item xs={1}>
+                        <Grid item xs={1.2}>
                             <GenericButton btnName='Clear' handleSubmit={handleClear} />
-
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={1.6}>
                             <AddButton path={"/subscriber"} />
                         </Grid>
-
                     </Grid>
-                    {/* <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-
-                        <SearchComponent />
-                        <SearchComponent />
-                        <SearchComponent />
-                    </Box> */}
-
                     <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
-
                 </Box>
             </Box>
 
