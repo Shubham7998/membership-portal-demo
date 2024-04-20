@@ -76,7 +76,7 @@ export default function GenericList(
                         <TableRow >
                             <StyledTableCell align="left">Sr No</StyledTableCell>
                             {dataHeader.map((data, index) => (
-                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left">{data}<span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
+                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="left" sx={{cursor : "pointer"}}>{data}<span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
                             ))}
                             {!isSearchMode ? handleButtons.map((btn, index) => (
                                 <StyledTableCell key={index} align="left">{btn}</StyledTableCell>
@@ -89,14 +89,29 @@ export default function GenericList(
                                 <StyledTableCell align="left">
                                     {++index}
                                 </StyledTableCell>
-                                {Object.entries(item).map(([key, value]: any, idx) => (
-                                    key !== "id" && key != "productId" &&
-                                    key != "discountId" && key != 'priceAfterDiscount'
-                                    && key != 'taxId' && key != 'genderId' &&
-                                    <StyledTableCell key={idx} align="left">
-                                        {value}
-                                    </StyledTableCell>
-                                ))}
+                                {Object.entries(item).map(([key, value]: any, idx) => {
+                                    if (
+                                        key !== "id" &&
+                                        key !== "discountId" &&
+                                        key !== "taxId" &&
+                                        key !== "productId" &&
+                                        key !== "genderId"
+                                    ) {
+                                        if (key === "isDiscountInPercentage") {
+                                            return (
+                                                <StyledTableCell key={idx} align="center">
+                                                    {value ? "true" : "false"}
+                                                </StyledTableCell>
+                                            );
+                                        } else {
+                                            return (
+                                                <StyledTableCell key={idx} align="center">
+                                                    {value}
+                                                </StyledTableCell>
+                                            );
+                                        }
+                                    }
+                                })}
                                 {!isSearchMode && (
                                     <StyledTableCell align="left">
                                         <EditIcon onClick={() => handleEdit(item.id)} color="primary" sx={{ cursor: 'pointer' }} />

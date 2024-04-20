@@ -43,10 +43,8 @@ export default function ShowSubscriber() {
         handleClear, searchSubscriberInfo } = ShowSubscriberUtility();
 
     const {
-        onSelectFieldChange,
-        onDateFieldChange,
         onTextFieldChange,
-        onNumberFieldChange
+        
     } = OnChangeFields();
 
     const subscriberDataHeader = ["First Name", "Last Name", "Contact No.", "Email", "Gender"]

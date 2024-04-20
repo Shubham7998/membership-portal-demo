@@ -117,7 +117,7 @@ export const GetInfoById = async (
     return result;
 };
 
-export const GetAllAsync = async (subscriberInfo: UserModel | ProductModel | SubscriberModel | DiscountModel | TaxModel | GenderModel,
+export const GetAllAsync = async (data: UserModel | ProductModel | SubscriberModel | DiscountModel | TaxModel | GenderModel,
     tableName: string,
     currentPage: number,
     pageSize: number,
@@ -135,8 +135,8 @@ export const GetAllAsync = async (subscriberInfo: UserModel | ProductModel | Sub
         dataArray: null,
         totalPages: 0
     }
-    try {///api/subscriber/paginatedsorting?page=0&pageSize=0&sortColumn=string&sortOrder=string
-        const response = await axios.post(`${API_URL}${tableName}/paginatedsorting?page=${currentPage}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`, subscriberInfo);
+    try {
+        const response = await axios.post(`${API_URL}${tableName}/paginatedsorting?page=${currentPage}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`, data);
         if (result != null) {
             paginatedResult.dataArray = response.data.dataArray;
             paginatedResult.totalPages = response.data.totalPages;
@@ -150,36 +150,6 @@ export const GetAllAsync = async (subscriberInfo: UserModel | ProductModel | Sub
     } catch (error) {
         handleError(error, result);
     }
-    return paginatedResult;
-};
-
-
-export const GetPaginatedAdvanceAsync = async (page: number = 0, pageSize: number = 5, Info: any, parameter: any): Promise<PaginatedModel> => {
-    let result: ResponseModel = {
-        error: "",
-        data: null,
-        message: "",
-        errorCode: "",
-    };
-
-    let paginatedResult: PaginatedModel = {
-        dataArray: null,
-        totalPages: 0
-    }
-    try {
-        const response = await axios.post(`${API_URL}/${parameter}/paginated?page=${page}&pageSize=${pageSize}`, Info);
-        paginatedResult.dataArray = response.data.dataArray;
-        paginatedResult.totalPages = response.data.totalPages;
-
-        console.log(paginatedResult)
-
-        console.log(response);
-
-        result.errorCode = response.status + "";
-    } catch (error) {
-        handleError(error, result);
-    }
-
     return paginatedResult;
 };
 

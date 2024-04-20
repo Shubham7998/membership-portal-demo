@@ -77,24 +77,6 @@ export default function ShowSubscriberUtility() {
         // var find = "";
     
         alert("Handle search data")
-
-        // console.log(searchSubscriberInfo.firstName !== "");
-        // if (searchSubscriberInfo.firstName !== "") {
-        //   find = searchSubscriberInfo.firstName;
-        //   console.log(find);
-        // }
-        // if (searchSubscriberInfo.lastName !== "") {
-        //   find = searchSubscriberInfo.lastName;
-        // }
-        // if (searchSubscriberInfo.contactNumber !== "") {
-        //   count += 1;
-        //   find = searchSubscriberInfo.contactNumber;
-        // }
-        // if (searchSubscriberInfo.email !== "") {
-        //   count += 1;
-        //   find = searchSubscriberInfo.email;
-        // }
-
         alert(JSON.stringify(searchSubscriberInfo));
         const result = await GetAllAsync(searchSubscriberInfo, tableName,currentPage, recordsPerPage, "id", "asc");
 
