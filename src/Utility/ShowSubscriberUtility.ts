@@ -17,15 +17,18 @@ export default function ShowSubscriberUtility() {
         genderName: ''
     }
 
-    const [searchSubscriberInfo, setSearchSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
+    const [searchSubscriberInfo, setSearchSubscriberInfo] = useState<SubscriberModel>(initialValue);
 
     const navigate = useNavigate();
 
     const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([initialValue]);
+
     const recordsPerPage = 5;
     const { npage,setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);
     const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
-
+    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+    const [searchMode, setSearchMode] = useState(false);
+    
     useEffect(() => {
         fetchData();
         console.log("use effect")
@@ -37,7 +40,6 @@ export default function ShowSubscriberUtility() {
         if(result != null){
             setSubscriberInfo(result.dataArray);
             setTotalPages(result.totalPages);
-            setSearchSubscriberInfo(result.dataArray);
         }
     }
 
@@ -67,7 +69,50 @@ export default function ShowSubscriberUtility() {
             setTotalPages(result.totalPages);
         }
     }
+    const handleClear = () => {
+        setSearchSubscriberInfo(initialValue);
+        fetchData();
+    
+      };
 
+      async function searchData() {
+        // var find = "";
+    
+        alert("Handle search data")
+
+        // console.log(searchSubscriberInfo.firstName !== "");
+        // if (searchSubscriberInfo.firstName !== "") {
+        //   find = searchSubscriberInfo.firstName;
+        //   console.log(find);
+        // }
+        // if (searchSubscriberInfo.lastName !== "") {
+        //   find = searchSubscriberInfo.lastName;
+        // }
+        // if (searchSubscriberInfo.contactNumber !== "") {
+        //   count += 1;
+        //   find = searchSubscriberInfo.contactNumber;
+        // }
+        // if (searchSubscriberInfo.email !== "") {
+        //   count += 1;
+        //   find = searchSubscriberInfo.email;
+        // }
+
+        alert(JSON.stringify(searchSubscriberInfo));
+    
+        const  result = await GetPaginatedAdvanceSearchSortingSubscriberAsync(currentPage,recordsPerPage,"firstName","asc", searchSubscriberInfo);
+        console.log(result)
+        setSubscriberInfo(result.dataArray);
+        setTotalPages(result.totalPages);
+        
+      }
+    
+      const handleSearchClick = () => {
+        alert("Handle search cleck")
+        searchData();
+        setSearchMode(true);
+        setIsButtonEnabled(!isButtonEnabled);
+        
+      };
     // if(currentPage == 1){
     //     displaySnackbar("You are on first page \nPrevious is disabled","error");
     // }else if(currentPage == npage){
@@ -76,8 +121,8 @@ export default function ShowSubscriberUtility() {
 
     return {handleSorting, handleDelete, subscriberInfo, handleEdit ,navigate,prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, snackbarOpen,
         handleSnackbarClose,searchSubscriberInfo,
-        snackbarMessage,
-        snackbarSeverity}
+        snackbarMessage,handleClear,setSearchSubscriberInfo,
+        snackbarSeverity,handleSearchClick}
 
 }
 

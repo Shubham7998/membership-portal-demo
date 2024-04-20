@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { Box, Button, Grid, MenuItem, TextField } from '@mui/material';
 import SideNav from './HelpingPages/SideNav';
 import Navbar from './HelpingPages/Navbar';
 import { UserModel } from '../Models/UserModel';
@@ -27,13 +27,27 @@ import PaginationComponent from '../Generics/Components/Pagination/PaginationCom
 import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
 import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import SearchComponent from '../Generics/Components/SearchComponents/SearchComponent';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import OnChangeFields from '../Generics/OnChangeFields';
+import GenericButton from '../Generics/Components/Buttons/ButtonGeneric';
 
 
 export default function ShowSubscriber() {
 
     const { handleSorting, handleSnackbarClose,
-        snackbarMessage, snackbarOpen,
-        snackbarSeverity, navigate, handleDelete, subscriberInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, searchSubscriberInfo } = ShowSubscriberUtility();
+        snackbarMessage, snackbarOpen, handleSearchClick,
+        snackbarSeverity, navigate, handleDelete,
+        subscriberInfo, handleEdit, prevPage, nextPage,
+        currentPage, changeCurrentPage, numbers,
+        prevPageDisabled, nextPageDisabled, setSearchSubscriberInfo,
+        handleClear, searchSubscriberInfo } = ShowSubscriberUtility();
+
+    const {
+        onSelectFieldChange,
+        onDateFieldChange,
+        onTextFieldChange,
+        onNumberFieldChange
+    } = OnChangeFields();
 
     const subscriberDataHeader = ["First Name", "Last Name", "Contact No.", "Email", "Gender"]
     const sortColumn = ["firstName", "lastName", "contactNumber", "email", "genderId",];
@@ -45,46 +59,107 @@ export default function ShowSubscriber() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscriber List</h1>
-                    <AddButton path={"/subscriber"} />
-
-                    <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
 
 
-                        {/* Second version with searchSubscriberInfo */}
-                        {subscriberDataHeader.map((header, index) => (
+                    <Grid container spacing={2} sx={{marginBottom : 2}}>
+                        <Grid item xs={2}>
                             <TextField
-                                key={index}
-                                select
-                                label={header}
-                                // value={filterValues[index]}
-                                // onChange={(e) => handleFilterChange(index, e.target.value)}
+                                fullWidth
+                                id="firstName"
+                                name="firstName"
+                                label="First Name"
+                                size='small'
                                 variant="outlined"
-                                style={{ minWidth: '150px' }}
-                            >
-                                <MenuItem value="">All</MenuItem>
-                                {searchSubscriberInfo.map((option, idx) => (
-                                    <MenuItem key={idx} value={option.id}>
-                                        {option.lastName}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        ))}
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                                autoComplete="off"
+                                //InputLabelProps={{ shrink: subscriberUtility.SubscriberInfo.firstName !==""? true:false }}
+                                inputProps={{ maxLength: 50 }}
+                                value={searchSubscriberInfo.firstName}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="lastName"
+                                name="lastName"
+                                size='small'
+                                label="Last Name"
+                                variant="outlined"
+                                autoComplete="off"
+                                value={searchSubscriberInfo.lastName || ""}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                                inputProps={{ maxLength: 50 }}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="email"
+                                name="email"
+                                size='small'
+                                label="Email Address"
+                                variant="outlined"
+                                autoComplete="off"
+                                value={searchSubscriberInfo.email}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <TextField
+                                fullWidth
+                                id="contactNumber"
+                                name="contactNumber"
+                                size='small'
+                                label="Mobile No"
+                                variant="outlined"
+                                value={searchSubscriberInfo.contactNumber}
+                                onChange={(e) =>
+                                    onTextFieldChange(
+                                        e,
+                                        setSearchSubscriberInfo
+                                    )
+                                }
+                                inputProps={{ maxLength: 10 }}
+                            />
+                        </Grid>
+
+                        <Grid item xs={1}>
+                            <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
+                        </Grid>
+                        <Grid item xs={1}>
+                            <GenericButton btnName='Clear' handleSubmit={handleClear} />
+
+                        </Grid>
+                        <Grid item xs={2}>
+                            <AddButton path={"/subscriber"} />
+                        </Grid>
+
+                    </Grid>
+                    {/* <Box sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
 
                         <SearchComponent />
                         <SearchComponent />
                         <SearchComponent />
-                    </Box>
+                    </Box> */}
 
                     <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
-                    {/* <GenericSnackbar
-                            open={snackbarOpen}
-                            onClose={handleSnackbarClose}
-                            severity={snackbarSeverity}
-                            message={snackbarMessage}
-                        /> */}
+
                 </Box>
             </Box>
 
@@ -92,3 +167,10 @@ export default function ShowSubscriber() {
         </>
     );
 }
+
+{/* <GenericSnackbar
+                            open={snackbarOpen}
+                            onClose={handleSnackbarClose}
+                            severity={snackbarSeverity}
+                            message={snackbarMessage}
+                        /> */}
