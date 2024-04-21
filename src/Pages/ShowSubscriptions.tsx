@@ -9,13 +9,35 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import AddButton from '../Generics/Components/Buttons/AddButton';
 export default function ShowSubscriptions() {
 
-    const { navigate, subscriptionInfo, handleEdit, handleDelete } = ShowSubcriptionUtility();
+    const { handleSorting, handleDelete, subscriptionInfo, 
+        handleEdit ,navigate,prevPage, nextPage, currentPage,
+         changeCurrentPage, numbers, prevPageDisabled,
+          nextPageDisabled, snackbarOpen,
+        handleSnackbarClose,searchSubscriptionInfo,searchMode,
+        snackbarMessage,handleClear,setSearchSubscriptionInfo,
+        snackbarSeverity,handleSearchClick } = ShowSubcriptionUtility();
 
     const subscriptionDataHeader = ["Subscriber Id", "Product Name",
         "Product Price", "Discount Code", "Discount Amount", "Start Date",
-        "Expiry Date", "CGST%", "SGST%", "Total tax Percent",
+        "Expiry Date","Price After Discount","CGST%", "SGST%", "Total tax Percent",
         "Tax Amount", "Final Amount"
     ];
+
+    const sortColumn = [
+        "subscriberId",
+        "productName",
+        "Price",
+        "discountCode",
+        "discountAmount",
+        "startDate",
+        "expiryDate",
+        "priceDiscount",
+        "cgst",
+        "sgst",
+        "totalTaxPercentage",
+        "taxAmount",
+        "finalAmount",
+      ];
     
     return (
         <>
@@ -25,10 +47,10 @@ export default function ShowSubscriptions() {
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Subscription List</h1>
                     <AddButton path={"/subscription"} />
-                    {/* {subscriptionInfo === null ?
-                        <GenericList data={subscriptionInfo} dataHeader={subscriptionDataHeader} handleEdit={handleEdit} handleDelete={handleDelete} isSearchMode={false} />
-                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
-                    } */}
+                     {/* {subscriptionInfo === null ? */}
+                    <GenericList data={subscriptionInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={subscriptionDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                    {/* :<h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
+                    }  */}
                 </Box>
             </Box>
         </>

@@ -60,7 +60,7 @@ export default function SubscriptionUtility(id: number) {
         startDate: new Date(),
         expiryDate: new Date(),
         priceAfterDiscount: 0,
-        taxId: 12,
+        taxId: 4,
         cgst: 0,
         sgst: 0,
         totalTaxPercent: 0,
@@ -74,13 +74,13 @@ export default function SubscriptionUtility(id: number) {
         return endDate;
     }
 
-    // Example usage:
     const startDate = new Date(); // Your starting date
     const daysToAdd = 7; // Number of days to add
     const expiryDate = addDays(startDate, daysToAdd);
     console.log(expiryDate);
 
     const [subscriptionInfo, setSubscriptionInfo] = useState<SubscriptionModel>(initialValueSubscription)
+    
     const navigate = useNavigate();
 
 

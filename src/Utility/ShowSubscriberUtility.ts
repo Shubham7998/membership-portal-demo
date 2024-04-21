@@ -42,7 +42,7 @@ export default function ShowSubscriberUtility() {
     }
 
     const handleEdit = (id: number) => {
-        navigate(`/subscriber/${id}`)
+        navigate(`/${tableName}/${id}`)
     }
     
     const handleDelete = async (id: number) => {

@@ -8,6 +8,7 @@ import { SubscriberModel } from "../../Models/SubscriberModel";
 import { TaxModel } from "../../Models/TaxModel";
 import { UserModel } from "../../Models/UserModel";
 import API_URL from "../URL_Config";
+import { SubscriptionModel } from "../../Models/SubscriptionModel";
 
 interface GenericServiceProps {
     data?: UserModel[] | ProductModel[] | SubscriberModel[] | DiscountModel[] | TaxModel[] | GenderModel[];
@@ -117,7 +118,7 @@ export const GetInfoById = async (
     return result;
 };
 
-export const GetAllAsync = async (data: UserModel | ProductModel | SubscriberModel | DiscountModel | TaxModel | GenderModel,
+export const GetAllAsync = async (data: UserModel | ProductModel | SubscriberModel | DiscountModel | TaxModel | GenderModel | SubscriptionModel,
     tableName: string,
     currentPage: number,
     pageSize: number,
@@ -135,12 +136,17 @@ export const GetAllAsync = async (data: UserModel | ProductModel | SubscriberMod
         dataArray: null,
         totalPages: 0
     }
+
+    const URL = `${API_URL}${tableName}/paginatedsorting?page=${currentPage}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
+    // alert(URL)
+    console.log(data)
     try {
-        const response = await axios.post(`${API_URL}${tableName}/paginatedsorting?page=${currentPage}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`, data);
+        const response = await axios.post(URL, data);
         if (result != null) {
             paginatedResult.dataArray = response.data.dataArray;
             paginatedResult.totalPages = response.data.totalPages;
 
+            console.log("paginated result")
             console.log(paginatedResult)
 
             console.log(response);
