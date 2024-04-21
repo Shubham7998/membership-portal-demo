@@ -7,22 +7,22 @@ import Home from './Pages/HelpingPages/Home';
 import Settings from './Pages/HelpingPages/Settings';
 import About from './Pages/HelpingPages/About';
 import Layout from './Pages/HelpingPages/Layout';
-import User from './Pages/User';
-import ShowUser from './Pages/ShowUser';
-import Subscriber from './Pages/Subscriber';
+import User from './Pages/CreatePages/User';
+import ShowUser from './Pages/ShowLists/ShowUser';
+import Subscriber from './Pages/CreatePages/Subscriber';
 import HelperComponents from './Pages/HelperComponents';
-import ShowSubscriber from './Pages/ShowSubscriber';
+import ShowSubscriber from './Pages/ShowLists/ShowSubscriber';
 import Helpme2 from './Pages/HelpingPages/Helpme2';
-import ShowProduct from './Pages/HelpingPages/ShowProduct';
-import Product from './Pages/Product';
+import ShowProduct from './Pages/ShowLists/ShowProduct';
+import Product from './Pages/CreatePages/Product';
 import { TablePaginationActions } from './Helptxt/TableComp';
-import Discount from './Pages/Discount';
-import GenericList from './Pages/GenericList';
-import ShowDiscount from './Pages/ShowDiscount';
-import ShowTax from './Pages/ShowTax';
-import Tax from './Pages/Tax';
-import Subscription from './Pages/Subscription';
-import ShowSubscriptions from './Pages/ShowSubscriptions';
+import Discount from './Pages/CreatePages/Discount';
+import GenericList from './Pages/ShowLists/GenericList';
+import ShowDiscount from './Pages/ShowLists/ShowDiscount';
+import ShowTax from './Pages/ShowLists/ShowTax';
+import Tax from './Pages/CreatePages/Tax';
+import Subscription from './Pages/CreatePages/Subscription';
+import ShowSubscriptions from './Pages/ShowLists/ShowSubscriptions';
 import GenericFloatingTable from './Pages/GenericFloatingTable';
 
 function App() {
@@ -45,16 +45,16 @@ function App() {
           <Route path='/subscription' element={<Subscription />}></Route>
           <Route path='/subscription/:id' element={<Subscription />}></Route>
           <Route path='/showsubscriptions' element={<ShowSubscriptions />}></Route>
-          
+
           <Route path='/product' element={<Product />}></Route>
           <Route path='/product/:id' element={<Product />}></Route>
           <Route path='/showproducts' element={<ShowProduct />}></Route>
-          
-          
+
+
           <Route path='/discount' element={<Discount />}></Route>
           <Route path='/discount/:id' element={<Discount />}></Route>
           <Route path='/showdiscounts' element={<ShowDiscount />}></Route>
-          
+
           <Route path='/tax' element={<Tax />}></Route>
           <Route path='/tax/:id' element={<Tax />}></Route>
           <Route path='/showtaxes' element={<ShowTax />}></Route>

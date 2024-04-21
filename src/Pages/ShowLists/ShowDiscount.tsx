@@ -1,15 +1,15 @@
 import React from 'react'
-import SideNav from './HelpingPages/SideNav';
-import ShowUserUtility from '../Utility/ShowUserUtility';
+import SideNav from '../HelpingPages/SideNav';
+import ShowUserUtility from '../../Utility/ShowUserUtility';
 import { Box, Button, Grid, Pagination, Snackbar, TextField } from '@mui/material';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import ShowDiscountUtility from '../Utility/ShowDiscountUtility';
-import AddButton from '../Generics/Components/Buttons/AddButton';
-import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
+import ShowDiscountUtility from '../../Utility/ShowDiscountUtility';
+import AddButton from '../../Generics/Components/Buttons/AddButton';
+import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
 import GenericList from './GenericList';
-import GenericButton from '../Generics/Components/Buttons/ButtonGeneric';
-import OnChangeFields from '../Generics/OnChangeFields';
+import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
+import OnChangeFields from '../../Generics/OnChangeFields';
 export default function ShowDiscount() {
 
     const { navigate, handleDelete, discountInfo,
@@ -18,7 +18,7 @@ export default function ShowDiscount() {
         nextPageDisabled, handleSearchClick, handleClear,
         handleSorting, searchDiscountInfo, setSearchDiscountInfo } = ShowDiscountUtility();
     const discountDataHeader = ["Discount Code", "Discount Amount", "IsDiscountInPercentage"]
-    const sortColumn = ["discountCode", "discountAmount","id"];
+    const sortColumn = ["discountCode", "discountAmount", "id"];
 
     const {
         onTextFieldChange,

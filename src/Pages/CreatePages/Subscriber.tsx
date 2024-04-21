@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import SubscriberUtility from '../Utility/SubscriberUtility';
+import SubscriberUtility from '../../Utility/SubscriberUtility';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
     Paper, Grid, TextField, InputLabel,
     MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert,
     CardActions
 } from "@mui/material";
-import SideNav from './HelpingPages/SideNav';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-import OnChangeFields from '../Generics/OnChangeFields';
-import CustomHelperText from '../Generics/Components/CustomHelperText';
+import SideNav from '../HelpingPages/SideNav';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
+import OnChangeFields from '../../Generics/OnChangeFields';
+import CustomHelperText from '../../Generics/Components/CustomHelperText';
 
 export default function Subscriber() {
     const { id = 0 } = useParams();

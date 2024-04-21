@@ -2,8 +2,12 @@ import { SelectChangeEvent } from "@mui/material";
 
 import React, { useState } from "react";
 import { Dayjs } from "dayjs";
+import { ParameterErrorModel } from "../Models/ParameterErrorModel";
 
 export default function OnInputChange() {
+
+    const initialErrors: ParameterErrorModel[] = [];
+  const [errorInfo, setErrorInfo] = useState<ParameterErrorModel[]>(initialErrors);
 
     const onTextFieldChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, set: any
@@ -12,6 +16,19 @@ export default function OnInputChange() {
         const { name, value } = event.currentTarget;
         set((prev: any) => ({ ...prev, [name]: value }));
 
+    };
+
+    const onTextFieldChangeError = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, 
+        set: any, setErrors : any,errors : ParameterErrorModel[]
+    ) => {
+        const { name, value } = event.currentTarget;
+        set((prev: any) => ({ ...prev, [name]: value }));
+
+        if (errors.some(error => error.parameterName === name)) {
+            const updatedErrors = errors.filter(error => error.parameterName !== name);
+            setErrors(updatedErrors);
+        }
     };
 
 
@@ -41,6 +58,7 @@ export default function OnInputChange() {
         onSelectFieldChange,
         onDateFieldChange,
         onTextFieldChange,
-        onNumberFieldChange
+        onNumberFieldChange,
+        onTextFieldChangeError
     }
 }

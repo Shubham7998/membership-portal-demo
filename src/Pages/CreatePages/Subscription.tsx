@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import SubscriberUtility from '../Utility/SubscriberUtility';
+import SubscriberUtility from '../../Utility/SubscriberUtility';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
     Paper, Grid, TextField, InputLabel,
     MenuItem, FormControl, Button, InputAdornment, Snackbar, Alert,
     CardActions
 } from "@mui/material";
-import SideNav from './HelpingPages/SideNav';
-import SubscriptionUtility from '../Utility/SubscriptionUtility';
+import SideNav from '../HelpingPages/SideNav';
+import SubscriptionUtility from '../../Utility/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-import OnChangeFields from '../Generics/OnChangeFields';
-import CustomHelperText from '../Generics/Components/CustomHelperText';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
+import OnChangeFields from '../../Generics/OnChangeFields';
+import CustomHelperText from '../../Generics/Components/CustomHelperText';
 import { useEffect, useState } from 'react';
 
 
@@ -113,7 +113,7 @@ export default function Subscription() {
                                         label="Select Discount Coupon"
                                         name='discountId'
                                         required
-                                        disabled = {subscriptionInfo.productId == 0}
+                                        disabled={subscriptionInfo.productId == 0}
                                         onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriptionInfo)}
                                     >
                                         <MenuItem value={0}>Select Discount Coupon</MenuItem>

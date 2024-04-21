@@ -13,11 +13,11 @@ import {
   TextField,
 } from "@mui/material";
 import ShowProductUtility from '../../Utility/ShowProductUtility';
-import SideNav from './SideNav';
-import GenericList from '../GenericList';
+import SideNav from '../HelpingPages/SideNav';
+import GenericList from './GenericList';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
-import GenericList2 from './Helpme2';
+import GenericList2 from '../HelpingPages/Helpme2';
 import { ProductModel } from '../../Models/ProductModel';
 import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
 import OnChangeFields from '../../Generics/OnChangeFields';
@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ShowProduct() {
   const productDataHeader = ["Product Name", "Product Price"]
 
-  const { handleSearchClick,handleClear,handleSorting,setSearchProductInfo,searchProductInfo,handleSelectChange, navigate, handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates } = ShowProductUtility();
+  const { handleSearchClick, handleClear, handleSorting, setSearchProductInfo, searchProductInfo, handleSelectChange, navigate, handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates } = ShowProductUtility();
   const sortColumn = ["productName", "price"];
   const {
     onTextFieldChange,
@@ -60,7 +60,7 @@ export default function ShowProduct() {
         <SideNav />
         <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
-          <Grid container spacing={3} sx={{marginBottom : 3}}>
+          <Grid container spacing={3} sx={{ marginBottom: 3 }}>
             <Grid item xs={2}>
               <FormControl fullWidth>
                 <InputLabel id="productName">Select Product</InputLabel>

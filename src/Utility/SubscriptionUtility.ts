@@ -184,8 +184,6 @@ export default function SubscriptionUtility(id: number) {
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.currentTarget;
         setSubscriptionInfo(prev => ({ ...prev, [name]: value }));
-
-
     }
 
 

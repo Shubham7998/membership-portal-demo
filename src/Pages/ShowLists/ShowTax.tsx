@@ -1,13 +1,13 @@
 import React from 'react'
 import { Box, Button, Grid, TextField } from '@mui/material';
-import SideNav from './HelpingPages/SideNav';
+import SideNav from '../HelpingPages/SideNav';
 import GenericList from './GenericList';
-import ShowTaxUtility from '../Utility/ShowTaxUtility';
+import ShowTaxUtility from '../../Utility/ShowTaxUtility';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import AddButton from '../Generics/Components/Buttons/AddButton';
-import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
-import GenericButton from '../Generics/Components/Buttons/ButtonGeneric';
-import OnChangeFields from '../Generics/OnChangeFields';
+import AddButton from '../../Generics/Components/Buttons/AddButton';
+import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
+import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
+import OnChangeFields from '../../Generics/OnChangeFields';
 export default function ShowTax() {
     const { navigate, handleDelete, taxInfo, handleEdit,
         prevPage, nextPage, currentPage, changeCurrentPage,
@@ -30,7 +30,7 @@ export default function ShowTax() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Tax List</h1>
-                    <Grid container spacing={3} sx={{display: 'flex', justifyContent: 'center', marginBottom: 3 }}>
+                    <Grid container spacing={3} sx={{ display: 'flex', justifyContent: 'center', marginBottom: 3 }}>
 
                         <Grid item xs={2}>
                             <TextField

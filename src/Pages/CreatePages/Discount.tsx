@@ -1,11 +1,11 @@
 import React from 'react'
 import { Alert, Button, CardActions, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from '@mui/material'
-import SideNav from './HelpingPages/SideNav'
+import SideNav from '../HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
-import ProductUtility from '../Utility/ProductUtility';
-import DiscountUtility from '../Utility/DiscountUtility';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-import OnChangeFields from '../Generics/OnChangeFields';
+import ProductUtility from '../../Utility/ProductUtility';
+import DiscountUtility from '../../Utility/DiscountUtility';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
+import OnChangeFields from '../../Generics/OnChangeFields';
 
 export default function Discount() {
     const { id = 0 } = useParams();

@@ -1,24 +1,24 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
-import SideNav from './HelpingPages/SideNav';
-import ShowUserUtility from '../Utility/ShowUserUtility';
+import SideNav from '../HelpingPages/SideNav';
+import ShowUserUtility from '../../Utility/ShowUserUtility';
 import GenericList from './GenericList';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import AddButton from '../Generics/Components/Buttons/AddButton';
-import OnChangeFields from '../Generics/OnChangeFields';
+import AddButton from '../../Generics/Components/Buttons/AddButton';
+import OnChangeFields from '../../Generics/OnChangeFields';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import GenericButton from '../Generics/Components/Buttons/ButtonGeneric';
-import PaginationComponent from '../Generics/Components/Pagination/PaginationComponent';
+import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
+import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
 
 export default function ShowUser() {
 
     const { handleDelete, userInfo,
-        handleEdit,navigate , handleSorting,
-        setUserInfo,searchUserInfo,
+        handleEdit, navigate, handleSorting,
+        setUserInfo, searchUserInfo,
         prevPage, nextPage, currentPage, changeCurrentPage,
-          numbers, prevPageDisabled, 
-          nextPageDisabled,
-        handleSearchClick,handleClear
-        ,setSearchUserInfo} = ShowUserUtility();
+        numbers, prevPageDisabled,
+        nextPageDisabled,
+        handleSearchClick, handleClear
+        , setSearchUserInfo } = ShowUserUtility();
 
     ShowAlert();
     function ShowAlert() {
@@ -30,7 +30,7 @@ export default function ShowUser() {
     const sortColumn = ["firstName", "lastName", "contactNumber", "email", "password", "contactNumber"];
     const {
         onTextFieldChange,
-        
+
     } = OnChangeFields();
 
     return (
@@ -41,7 +41,7 @@ export default function ShowUser() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>User List</h1>
-                    <Grid container spacing={2} sx={{marginBottom : 3}}>
+                    <Grid container spacing={2} sx={{ marginBottom: 3 }}>
                         <Grid item xs={2}>
                             <TextField
                                 fullWidth

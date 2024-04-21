@@ -6,14 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { UserModel } from '../Models/UserModel';
+import { UserModel } from '../../Models/UserModel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { ProductModel } from '../Models/ProductModel';
-import { SubscriberModel } from '../Models/SubscriberModel';
-import { DiscountModel } from '../Models/DiscountModel';
-import { TaxModel } from '../Models/TaxModel';
-import GenderModel from '../Models/GenderModel';
+import { ProductModel } from '../../Models/ProductModel';
+import { SubscriberModel } from '../../Models/SubscriberModel';
+import { DiscountModel } from '../../Models/DiscountModel';
+import { TaxModel } from '../../Models/TaxModel';
+import GenderModel from '../../Models/GenderModel';
 import { useState } from 'react';
 
 
@@ -76,7 +76,7 @@ export default function GenericList(
                         <TableRow >
                             <StyledTableCell align="left">Sr No</StyledTableCell>
                             {dataHeader.map((data, index) => (
-                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="center" sx={{cursor : "pointer"}}>{data} <span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
+                                <StyledTableCell onClick={() => handleSort(tableName[index])} key={index} align="center" sx={{ cursor: "pointer" }}>{data} <span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span></StyledTableCell>
                             ))}
                             {!isSearchMode ? handleButtons.map((btn, index) => (
                                 <StyledTableCell key={index} align="left">{btn}</StyledTableCell>

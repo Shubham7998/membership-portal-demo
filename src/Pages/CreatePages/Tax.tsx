@@ -1,12 +1,12 @@
 import React from 'react'
 import { Alert, Button, CardActions, FormControl, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Snackbar, TextField } from '@mui/material'
-import SideNav from './HelpingPages/SideNav'
+import SideNav from '../HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
-import ProductUtility from '../Utility/ProductUtility';
-import DiscountUtility from '../Utility/DiscountUtility';
-import TaxUtility from '../Utility/TaxUtility';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-import OnChangeFields from '../Generics/OnChangeFields';
+import ProductUtility from '../../Utility/ProductUtility';
+import DiscountUtility from '../../Utility/DiscountUtility';
+import TaxUtility from '../../Utility/TaxUtility';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
+import OnChangeFields from '../../Generics/OnChangeFields';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function Tax() {

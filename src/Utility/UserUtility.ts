@@ -23,7 +23,7 @@ export function UserUtility(id: number) {
 
     const newErrors: ParameterErrorModel[] = [];
 
-    const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
+    const [errors, setErrors] = useState<ParameterErrorModel[]>(newErrors);
 
     const { displaySnackbar, handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity } = SnackBarGeneric();
 
@@ -207,5 +207,5 @@ export function UserUtility(id: number) {
         }
     }
 
-    return { navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    return {setErrors, navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 }

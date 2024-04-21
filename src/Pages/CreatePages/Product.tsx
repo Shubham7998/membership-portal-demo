@@ -1,10 +1,10 @@
 import { Alert, Button, CardActions, Grid, Paper, Snackbar, TextField } from '@mui/material'
 import React from 'react'
-import SideNav from './HelpingPages/SideNav'
+import SideNav from '../HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
-import ProductUtility from '../Utility/ProductUtility';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-import OnChangeFields from '../Generics/OnChangeFields';
+import ProductUtility from '../../Utility/ProductUtility';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
+import OnChangeFields from '../../Generics/OnChangeFields';
 
 export default function Product() {
 

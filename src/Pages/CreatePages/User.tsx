@@ -1,27 +1,28 @@
 import React, { useState } from 'react'
-import { UserModel } from '../Models/UserModel'
+import { UserModel } from '../../Models/UserModel'
 import { Button, Grid, Paper, TextField, Snackbar, Alert, CardActions } from '@mui/material';
 import { userInfo } from 'os';
-import { UserUtility } from '../Utility/UserUtility';
+import { UserUtility } from '../../Utility/UserUtility';
 import { useParams } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import SideNav from './HelpingPages/SideNav';
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
+import SideNav from '../HelpingPages/SideNav';
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
 import { error } from 'console';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
-import OnChangeFields from '../Generics/OnChangeFields';
+import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
+import OnChangeFields from '../../Generics/OnChangeFields';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function User() {
 
     const { id = 0 } = useParams();
-    const { setUserInfo, navigate, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = UserUtility(+id);
+    const {setErrors, setUserInfo, navigate, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = UserUtility(+id);
     const { onTextFieldChange,
-        onNumberFieldChange
+        onNumberFieldChange,
+        onTextFieldChangeError
     } = OnChangeFields();
 
 
@@ -42,7 +43,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='firstName'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo,setErrors,errors)}
                                     value={userInfo.firstName}
                                     required
                                     helperText={
