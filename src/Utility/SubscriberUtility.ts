@@ -116,7 +116,6 @@ export default function SubscriberUtility(id: number) {
         displaySnackbar("Subscriber details updated successfully", "success");
       } else {
         alert("add");
-        // subscriberInfo.genderId += 1;
         const response = await CreateSubscriberAsync(subscriberInfo);
         console.log("response data added");
         console.log(response);

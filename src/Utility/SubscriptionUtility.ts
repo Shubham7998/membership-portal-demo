@@ -11,6 +11,8 @@ import { GetDiscountAsync } from '../Services/DiscontService';
 import dayjs, { Dayjs } from 'dayjs';
 import { SelectChangeEvent, } from "@mui/material";
 import { CreateSubscriptionAsync, GetSubscriptionByIdAsync, UpdateSubscriptionAsync } from '../Services/SubscriptionService';
+import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { ParameterErrorModel } from '../Models/ParameterErrorModel';
 
 export default function SubscriptionUtility(id: number) {
     type DateFieldChangeHandler = (name: string, value: Dayjs | null) => void;
@@ -41,17 +43,6 @@ export default function SubscriptionUtility(id: number) {
     }
     const [discountInfo, setDiscountInfo] = useState<DiscountModel[]>([initialValueDiscount]);
 
-    function formatDate(date: Date): string {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`; // This format is compatible with DateOnly in C#
-    }
-
-    // Usage in your code
-    //   const startDateToSend = formatDate(startDate); // Adjust startDate to your actual date variable
-    //   const expiryDateToSend = formatDate(expiryDate);
-
     const initialValueSubscription: SubscriptionModel = {
         id: 0,
         subscriberId: 0,
@@ -60,27 +51,23 @@ export default function SubscriptionUtility(id: number) {
         startDate: new Date(),
         expiryDate: new Date(),
         priceAfterDiscount: 0,
+        
         taxId: 4,
         cgst: 0,
         sgst: 0,
         totalTaxPercent: 0,
         taxAmount: 0,
-        finalAmount: 0
+        finalAmount: 0,
+        productPrice: 0
     }
-    // Assuming startDate is your starting date and daysToAdd is the number of days you want to add
-    function addDays(startDate: Date, daysToAdd: number): Date {
-        const endDate = new Date(startDate.getTime());
-        endDate.setDate(startDate.getDate() + daysToAdd);
-        return endDate;
-    }
+    const { displaySnackbar, handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity } = SnackBarGeneric();
 
-    const startDate = new Date(); // Your starting date
-    const daysToAdd = 7; // Number of days to add
-    const expiryDate = addDays(startDate, daysToAdd);
-    console.log(expiryDate);
+    const newErrors: ParameterErrorModel[] = [];
+
+    const [errors, setErrors] = useState<ParameterErrorModel[]>([]);
 
     const [subscriptionInfo, setSubscriptionInfo] = useState<SubscriptionModel>(initialValueSubscription)
-    
+
     const navigate = useNavigate();
 
 
@@ -98,7 +85,7 @@ export default function SubscriptionUtility(id: number) {
 
         }
         const fetchProductInfo = await GetProductAsync();
-        if(fetchProductInfo != null){
+        if (fetchProductInfo != null) {
             setProductInfo(fetchProductInfo.data);
             console.log("fetchProductInfo");
             console.log(fetchProductInfo)
@@ -106,7 +93,7 @@ export default function SubscriptionUtility(id: number) {
 
         const fetchDiscountInfo = await GetDiscountAsync();
 
-        if(fetchDiscountInfo != null){
+        if (fetchDiscountInfo != null) {
 
             setDiscountInfo(fetchDiscountInfo.data);
             console.log("fetchDiscountInfo");
@@ -115,12 +102,77 @@ export default function SubscriptionUtility(id: number) {
 
         if (id > 0) {
             const result = await GetSubscriptionByIdAsync(id);
-            if(result){
+            if (result) {
                 setSubscriptionInfo(result.data);
             }
         }
     }
 
+    const isValidate1 = () => {
+        alert(JSON.stringify(subscriptionInfo))
+        console.log(subscriptionInfo)
+        if (subscriptionInfo.productId === 0) {
+            newErrors.push({
+                parameterName: "productId",
+                errorMessage: "Please select product"
+            })
+        }
+        if (subscriptionInfo.subscriberId === 0) {
+            newErrors.push({
+                parameterName: "subscriberId",
+                errorMessage: "Please select product"
+            })
+        }
+
+
+        setErrors(newErrors);
+
+        return newErrors.length === 0;
+
+    }
+    const isValidate = () => {
+
+        const currentDate = new Date();
+
+        if (!subscriptionInfo.startDate || subscriptionInfo.startDate < currentDate) {
+            newErrors.push({
+                parameterName: "startDate",
+                errorMessage: "Please select a valid start date"
+            });
+        }
+
+        if (!subscriptionInfo.expiryDate || subscriptionInfo.expiryDate < currentDate) {
+            newErrors.push({
+                parameterName: "expiryDate",
+                errorMessage: "Please select a valid expiry date"
+            });
+        }
+
+        if (subscriptionInfo.startDate && subscriptionInfo.expiryDate &&
+            subscriptionInfo.startDate >= subscriptionInfo.expiryDate) {
+            newErrors.push({
+                parameterName: "expiryDate",
+                errorMessage: "Expiry date must be after start date"
+            });
+        }
+
+        if (subscriptionInfo.productId === 0) {
+            newErrors.push({
+                parameterName: "productId",
+                errorMessage: "Please select a product"
+            });
+        }
+        if (subscriptionInfo.subscriberId === 0) {
+            newErrors.push({
+                parameterName: "subscriberId",
+                errorMessage: "Please select a subscriber"
+            });
+        }
+        
+        setErrors(newErrors);
+
+        return newErrors.length === 0;
+    }
 
     const handleDateFieldChange = (name: any, value: any) => {
         setSubscriptionInfo((prevState: any) => ({
@@ -133,36 +185,35 @@ export default function SubscriptionUtility(id: number) {
         const { name, value } = event.currentTarget;
         setSubscriptionInfo(prev => ({ ...prev, [name]: value }));
 
-        if (name === "startDate") {
 
-            const date = new Date(value);
-            let startDate: Date = new Date();
-            startDate.setDate(date.getDate() + 20);
-
-            console.log(startDate)
-            console.log(date)
-            const daysToAdd = 7;
-            const expiryDate = addDays(startDate, daysToAdd);
-
-            console.log(expiryDate);
-
-            subscriptionInfo.expiryDate = expiryDate;
-        }
     }
 
 
     const handleSubmit = async () => {
         alert(JSON.stringify(subscriptionInfo))
-        if (id > 0) {
-            const result = await UpdateSubscriptionAsync(id, subscriptionInfo);
-            setSubscriptionInfo(result.data);
-            console.log(result)
-        } else {
-            const result = await CreateSubscriptionAsync(subscriptionInfo);
-            console.log(result)
-        }
+        if (isValidate()) {
+            if(subscriptionInfo.discountId == 0){
+                subscriptionInfo.discountId = 1;
+            } 
+            if (id > 0) {
+                const result = await UpdateSubscriptionAsync(id, subscriptionInfo);
+                setSubscriptionInfo(result.data);
+                console.log(result)
+                displaySnackbar("Subscription details updated successfully", "success");
+            } else {
+                alert("Create subscription subscription")
+                const result = await CreateSubscriptionAsync(subscriptionInfo);
+                console.log(result)
+                displaySnackbar("Subscription details added successfully", "success");
 
-        setSubscriptionInfo(initialValueSubscription);
+            }
+            setTimeout(() => {
+                navigate(`/showsubscriptions`);
+            }, 1000);
+            setSubscriptionInfo(initialValueSubscription);
+        } else {
+            displaySnackbar("Please field mendatory fields", "error");
+        }
     }
 
     const handleSelectChange = (
@@ -173,7 +224,7 @@ export default function SubscriptionUtility(id: number) {
         setSubscriptionInfo((prevState) => ({ ...prevState, [name]: value }));
     };
 
-    return { setSubscriptionInfo, handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange }
+    return { errors, setSubscriptionInfo, handleSelectChange, handleSubmit, handleTextChange, subscriberInfo, navigate, subscriptionInfo, productInfo, discountInfo, handleDateFieldChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
 }
 
 

@@ -145,7 +145,10 @@ export default function ShowSubscriber() {
                             <AddButton path={"/subscriber"} />
                         </Grid>
                     </Grid>
+                    {subscriberInfo !== null ?
                     <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                    : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
+                    }
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
                 </Box>
             </Box>

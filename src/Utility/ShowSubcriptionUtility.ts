@@ -1,24 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { SubscriptionModel } from '../Models/SubscriptionModel';
-import { DeleteSubscriptionAsync, GetSubscriptionAsync } from '../Services/SubscriptionService';
+import { DeleteSubscriptionAsync } from '../Services/SubscriptionService';
 import { handleSwirl } from '../Generics/Swirl';
-import { DeleteSubscriberByIdAsync } from '../Services/SubscriberService';
+import {  GetSubscriberAsync } from '../Services/SubscriberService';
 import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
 import { GetAllAsync } from '../Generics/Services/GenericService';
 import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DiscountModel } from '../Models/DiscountModel';
+import { ProductModel } from '../Models/ProductModel';
+import { SubscriberModel } from '../Models/SubscriberModel';
+import { GetDiscountAsync } from '../Services/DiscontService';
+import { GetProductAsync } from '../Services/ProductService';
 
 export default function () {
 
-    const apiEndpointFormat = "2024-04-21T10:01:08.791Z";
-    const timestamp = new Date(apiEndpointFormat);
 
-    const formattedStartDate = `${(timestamp.getDate() < 10 ? '0' : '') + timestamp.getDate()}-${(timestamp.getMonth() < 9 ? '0' : '') + (timestamp.getMonth() + 1)}-${timestamp.getFullYear()}`;
+    const initialValueSubscriber: SubscriberModel = {
+        id: 0,
+        firstName: '',
+        contactNumber: '',
+        email: '',
+        genderId: -1,
+        lastName: ''
+    }
+    const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([initialValueSubscriber]);
 
-    // Assuming you have received DateOnly dates as strings from the backend API
-    const apiStartDate = "2024-01-04"; // Example DateOnly format from backend API
-    const apiExpiryDate = "2024-01-04"; // Example DateOnly format from backend API
+    const initialValueProduct: ProductModel = {
+        id: 0,
+        productName: '',
+        price: 0
+    }
+
+    const [productInfo, setProductInfo] = useState<ProductModel[]>([initialValueProduct]);
+
+    const initialValueDiscount: DiscountModel = {
+        id: 0,
+        discountCode: '',
+        discountAmount: 0,
+        isDiscountInPercentage: false
+    }
+    const [discountInfo, setDiscountInfo] = useState<DiscountModel[]>([initialValueDiscount]);
 
     const initialValueSubscription: SubscriptionModel = {
         id: 0,
@@ -40,10 +62,6 @@ export default function () {
         finalAmount: 0
     };
 
-    console.log(initialValueSubscription);
-
-
-    console.log(formattedStartDate);
 
     const [searchMode, setSearchMode] = useState(false);
 
@@ -57,13 +75,33 @@ export default function () {
     const { handleSnackbarClose, snackbarOpen, snackbarMessage, snackbarSeverity, displaySnackbar } = SnackBarGeneric();
 
     useEffect(() => {
-
-        fetchData(searchSubscriptionInfo);
+        fetchData();
     }, [currentPage])
 
-    const fetchData = async (data: SubscriptionModel) => {
-        
-        const result = await GetAllAsync(data, tableName, currentPage, recordsPerPage, "id", "asc");
+    const fetchData = async () => {
+        const fetchSubscriberInfo = await GetSubscriberAsync();
+        if (fetchSubscriberInfo != null) {
+            setSubscriberInfo(fetchSubscriberInfo.data);
+            console.log("fetchSubscriberInfo");
+            console.log(fetchSubscriberInfo);
+
+        }
+        const fetchProductInfo = await GetProductAsync();
+        if(fetchProductInfo != null){
+            setProductInfo(fetchProductInfo.data);
+            console.log("fetchProductInfo");
+            console.log(fetchProductInfo)
+        }
+
+        const fetchDiscountInfo = await GetDiscountAsync();
+
+        if(fetchDiscountInfo != null){
+
+            setDiscountInfo(fetchDiscountInfo.data);
+            console.log("fetchDiscountInfo");
+            console.log(fetchDiscountInfo)
+        }
+        const result = await GetAllAsync(searchSubscriptionInfo, tableName, currentPage, recordsPerPage, "id", "asc");
         if (true) {
             setSubscriptionInfo(result.dataArray);
             setTotalPages(result.totalPages);
@@ -81,19 +119,17 @@ export default function () {
             console.log(" data deleted successfullu")
             const result = await DeleteSubscriptionAsync(id);
             console.log(result)
-            fetchData(initialValueSubscription);
+            fetchData();
         }
     }
 
     const handleClear = () => {
         setSearchSubscriptionInfo(initialValueSubscription);
-        fetchData(initialValueSubscription);
-
+        fetchData();
+        setSearchMode(false);
     }
 
     const handleSorting = async (columnName: string, sortOrder: string) => {
-
-
         const result = await GetAllAsync(searchSubscriptionInfo, tableName, currentPage, recordsPerPage, columnName, sortOrder);
         console.log("result")
         console.log(columnName)
@@ -104,20 +140,15 @@ export default function () {
     }
 
     async function searchData() {
-        // var find = "";
 
-        alert("Handle search data")
-        alert(JSON.stringify(searchSubscriptionInfo));
         const result = await GetAllAsync(searchSubscriptionInfo, tableName, currentPage, recordsPerPage, "id", "asc");
 
-        console.log(result)
         setSubscriptionInfo(result.dataArray);
         setTotalPages(result.totalPages);
 
     }
 
     const handleSearchClick = () => {
-        alert("Handle search cleck")
         searchData();
         setSearchMode(true);
 
@@ -127,6 +158,6 @@ export default function () {
         handleSorting, handleDelete, subscriptionInfo, handleEdit, navigate, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, snackbarOpen,
         handleSnackbarClose, searchSubscriptionInfo, searchMode,
         snackbarMessage, handleClear, setSearchSubscriptionInfo,
-        snackbarSeverity, handleSearchClick
+        snackbarSeverity, handleSearchClick,subscriberInfo,discountInfo,productInfo
     }
 }

@@ -12,18 +12,38 @@ import SubscriptionUtility from '../Utility/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
 import GenericSnackbar from '../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../Generics/OnChangeFields';
+import CustomHelperText from '../Generics/Components/CustomHelperText';
+import { useEffect, useState } from 'react';
 
 
 
 
 export default function Subscription() {
     const { id = 0 } = useParams();
-    const { errors, handleNumberChange, genders, setSubscriberInfo, handleChange, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
-    const { handleTextChange, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo, setSubscriptionInfo } = SubscriptionUtility(+id);
+    const { errors, handleSubmit, handleSelectChange, subscriberInfo, handleDateFieldChange, navigate, subscriptionInfo, productInfo, discountInfo, setSubscriptionInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriptionUtility(+id);
     const {
         onSelectFieldChange,
         onTextFieldChange
     } = OnChangeFields();
+
+    const [totalPrice, setTotalPrice] = useState<number>(0);
+
+    useEffect(() => {
+        // Calculate product price
+        const productPrice = subscriptionInfo.productId !== 0 ? productInfo.find(product => product.id === subscriptionInfo.productId)?.price || 0 : 0;
+
+        // Calculate discount amount
+        const discountAmount = subscriptionInfo.discountId !== 0 ? (discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.isDiscountInPercentage ?
+            (productPrice * ((discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.discountAmount || 0) / 100)) :
+            (discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.discountAmount || 0)) : 0;
+
+        // Calculate total price after discount
+        const totalPriceAfterDiscount = productPrice - discountAmount;
+
+        // Update total price
+        setTotalPrice(totalPriceAfterDiscount);
+    }, [subscriptionInfo.productId, subscriptionInfo.discountId, productInfo, discountInfo]);
+
     return (
         <>
             <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20, height: '100vh' }}>
@@ -52,6 +72,9 @@ export default function Subscription() {
                                         ))}
 
                                     </Select>
+                                    {errors.find(error => error.parameterName === "subscriberId") && (
+                                        <CustomHelperText children={"Please select Subscriber"} />
+                                    )}
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} >
@@ -70,10 +93,15 @@ export default function Subscription() {
                                         {productInfo?.map((product, key) => (
                                             <MenuItem key={product.id} value={product.id}>{product.productName}</MenuItem>
                                         ))}
-
                                     </Select>
+                                    {errors.find(error => error.parameterName === "productId") && (
+                                        <CustomHelperText children={"Please select Product"} />
+                                    )}
                                 </FormControl>
                             </Grid>
+                            {subscriptionInfo.productId == 0 ? "" :
+                                <span style={{ color: "green" }}>Product Price = {productInfo.find(product => product.id === subscriptionInfo.productId)?.price}</span>
+                            }
                             <Grid item xs={12} >
                                 <FormControl fullWidth >
                                     <InputLabel id="discountId">Select Discount Coupon</InputLabel>
@@ -85,6 +113,7 @@ export default function Subscription() {
                                         label="Select Discount Coupon"
                                         name='discountId'
                                         required
+                                        disabled = {subscriptionInfo.productId == 0}
                                         onChange={(event: SelectChangeEvent<string>) => onSelectFieldChange(event, setSubscriptionInfo)}
                                     >
                                         <MenuItem value={0}>Select Discount Coupon</MenuItem>
@@ -93,8 +122,19 @@ export default function Subscription() {
                                         ))}
 
                                     </Select>
+                                    {errors.find(error => error.parameterName === "discountId") && (
+                                        <CustomHelperText children={"Please select Discount"} />
+                                    )}
                                 </FormControl>
                             </Grid>
+                            {subscriptionInfo.discountId === 0 ? "" :
+                                <span style={{ color: "green" }}>
+                                    Discount = {discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.isDiscountInPercentage ?
+                                        `${discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.discountAmount}%` :
+                                        `₹${discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.discountAmount}`
+                                    }
+                                </span>
+                            }
                             <Grid item xs={12}>
                                 <InputLabel id="startDate">Select Start Date</InputLabel>
                                 <TextField
@@ -105,10 +145,20 @@ export default function Subscription() {
                                     name='startDate'
                                     type='date'
                                     value={subscriptionInfo.startDate}
-                                    // onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
-                                    onChange={handleTextChange}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
+                                    helperText={
+                                        errors.find(
+                                            (error) => error.parameterName === 'startDate'
+                                        )?.errorMessage || ""
+                                    }
+                                    error={
+                                        !!errors.find(
+                                            (error) => error.parameterName == "startDate"
+                                        )
+                                    }
                                 />
                             </Grid>
+
                             <Grid item xs={12}>
                                 <InputLabel id="expiryDate">Select Expiry Date</InputLabel>
                                 <TextField
@@ -118,9 +168,25 @@ export default function Subscription() {
                                     size="small"
                                     name='expiryDate'
                                     type='date'
-                                    value={subscriptionInfo.startDate}
+                                    value={subscriptionInfo.expiryDate}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriptionInfo)}
+                                    helperText={
+                                        errors.find(
+                                            (error) => error.parameterName === 'expiryDate'
+                                        )?.errorMessage || ""
+                                    }
+                                    error={
+                                        !!errors.find(
+                                            (error) => error.parameterName == "expiryDate"
+                                        )
+                                    }
                                 />
+                            </Grid>
+                            <Grid container justifyContent="center" alignItems="center" item xs={12} >
+                                {
+                                    subscriptionInfo.productId == 0 ? "" : <span style={{ color: "green" }}>Total price : {totalPrice}</span>
+                                }
+
                             </Grid>
                             <Grid item xs={5}>
                                 <CardActions style={{ justifyContent: "center", padding: 5 }}>
@@ -144,6 +210,7 @@ export default function Subscription() {
                                 </CardActions>
 
                             </Grid>
+
                         </Grid>
                     </Paper>
                 </Grid>

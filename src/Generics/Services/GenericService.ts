@@ -142,7 +142,7 @@ export const GetAllAsync = async (data: UserModel | ProductModel | SubscriberMod
     console.log(data)
     try {
         const response = await axios.post(URL, data);
-        if (result != null) {
+        if (response != null) {
             paginatedResult.dataArray = response.data.dataArray;
             paginatedResult.totalPages = response.data.totalPages;
 
