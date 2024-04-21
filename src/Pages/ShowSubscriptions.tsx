@@ -16,12 +16,7 @@ export default function ShowSubscriptions() {
         "Expiry Date", "CGST%", "SGST%", "Total tax Percent",
         "Tax Amount", "Final Amount"
     ];
-    // const subscriptionDataHeader = ["Sr. No.", "Subscriber Id", "Product Id", "Product Name",
-    //     "Product Price", "Discount Id", "Discount Id", "Discount Amount", "Start Date",
-    //     "Expiry Date", "Price After Discount", "Tax Id", "CGST%", "SGST%", "Total tax Percent",
-    //     "Tax Amount", "Final Amount"
-    // ];
-
+    
     return (
         <>
             <Box height={30} />
