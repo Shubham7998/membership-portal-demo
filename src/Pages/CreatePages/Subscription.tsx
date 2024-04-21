@@ -29,18 +29,14 @@ export default function Subscription() {
     const [totalPrice, setTotalPrice] = useState<number>(0);
 
     useEffect(() => {
-        // Calculate product price
         const productPrice = subscriptionInfo.productId !== 0 ? productInfo.find(product => product.id === subscriptionInfo.productId)?.price || 0 : 0;
 
-        // Calculate discount amount
         const discountAmount = subscriptionInfo.discountId !== 0 ? (discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.isDiscountInPercentage ?
             (productPrice * ((discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.discountAmount || 0) / 100)) :
             (discountInfo.find(discount => discount.id === subscriptionInfo.discountId)?.discountAmount || 0)) : 0;
 
-        // Calculate total price after discount
         const totalPriceAfterDiscount = productPrice - discountAmount;
 
-        // Update total price
         setTotalPrice(totalPriceAfterDiscount);
     }, [subscriptionInfo.productId, subscriptionInfo.discountId, productInfo, discountInfo]);
 

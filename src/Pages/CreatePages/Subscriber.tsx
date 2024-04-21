@@ -16,9 +16,10 @@ export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors, navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const { errors,setErrors, navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
     const {
         onSelectFieldChange,
+        onTextFieldChangeError,
         onDateFieldChange,
         onTextFieldChange,
         onNumberFieldChange
@@ -39,7 +40,7 @@ export default function Subscriber() {
                                     variant="outlined"
                                     size="small" // Set size to "small"
                                     name="firstName"
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriberInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setSubscriberInfo, setErrors, errors)}
                                     value={subscriberInfo.firstName}
                                     required
                                     helperText={
@@ -63,7 +64,7 @@ export default function Subscriber() {
                                     size="small"
                                     name='lastName'
                                     required
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriberInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setSubscriberInfo, setErrors, errors)}
                                     value={subscriberInfo.lastName}
                                     helperText={
                                         errors.find(
@@ -114,7 +115,7 @@ export default function Subscriber() {
                                     variant="outlined"
                                     size="small"
                                     name='email'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setSubscriberInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setSubscriberInfo, setErrors, errors)}
                                     value={subscriberInfo.email}
                                     required
                                     helperText={
@@ -146,6 +147,9 @@ export default function Subscriber() {
                                                 +91
                                             </InputAdornment>
                                         ),
+                                        inputProps: {
+                                            maxLength: 10, 
+                                        },
                                     }}
                                     helperText={errors.find(
                                         (error) => error.parameterName == "contactNumber"

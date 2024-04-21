@@ -206,6 +206,9 @@ export function UserUtility(id: number) {
             setErrors(newErrors);
         }
     }
-
-    return {setErrors, navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    const handleClear = () => {
+        setErrors([]);
+        setUserInfo(initialValue);
+    }
+    return {handleClear,setErrors, navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 }

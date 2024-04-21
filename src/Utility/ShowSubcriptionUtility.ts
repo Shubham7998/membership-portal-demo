@@ -126,7 +126,7 @@ export default function () {
     const handleClear = () => {
         setSearchSubscriptionInfo(initialValueSubscription);
         fetchData();
-        setSearchMode(false);
+        setSearchMode(false)
     }
 
     const handleSorting = async (columnName: string, sortOrder: string) => {

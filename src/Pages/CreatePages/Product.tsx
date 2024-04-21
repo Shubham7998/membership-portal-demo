@@ -12,7 +12,7 @@ export default function Product() {
 
     const {
         setProductInfo,
-        productInfo,
+        productInfo,setErrors,
         errors, navigate,
         onInputChangeproduct,
         snackbarOpen,
@@ -23,11 +23,10 @@ export default function Product() {
         handleSubmit,
     } = ProductUtility(+id);
 
-    const {
-        onSelectFieldChange,
-        onDateFieldChange,
-        onTextFieldChange,
-        onNumberFieldChange
+    const { onTextFieldChange,
+        onNumberFieldChange,
+        onTextFieldChangeError,
+        onNumberFieldChangeError
     } = OnChangeFields();
 
     return (
@@ -47,9 +46,9 @@ export default function Product() {
                                     size='small'
                                     variant="outlined"
                                     autoComplete="off"
-                                    inputProps={{ maxLength: 100 }}
+                                    inputProps={{ maxLength: 25 }}
                                     value={productInfo.productName}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setProductInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setProductInfo, setErrors, errors)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "productName"
@@ -72,11 +71,12 @@ export default function Product() {
                                     label="Price"
                                     variant="outlined"
                                     autoComplete="off"
+                                    inputProps={{ maxLength: 6 }}
                                     fullWidth
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
                                     value={productInfo.price}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChange(event, setProductInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setProductInfo,setErrors,errors)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "price"

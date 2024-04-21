@@ -16,16 +16,14 @@ export async function GetAllGenderAsync() : Promise<ResponseModel> {
     await axios
     .get(genderURL)
     .then(function(response) {
-        console.log(genderURL);
-        result.data = response.data;
-        console.log(result.data)
-        console.log(response.data)
+        if(response.data != null){
+            result.data = response.data;
         result.errorCode = response.status + "";
+        }
     })
     .catch(function (error) {
         result.error = error;
         console.log(error)
-        alert(JSON.stringify(error))
     })
 
     return result;

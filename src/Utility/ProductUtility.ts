@@ -139,7 +139,7 @@ export default function ProductUtility(id: number) {
         snackbarMessage,
         snackbarSeverity,
         errors, handleSubmit,
-        navigate
+        navigate,setErrors
     };
 }
 

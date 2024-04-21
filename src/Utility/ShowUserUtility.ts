@@ -33,7 +33,7 @@ export default function ShowUserUtility() {
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [searchMode, setSearchMode] = useState(false);
     const tableName = 'user';
-    
+
     useEffect(() => {
         fetchData();
     }, [currentPage])
@@ -55,6 +55,7 @@ export default function ShowUserUtility() {
             const result = await DeleteUserService(id);
             console.log(result.data);
             fetchData();
+            setSearchMode(false);
         }
     }
 
@@ -70,6 +71,8 @@ export default function ShowUserUtility() {
         if(result != null){
             setUserInfo(result.dataArray);
             setTotalPages(result.totalPages);
+            setSearchMode(false);
+
         }
     }
     const handleClear = () => {
@@ -84,7 +87,6 @@ export default function ShowUserUtility() {
         alert("Handle search data")
         alert(JSON.stringify(searchUserInfo));
         const result = await GetAllAsync(searchUserInfo, tableName,currentPage, recordsPerPage, "id", "asc");
-
         console.log(result)
         setUserInfo(result.dataArray);
         setTotalPages(result.totalPages);
@@ -102,8 +104,8 @@ export default function ShowUserUtility() {
          handleEdit,navigate , handleSorting,
          setUserInfo,searchUserInfo,
          handleSearchClick,handleClear
-         ,setSearchUserInfo
-         ,prevPage, nextPage, currentPage, changeCurrentPage,
+         ,setSearchUserInfo,searchMode,
+         prevPage, nextPage, currentPage, changeCurrentPage,
           numbers, prevPageDisabled, 
           nextPageDisabled}
 }

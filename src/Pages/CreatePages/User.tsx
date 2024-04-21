@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { UserModel } from '../../Models/UserModel'
-import { Button, Grid, Paper, TextField, Snackbar, Alert, CardActions } from '@mui/material';
+import { Button, Grid, Paper, TextField, Snackbar, Alert, CardActions, IconButton } from '@mui/material';
 import { userInfo } from 'os';
 import { UserUtility } from '../../Utility/UserUtility';
 import { useParams } from 'react-router-dom';
@@ -15,15 +15,20 @@ import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../../Generics/OnChangeFields';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
+import LockIcon from '@mui/icons-material/Lock';
+import EmailIcon from '@mui/icons-material/Email';
 
 export default function User() {
 
     const { id = 0 } = useParams();
-    const {setErrors, setUserInfo, navigate, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = UserUtility(+id);
+    const { setErrors, handleClear, setUserInfo, navigate, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = UserUtility(+id);
     const { onTextFieldChange,
         onNumberFieldChange,
-        onTextFieldChangeError
+        onTextFieldChangeError,
+        onNumberFieldChangeError
     } = OnChangeFields();
+    const [showPassword, setShowPassword] = React.useState(false);
 
 
     return (
@@ -43,7 +48,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='firstName'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo,setErrors,errors)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo, setErrors, errors)}
                                     value={userInfo.firstName}
                                     required
                                     helperText={
@@ -68,7 +73,7 @@ export default function User() {
                                     size="small"
                                     name='lastName'
                                     required
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo, setErrors, errors)}
                                     value={userInfo.lastName}
                                     helperText={
                                         errors.find(
@@ -90,9 +95,15 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='email'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo, setErrors, errors)}
                                     value={userInfo.email}
                                     required
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <EmailIcon />
+                                            </InputAdornment>
+                                        )}}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === 'email'
@@ -113,7 +124,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='contactNumber'
-                                    onChange={(e: any) => onNumberFieldChange(e, setUserInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setUserInfo,setErrors,errors)}
                                     value={userInfo.contactNumber}
                                     required
                                     InputProps={{
@@ -122,6 +133,9 @@ export default function User() {
                                                 +91
                                             </InputAdornment>
                                         ),
+                                        inputProps: {
+                                            maxLength: 10, 
+                                        },
                                     }}
                                     helperText={errors.find(
                                         (error) => error.parameterName == "contactNumber"
@@ -132,17 +146,39 @@ export default function User() {
                                     }
                                 />
                             </Grid>
+
                             <Grid item xs={12} >
+
+
                                 <TextField
+                                    type={showPassword ? 'text' : 'password'}
                                     fullWidth
                                     id="password"
                                     label="Password"
                                     variant="outlined"
                                     size="small"
                                     name='password'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo, setErrors, errors)}
                                     value={userInfo.password}
                                     required
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <LockIcon />
+                                            </InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle last name visibility"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                     helperText={errors.find(
                                         (error) => error.parameterName == "password"
                                     )?.errorMessage || ""
@@ -159,9 +195,16 @@ export default function User() {
                                         variant="contained"
                                         color="primary"
                                         fullWidth
-                                        style={{ marginRight: 12 }}
                                     >
                                         Submit
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => handleClear()}
+                                        fullWidth
+                                    >
+                                        Clear
                                     </Button>
                                     <Button
                                         variant="contained"

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { styled, alpha, CSSObject, Theme } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -26,7 +28,7 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
 })<AppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  
+
 }));
 
 const Search = styled('div')(({ theme }) => ({
@@ -74,8 +76,8 @@ export default function Navbar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
-    const updateOpen = useAppStore((state)=> state.updateOpen);
-    const dOpen = useAppStore((state)=> state.dOpen);
+  const updateOpen = useAppStore((state) => state.updateOpen);
+  const dOpen = useAppStore((state) => state.dOpen);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -181,7 +183,7 @@ export default function Navbar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-            onClick={()=>updateOpen(!dOpen)}
+            onClick={() => updateOpen(!dOpen)}
           >
             <MenuIcon />
           </IconButton>
@@ -191,9 +193,10 @@ export default function Navbar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            <SportsGymnasticsIcon/>
+            Gym MemberShip Portal
           </Typography>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -201,7 +204,7 @@ export default function Navbar() {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">

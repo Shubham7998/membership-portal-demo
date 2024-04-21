@@ -41,7 +41,6 @@ async function GetSubscriptionAsync(): Promise<ResponseModel>{
     await axios
     .get(URL)
     .then(function (response) {
-        alert("Hey, I'm here in get subscription")
         if(response.data != null){
             result.data = response.data;
         }
@@ -60,8 +59,6 @@ async function DeleteSubscriptionAsync(id : number): Promise<ResponseModel>{
         errorCode: ""
     }
 
-    console.log("Get subscription");
-    alert(`${URL}/${id}`);
     await axios
     .delete(`${URL}/${id}`)
     .then(function (response) {
@@ -82,8 +79,6 @@ async function GetSubscriptionByIdAsync(id : number): Promise<ResponseModel>{
         errorCode: ""
     }
 
-    console.log("Get subscription by id");
-    console.log(`${URL}/${id}`);
 
     await axios
     .get(`${URL}/${id}`)
@@ -105,8 +100,7 @@ async function UpdateSubscriptionAsync(id : number, subscriberInfo : Subscriptio
         errorCode: ""
     }
 
-    console.log("Get subscription by id");
-    alert(`${URL}/${id}`);
+   
 
     await axios
     .put(`${URL}/${id}`,subscriberInfo)

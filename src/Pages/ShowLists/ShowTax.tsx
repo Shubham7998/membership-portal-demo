@@ -57,7 +57,7 @@ export default function ShowTax() {
                             <GenericButton btnName='Clear' handleSubmit={handleClear} />
                         </Grid>
                         <Grid item xs={4}>
-                            <AddButton path={"/subscriber"} />
+                            <AddButton path={"/tax"} />
                         </Grid>
                     </Grid>
                     <GenericList data={taxInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={taxDataHeader} tableName={sortColumn} handleSorting={handleSorting} />

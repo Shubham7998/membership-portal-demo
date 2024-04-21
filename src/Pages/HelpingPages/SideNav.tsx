@@ -23,6 +23,7 @@ import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import MailIcon from '@mui/icons-material/Mail';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { CssBaseline, List } from '@mui/material';
+import Groups3Icon from '@mui/icons-material/Groups3';
 
 const drawerWidth = 240;
 
@@ -62,6 +63,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    position : "relative",
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -82,19 +84,13 @@ export default function SideNav() {
 
   const menuItems = [
     { label: 'Home', icon: <HomeIcon />, route: '/' },
-    { label: 'Users', icon: <PeopleIcon />, route: '/user' },
-    { label: 'Show Users', icon: <ViewListIcon />, route: '/showusers' },
-    { label: 'Subscribers', icon: <PersonIcon />, route: '/subscriber' },
+    { label: 'Show Users', icon: <PeopleIcon />, route: '/showusers' },
     { label: 'Show Subscribers', icon: <ViewListIcon />, route: '/showsubscribers' },
-    { label: 'Products', icon: <LocalMallIcon />, route: '/product' },
-    { label: 'Show Products', icon: <ViewListIcon />, route: '/showproducts' },
-    { label: 'Discounts', icon: <AttachMoneyIcon />, route: '/discount' },
-    { label: 'Show Discounts', icon: <ViewListIcon />, route: '/showdiscounts' },
-    { label: 'Taxes', icon: <MonetizationOnIcon />, route: '/tax' },
-    { label: 'Show Taxes', icon: <ViewListIcon />, route: '/showtaxes' },
-    { label: 'Subscriptions', icon: <SubscriptionsIcon />, route: '/subscription' },
-    { label: 'Show Subscriptions', icon: <ViewListIcon />, route: '/showsubscriptions' },
-    { label: 'Tables', icon: <TableChartIcon />, route: '/table' },
+    { label: 'Show Products', icon: <LocalMallIcon />, route: '/showproducts' },
+    { label: 'Show Discounts', icon: <AttachMoneyIcon />, route: '/showdiscounts' },
+    { label: 'Show Taxes', icon: <MonetizationOnIcon />, route: '/showtaxes' },
+    { label: 'Show Genders', icon: <Groups3Icon />, route: '/showgenders' },
+    { label: 'Show Subscriptions', icon: <SubscriptionsIcon />, route: '/showsubscriptions' },
   ];
 
   return (
@@ -112,7 +108,7 @@ export default function SideNav() {
             <ListItem
               key={index}
               disablePadding
-              sx={{ display: 'block', '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.08)' } }}
+              sx={{ display: 'block', '&:hover': { bgcolor: '#f5f5f5' } }}
               onClick={() => navigate(item.route)}
             >
               <ListItemButton

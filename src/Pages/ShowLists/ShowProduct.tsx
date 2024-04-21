@@ -112,7 +112,7 @@ export default function ShowProduct() {
               <GenericButton btnName='Clear' handleSubmit={handleClear} />
             </Grid>
             <Grid item xs={4}>
-              <AddButton path={"/user"} />
+              <AddButton path={"/product"} />
             </Grid>
           </Grid>
           <GenericList data={productInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={productDataHeader} tableName={sortColumn} handleSorting={handleSorting} />

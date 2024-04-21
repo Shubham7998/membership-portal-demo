@@ -16,16 +16,15 @@ export const CreateDiscountAsync = async (
         message: "",
         errorCode: "",
     };
-    alert(JSON.stringify(discountInfo));
-    alert(URL)
 
     await axios
         .post(URL, discountInfo)
         .then(function (response) {
-            result.data = response.data;
+            if(response.data != null){
+                result.data = response.data;
+            }
         })
         .catch(function (error) {
-          //  handleError(error, result);
             alert(JSON.stringify(error));
         })
     return result;
@@ -133,10 +132,6 @@ export const GetPaginatedAdvanceDiscountAsync = async  (page  : number = 0, page
       paginatedResult.dataArray = response.data.dataArray;
       paginatedResult.totalPages = response.data.totalPages;
   
-      console.log(paginatedResult)
-  
-      console.log(response);
-      
       result.errorCode = response.status + "";
     } catch (error) {
       handleError(error, result);

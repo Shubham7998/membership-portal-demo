@@ -13,13 +13,13 @@ export default function Discount() {
     const {
         handleSubmit, discoutInfo, errors,
         snackbarOpen, setDiscountInfo,
-        handleSnackbarClose, navigate,
+        handleSnackbarClose, navigate,setErrors,
         snackbarSeverity, snackbarMessage, handleSelectBooleanChange } = DiscountUtility(+id);
 
     const {
         onSelectFieldChange,
-        onDateFieldChange,
-        onTextFieldChange,
+        onDateFieldChange,onNumberFieldChangeError,
+        onTextFieldChange,onTextFieldChangeError,
         onNumberFieldChange
     } = OnChangeFields();
 
@@ -41,9 +41,9 @@ export default function Discount() {
                                     label="Discount Code"
                                     variant="outlined"
                                     autoComplete="off"
-                                    inputProps={{ maxLength: 100 }}
+                                    inputProps={{ maxLength: 25}}
                                     value={discoutInfo.discountCode}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setDiscountInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setDiscountInfo, setErrors, errors)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "discountCode"
@@ -71,7 +71,7 @@ export default function Discount() {
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
                                     value={discoutInfo.discountAmount}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChange(event, setDiscountInfo)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setDiscountInfo,setErrors,errors)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "discountAmount"
@@ -125,17 +125,6 @@ export default function Discount() {
 
                             </Grid>
                         </Grid>
-                        {/* <Snackbar
-                            open={snackbarOpen}
-                            autoHideDuration={6000}
-                            onClose={handleSnackbarClose}
-                            message={snackbarMessage}
-                            anchorOrigin={snackbarPosition}>
-                            <Alert onClose={handleSnackbarClose}
-                                severity={snackbarSeverity}>
-                                {snackbarMessage}
-                            </Alert>
-                        </Snackbar>   */}
                         <GenericSnackbar
                             open={snackbarOpen}
                             onClose={handleSnackbarClose}

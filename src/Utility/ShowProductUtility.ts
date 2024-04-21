@@ -54,7 +54,7 @@ export default function ShowProductUtility() {
         
       }
 
-    const recordsPerPage = 12;
+    const recordsPerPage = 5;
 
 
     const { setTotalPages, changeCurrentPage, nextPage, prevPageDisabled, nextPageDisabled, prevPage, numbers, currentPage } = PaginationUtility(recordsPerPage);

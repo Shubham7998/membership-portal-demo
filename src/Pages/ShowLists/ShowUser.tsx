@@ -1,13 +1,11 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
-import SideNav from '../HelpingPages/SideNav';
-import ShowUserUtility from '../../Utility/ShowUserUtility';
-import GenericList from './GenericList';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
-import OnChangeFields from '../../Generics/OnChangeFields';
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
+import OnChangeFields from '../../Generics/OnChangeFields';
+import ShowUserUtility from '../../Utility/ShowUserUtility';
+import SideNav from '../HelpingPages/SideNav';
+import GenericList from './GenericList';
 
 export default function ShowUser() {
 
@@ -16,7 +14,7 @@ export default function ShowUser() {
         setUserInfo, searchUserInfo,
         prevPage, nextPage, currentPage, changeCurrentPage,
         numbers, prevPageDisabled,
-        nextPageDisabled,
+        nextPageDisabled,searchMode,
         handleSearchClick, handleClear
         , setSearchUserInfo } = ShowUserUtility();
 
@@ -117,7 +115,7 @@ export default function ShowUser() {
                             <AddButton path={"/user"} />
                         </Grid>
                     </Grid>
-                    <GenericList data={userInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={userDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                    <GenericList data={userInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={userDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
                     <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
 
                 </Box>

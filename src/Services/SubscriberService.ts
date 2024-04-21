@@ -41,13 +41,11 @@ async function GetSubscriberByIdAsync(id: number): Promise<ResponseModel> {
         errorCode: ""
     }
 
-    console.log("Get subscriber by id");
-
     await axios
         .get(URL + `${id}`)
         .then(function (response) {
             if (!response.data) {
-                console.log(`Data with id = ${id} is not found`)
+                    console.log(`Data with id = ${id} is not found`)
             } else {
                 result.data = response.data;
                 result.errorCode = response.status + "";
@@ -55,7 +53,6 @@ async function GetSubscriberByIdAsync(id: number): Promise<ResponseModel> {
         })
         .catch((error) => {
             result.error = error.message + "";
-            //  console.log(error)
         })
 
     return result;

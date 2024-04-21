@@ -177,11 +177,11 @@ export default function ShowSubscriptions() {
                                     }
                                 />
                             </FormControl>
-                        </Grid>
+                        </Grid>*/}
 
                         <Grid item xs={2}>
                             <FormControl fullWidth >
-                                <label id="expiryDate"> Expiry Date</label>
+                                {/* <label id="expiryDate"> Expiry Date</label> */}
                                 <TextField
                                     required
                                     fullWidth
@@ -198,7 +198,7 @@ export default function ShowSubscriptions() {
                                     }
                                 />
                             </FormControl>
-                        </Grid> */}
+                        </Grid> 
                         <Grid item xs={1.2}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>

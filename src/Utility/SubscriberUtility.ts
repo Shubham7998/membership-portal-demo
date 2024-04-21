@@ -228,7 +228,7 @@ export default function SubscriberUtility(id: number) {
 
     return newErrors.length === 0;
   };
-  return { navigate, errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
+  return {setErrors, navigate, errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
 }
 
 

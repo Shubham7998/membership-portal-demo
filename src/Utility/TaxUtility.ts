@@ -69,16 +69,15 @@ export default function TaxUtility(id: number) {
         if (id > 0) {
             try {
                 const result = await GetTaxByIdAsync(id);
-                setTaxInfo(result.data)
-                console.log(result)
-                console.log(taxInfo)
-                console.log("result.errorCode = " + result.errorCode)
-                if (result.errorCode == "200") {
-                    console.log("result.errorCode = " + result.errorCode)
-                    if (result != null) {
-                        setTaxInfo(result.data);
-                        console.log("tax info")
-                        console.log(result.data);
+                if (result.data != null) {
+
+                    setTaxInfo(result.data)
+                    
+                    if (result.errorCode == "200") {
+                        console.log("result.errorCode = " + result.errorCode)
+                        if (result != null) {
+                            setTaxInfo(result.data);
+                        }
                     }
                 }
             } catch (error) {
@@ -86,12 +85,9 @@ export default function TaxUtility(id: number) {
             }
         } else {
             const result = await GetTaxAsync();
-            console.log(result.data)
             const taxStates = result.data.map((item: { stateName: any; }) => item.stateName);
             const states: any = States.filter(state => !taxStates.includes(state));
             setIndianStates(states);
-            console.log("Indian Stated")
-            console.log(indianStates)
             setTaxInfo(initialValue);
         }
     }
@@ -109,8 +105,8 @@ export default function TaxUtility(id: number) {
         const { name, value } = event.target;
         if (/^\d*$/.test(value) && (Number(value) < 15)) {
             setTaxInfo(prevState => ({ ...prevState, [name]: value }));
-        }else{
-            displaySnackbar("Tax cant be greater than 15","warning");
+        } else {
+            displaySnackbar("Tax cant be greater than 15", "warning");
         }
         if (errors.some(error => error.parameterName === name)) {
             const updatedErrors = errors.filter(error => error.parameterName !== name);
@@ -150,7 +146,6 @@ export default function TaxUtility(id: number) {
     };
 
     async function handleSubmit() {
-        console.log(taxInfo)
         if (isValidate()) {
             try {
                 if (id > 0) {

@@ -8,6 +8,7 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Stack, Typograp
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import Helpme2 from './Helpme2';
+import Home1 from '../HelperComponents';
 
 export default function Home() {
     return (
@@ -16,7 +17,7 @@ export default function Home() {
             <Box height={70} />
             <Box sx={{ display: 'flex' }}>
                 <SideNav />
-
+                <Home1/>
             </Box>
         </>
     );

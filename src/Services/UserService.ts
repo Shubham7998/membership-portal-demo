@@ -21,7 +21,8 @@ async function CreateUserService(userInfo: UserModel): Promise<ResponseModel> {
             result.errorCode = response.status + "";
         })
         .catch(function (error) {
-            alert(JSON.stringify(error));
+            // alert(JSON.stringify(error));
+            console.log(error)
         })
     return result;
 }
@@ -47,7 +48,8 @@ async function UpdateUserService(userInfo: UserModel, id: number): Promise<Respo
             }
         })
         .catch(function (error) {
-            alert(JSON.stringify(error));
+            console.log(error)
+            // alert(JSON.stringify(error));
         })
     return result;
 }
@@ -100,7 +102,8 @@ async function DeleteUserService(id: number): Promise<ResponseModel> {
             }
         })
         .catch(function (error) {
-            alert(JSON.stringify(error));
+            console.log(error)
+            // alert(JSON.stringify(error));
         })
     return result;
 }
@@ -124,7 +127,6 @@ async function GetAllUserService(): Promise<ResponseModel> {
             console.log(result)
         })
         .catch(function (error) {
-            alert(JSON.stringify(error));
             console.log(error)
             console.log(result.errorCode)
         })

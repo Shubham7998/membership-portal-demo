@@ -24,6 +24,9 @@ import Tax from './Pages/CreatePages/Tax';
 import Subscription from './Pages/CreatePages/Subscription';
 import ShowSubscriptions from './Pages/ShowLists/ShowSubscriptions';
 import GenericFloatingTable from './Pages/GenericFloatingTable';
+import Gender from './Pages/CreatePages/Gender';
+import ShowGender from './Pages/ShowLists/GenderList';
+import Home1 from './Pages/HelperComponents';
 
 function App() {
   return (
@@ -58,9 +61,13 @@ function App() {
           <Route path='/tax' element={<Tax />}></Route>
           <Route path='/tax/:id' element={<Tax />}></Route>
           <Route path='/showtaxes' element={<ShowTax />}></Route>
+          
+          <Route path='/gender' element={<Gender />}></Route>
+          <Route path='/gender/:id' element={<Gender />}></Route>
+          <Route path='/showgenders' element={<ShowGender />}></Route>
 
           <Route path='/table' element={<TablePaginationActions />}></Route>
-          <Route path='/helpme' element={<HelperComponents />}></Route>
+          <Route path='/helpme' element={<Home1 />}></Route>
 
         </Route>
       </Routes>

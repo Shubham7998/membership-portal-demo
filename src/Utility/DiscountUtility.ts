@@ -123,7 +123,7 @@ export default function DiscountUtility(id: number) {
     };
 
     return {
-        navigate,
+        navigate,setErrors,
         handleNumberChange, handleSelectChange,
         handleSubmit, discoutInfo,
         onInputChangeDiscount, errors,

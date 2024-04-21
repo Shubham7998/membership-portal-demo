@@ -26,7 +26,7 @@ interface GenericGetServiceProps {
 }
 
 export const CreateInfo = async (
-    { data, tableName }: GenericServiceProps
+    data : any, tableName : string
 ): Promise<ResponseModel> => {
     let result: ResponseModel = {
         error: "",
@@ -37,7 +37,7 @@ export const CreateInfo = async (
 
     try {
         const response = await axios.post(
-            `${API_URL}/${tableName}`,
+            `${API_URL}${tableName}`,
             data
         );
         result.data = response.data;
@@ -51,7 +51,7 @@ export const CreateInfo = async (
 };
 
 export const UpdateInfo = async (
-    { data, tableName, id }: GenericServiceProps
+     data : any, tableName : string, id : number
 ): Promise<ResponseModel> => {
     let result: ResponseModel = {
         error: "",
@@ -75,7 +75,7 @@ export const UpdateInfo = async (
 };
 
 export const DeleteInfoById = async (
-    { tableName, id }: GenericServiceProps
+    tableName : string, id : number 
 ): Promise<ResponseModel> => {
     let result: ResponseModel = {
         error: "",
@@ -96,7 +96,7 @@ export const DeleteInfoById = async (
 };
 
 export const GetInfoById = async (
-    { tableName, id }: GenericServiceProps
+     tableName : string, id : number
 ): Promise<ResponseModel> => {
     let result: ResponseModel = {
         error: "",
@@ -138,18 +138,12 @@ export const GetAllAsync = async (data: UserModel | ProductModel | SubscriberMod
     }
 
     const URL = `${API_URL}${tableName}/paginatedsorting?page=${currentPage}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
-    // alert(URL)
-    console.log(data)
+    
     try {
         const response = await axios.post(URL, data);
         if (response != null) {
             paginatedResult.dataArray = response.data.dataArray;
             paginatedResult.totalPages = response.data.totalPages;
-
-            console.log("paginated result")
-            console.log(paginatedResult)
-
-            console.log(response);
 
             result.errorCode = response.status + "";
         }
