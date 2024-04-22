@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { ProductModel } from '../Models/ProductModel'
+import { ProductModel } from '../../Models/ProductModel'
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedAdvanceProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../Services/ProductService';
-import { handleSwirl } from '../Generics/Swirl';
-import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
-import { GetAllAsync } from '../Generics/Services/GenericService';
+import { AdvanceSearchProductAsync, DeleteProductAsync, GetPaginatedAdvanceProductAsync, GetPaginatedProductAsync, GetProductAsync, SearchProductAsync } from '../../Services/ProductService';
+import { handleSwirl } from '../../Generics/Swirl';
+import PaginationUtility from '../../Generics/Components/Pagination/PaginationUtility';
+import { GetAllAsync } from '../../Generics/Services/GenericService';
 
 export default function ShowProductUtility() {
 
@@ -27,8 +27,6 @@ export default function ShowProductUtility() {
                 uniqueProducts.push(product);
             }
         });
-        console.log("uniqueProducts")
-        console.log(uniqueProducts)
         return uniqueProducts;
     };
 
@@ -39,20 +37,15 @@ export default function ShowProductUtility() {
         const name = event.target.name;
         const value = event.target.value;
 
-        setSearchProductInfo((prevState) => ({ ...prevState, [name]: value }));
-        searchData();
+            
     };
     async function searchData() {
-    
-        alert("Handle search data")
-        alert(JSON.stringify(searchProductInfo));
-        const result = await GetAllAsync(searchProductInfo, tableName,currentPage, recordsPerPage, "id", "asc");
 
-        console.log(result)
+        const result = await GetAllAsync(searchProductInfo, tableName, 1, recordsPerPage, "id", "asc");
+
         setProductInfo(result.dataArray);
         setTotalPages(result.totalPages);
-        
-      }
+    }
 
     const recordsPerPage = 5;
 
@@ -64,9 +57,9 @@ export default function ShowProductUtility() {
     }, [currentPage])
 
     async function fetchData() {
-        const result = await GetAllAsync(initialValue, tableName,currentPage, recordsPerPage, "id", "asc");
-        
-        if(result != null){
+        const result = await GetAllAsync(initialValue, tableName, currentPage, recordsPerPage, "id", "asc");
+
+        if (result != null) {
             setProductInfo(result.dataArray);
             setTotalPages(result.totalPages);
         }
@@ -74,10 +67,8 @@ export default function ShowProductUtility() {
 
     async function handleDelete(id: number) {
         const confirmation = await handleSwirl();
-        console.log(confirmation.confirmed)
         if (confirmation.confirmed) {
             const result = await DeleteProductAsync(id);
-            console.log(result.data);
             fetchData();
         }
     }
@@ -86,30 +77,27 @@ export default function ShowProductUtility() {
         navigate(`/product/${id}`)
     }
 
-    const handleSorting = async (columnName : string, sortOrder : string) => {
+    const handleSorting = async (columnName: string, sortOrder: string) => {
 
 
-        const result = await GetAllAsync(searchProductInfo, tableName,currentPage, recordsPerPage, columnName, sortOrder);
-        console.log("result")
-        console.log(columnName)
-        if(result != null){
+        const result = await GetAllAsync(searchProductInfo, tableName, currentPage, recordsPerPage, columnName, sortOrder);
+        if (result != null) {
             setProductInfo(result.dataArray);
             setTotalPages(result.totalPages);
+            setSearchMode(false);
         }
     }
     const handleClear = () => {
         setSearchProductInfo(initialValue);
         fetchData();
-    
-      };
+        setSearchMode(false)
+    };
 
-      
-    
-      const handleSearchClick = () => {
-        alert("Handle search cleck")
+
+
+    const handleSearchClick = () => {
         searchData();
         setSearchMode(true);
-        
-      };
-    return { handleSearchClick,handleClear,handleSorting,setSearchProductInfo,searchProductInfo,handleSelectChange, navigate, handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates }
+    };
+    return { searchMode,handleSearchClick, handleClear, handleSorting, setSearchProductInfo, searchProductInfo, handleSelectChange, navigate, handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates }
 }

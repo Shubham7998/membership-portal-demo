@@ -2,7 +2,7 @@ import { Button, CardActions, FormControl, Grid, InputLabel, MenuItem, Paper, Se
 import React from 'react'
 import SideNav from '../HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
-import GenderUtility from '../../Utility/GenderUtility';
+import GenderUtility from '../../Utility/Pages/GenderUtility';
 import OnChangeFields from '../../Generics/OnChangeFields';
 import CustomHelperText from '../../Generics/Components/CustomHelperText';
 

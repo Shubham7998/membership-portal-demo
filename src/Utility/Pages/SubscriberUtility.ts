@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { SubscriberModel } from '../Models/SubscriberModel'
-import { GetAllGenderAsync } from '../Services/GenderService';
-import GenderModel from '../Models/GenderModel';
+import { SubscriberModel } from '../../Models/SubscriberModel'
+import { GetAllGenderAsync } from '../../Services/GenderService';
+import GenderModel from '../../Models/GenderModel';
 import {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -9,10 +9,10 @@ import {
   SnackbarOrigin,
 } from "@mui/material";
 import { userInfo } from 'os';
-import { isValidName, removeSpace, isValidEmailAddress, isValidContactNumber, isValidPassword } from '../Generics/Validations';
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import { CreateSubscriberAsync, GetSubscriberAsync, GetSubscriberByIdAsync, UpdateSubscriberAsync } from '../Services/SubscriberService';
-import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { isValidName, removeSpace, isValidEmailAddress, isValidContactNumber, isValidPassword } from '../../Generics/Validations';
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
+import { CreateSubscriberAsync, GetSubscriberAsync, GetSubscriberByIdAsync, UpdateSubscriberAsync } from '../../Services/SubscriberService';
+import SnackBarGeneric from '../../Generics/Components/Snackbar/SnackBarGeneric';
 import { useNavigate } from 'react-router-dom';
 
 export default function SubscriberUtility(id: number) {
@@ -50,7 +50,6 @@ export default function SubscriberUtility(id: number) {
 
       const response = await GetAllGenderAsync();
       setGenders(response.data);
-      console.log(genders)
     } catch (error) {
       alert(JSON.stringify(error));
       console.log(error)
@@ -59,7 +58,6 @@ export default function SubscriberUtility(id: number) {
       try {
         const result = await GetSubscriberByIdAsync(id);
         if (result.errorCode == "200") {
-          console.log(result.data)
           setSubscriberInfo(result.data);
         }
       } catch (error) {
@@ -106,19 +104,11 @@ export default function SubscriberUtility(id: number) {
 
     if (isValidate()) {
       setDefaultValue();
-      console.log("Subscriber info")
-      console.log(subscriberInfo)
       if (id > 0) {
-        alert("Update");
         const response = await UpdateSubscriberAsync(subscriberInfo, id);
-        console.log("response data  update ");
-        console.log(response);
         displaySnackbar("Subscriber details updated successfully", "success");
       } else {
-        alert("add");
         const response = await CreateSubscriberAsync(subscriberInfo);
-        console.log("response data added");
-        console.log(response);
         displaySnackbar("Subscriber details added successfully", "success");
       }
       setTimeout(() => {
@@ -222,13 +212,12 @@ export default function SubscriberUtility(id: number) {
         parameterName: "genderId",
         errorMessage: "Please select the gender"
       })
-      console.log("gender is not valid")
     }
     setErrors(newErrors);
 
     return newErrors.length === 0;
   };
-  return {setErrors, navigate, errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
+  return { setErrors, navigate, errors, handleChange, handleSubmit, handleNumberChange, subscriberInfo, handleTextChange, genders, handleSelectChange, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity }
 }
 
 

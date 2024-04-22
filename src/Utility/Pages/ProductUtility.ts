@@ -1,11 +1,11 @@
 import { SnackbarOrigin } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ParameterErrorModel } from "../Models/ParameterErrorModel";
-import { ProductModel } from "../Models/ProductModel";
-import { CreateProductAsync, DeleteProductAsync, GetProductByIdAsync, UpdateProductAsync } from "../Services/ProductService";
-import { isValidName } from "../Generics/Validations";
-import SnackBarGeneric from "../Generics/Components/Snackbar/SnackBarGeneric";
+import { ParameterErrorModel } from "../../Models/ParameterErrorModel";
+import { ProductModel } from "../../Models/ProductModel";
+import { CreateProductAsync, DeleteProductAsync, GetProductByIdAsync, UpdateProductAsync } from "../../Services/ProductService";
+import { isValidName } from "../../Generics/Validations";
+import SnackBarGeneric from "../../Generics/Components/Snackbar/SnackBarGeneric";
 
 export default function ProductUtility(id: number) {
     const navigate = useNavigate();
@@ -57,12 +57,10 @@ export default function ProductUtility(id: number) {
             console.log("isValidate");
             try {
                 if (productInfo.id !== 0) {
-                    console.log("Updateproductinfo")
                     var response = await UpdateProductAsync(productInfo.id, productInfo);
                     displaySnackbar("Product updated successfully", "success");
                 }
                 else {
-                    alert("Createproductinfo");
                     await CreateProductAsync(productInfo);
                     displaySnackbar("Product added successfully", "success");
                 }
@@ -139,7 +137,7 @@ export default function ProductUtility(id: number) {
         snackbarMessage,
         snackbarSeverity,
         errors, handleSubmit,
-        navigate,setErrors
+        navigate, setErrors
     };
 }
 

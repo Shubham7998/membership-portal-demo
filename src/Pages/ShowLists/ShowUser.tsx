@@ -3,7 +3,7 @@ import AddButton from '../../Generics/Components/Buttons/AddButton';
 import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
 import OnChangeFields from '../../Generics/OnChangeFields';
-import ShowUserUtility from '../../Utility/ShowUserUtility';
+import ShowUserUtility from '../../Utility/List/ShowUserUtility';
 import SideNav from '../HelpingPages/SideNav';
 import GenericList from './GenericList';
 
@@ -14,7 +14,7 @@ export default function ShowUser() {
         setUserInfo, searchUserInfo,
         prevPage, nextPage, currentPage, changeCurrentPage,
         numbers, prevPageDisabled,
-        nextPageDisabled,searchMode,
+        nextPageDisabled, searchMode,
         handleSearchClick, handleClear
         , setSearchUserInfo } = ShowUserUtility();
 
@@ -105,18 +105,23 @@ export default function ShowUser() {
                             />
                         </Grid>
 
-                        <Grid item xs={1.2}>
+                        <Grid item xs={0.8}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>
                         <Grid item xs={1.2}>
                             <GenericButton btnName='Clear' handleSubmit={handleClear} />
                         </Grid>
-                        <Grid item xs={1.6}>
+                        <Grid item xs={2}>
                             <AddButton path={"/user"} />
                         </Grid>
                     </Grid>
-                    <GenericList data={userInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={userDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    {userInfo !== null ?
+                        <GenericList data={userInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={userDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{searchMode ? "Data not present":"Table is empty"}</h1>
+                    }
+                    <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    </Grid>
 
                 </Box>
             </Box>

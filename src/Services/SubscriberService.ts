@@ -15,14 +15,10 @@ async function GetSubscriberAsync(): Promise<ResponseModel> {
         message: "",
         errorCode: ""
     }
-
-    console.log("Get subscriber async");
-
     await axios
         .get(URL)
         .then(function (response) {
             result.data = response.data;
-            console.log(result.data)
             result.message = response.status + "";
         })
         .catch(function (error) {
@@ -128,7 +124,7 @@ async function CreateSubscriberAsync(subscriberInfo: SubscriberModel): Promise<R
         })
         .catch(function (error) {
             result.error = error;
-            alert(error);
+            console.log(error)
         })
 
     return result;
@@ -177,10 +173,6 @@ export const GetPaginatedAdvanceSubscriberAsync = async (page: number = 0, pageS
         const response = await axios.post(`${API_URL}subscriber/paginated?page=${page}&pageSize=${pageSize}`, subscriberInfo);
         paginatedResult.dataArray = response.data.dataArray;
         paginatedResult.totalPages = response.data.totalPages;
-
-        console.log(paginatedResult)
-
-        console.log(response);
 
         result.errorCode = response.status + "";
     } catch (error) {

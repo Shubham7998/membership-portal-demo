@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import SideNav from '../HelpingPages/SideNav';
-import ShowUserUtility from '../../Utility/ShowUserUtility';
+import ShowUserUtility from '../../Utility/List/ShowUserUtility';
 import GenericList from './GenericList';
-import ShowSubcriptionUtility from '../../Utility/ShowSubcriptionUtility';
+import ShowSubcriptionUtility from '../../Utility/List/ShowSubcriptionUtility';
 import GenericFloatingTable from '../GenericFloatingTable';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
@@ -14,6 +14,7 @@ import { ProductModel } from '../../Models/ProductModel';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { SubscriberModel } from '../../Models/SubscriberModel';
 import OnChangeFields from '../../Generics/OnChangeFields';
+import GenericListSubscription from './GenericListSubscription';
 
 export default function ShowSubscriptions() {
 
@@ -198,7 +199,7 @@ export default function ShowSubscriptions() {
                                     }
                                 />
                             </FormControl>
-                        </Grid> 
+                        </Grid>
                         <Grid item xs={1.2}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>
@@ -210,11 +211,13 @@ export default function ShowSubscriptions() {
                         </Grid>
                     </Grid>
                     {subscriptionInfo !== null ?
-                        <GenericList data={subscriptionInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={subscriptionDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
+                        <GenericListSubscription subscriberInfo={subscriberInfo} data={subscriptionInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={subscriptionDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{searchMode ? "Data not present" : "Table is empty"}</h1>
                     }
-                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
 
+                    <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    </Grid>
                 </Box>
             </Box>
         </>

@@ -2,8 +2,8 @@ import React from 'react'
 import { Alert, Button, CardActions, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from '@mui/material'
 import SideNav from '../HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
-import ProductUtility from '../../Utility/ProductUtility';
-import DiscountUtility from '../../Utility/DiscountUtility';
+import ProductUtility from '../../Utility/Pages/ProductUtility';
+import DiscountUtility from '../../Utility/Pages/DiscountUtility';
 import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../../Generics/OnChangeFields';
 
@@ -13,13 +13,13 @@ export default function Discount() {
     const {
         handleSubmit, discoutInfo, errors,
         snackbarOpen, setDiscountInfo,
-        handleSnackbarClose, navigate,setErrors,
+        handleSnackbarClose, navigate, setErrors,
         snackbarSeverity, snackbarMessage, handleSelectBooleanChange } = DiscountUtility(+id);
 
     const {
         onSelectFieldChange,
-        onDateFieldChange,onNumberFieldChangeError,
-        onTextFieldChange,onTextFieldChangeError,
+        onDateFieldChange, onNumberFieldChangeError,
+        onTextFieldChange, onTextFieldChangeError,
         onNumberFieldChange
     } = OnChangeFields();
 
@@ -41,7 +41,7 @@ export default function Discount() {
                                     label="Discount Code"
                                     variant="outlined"
                                     autoComplete="off"
-                                    inputProps={{ maxLength: 25}}
+                                    inputProps={{ maxLength: 25 }}
                                     value={discoutInfo.discountCode}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setDiscountInfo, setErrors, errors)}
                                     helperText={
@@ -71,7 +71,7 @@ export default function Discount() {
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
                                     value={discoutInfo.discountAmount}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setDiscountInfo,setErrors,errors)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setDiscountInfo, setErrors, errors)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "discountAmount"

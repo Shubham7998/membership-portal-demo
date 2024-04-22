@@ -2,14 +2,15 @@ import React from 'react'
 import { Box, Button, Grid, TextField } from '@mui/material';
 import SideNav from '../HelpingPages/SideNav';
 import GenericList from './GenericList';
-import ShowTaxUtility from '../../Utility/ShowTaxUtility';
+import ShowTaxUtility from '../../Utility/List/ShowTaxUtility';
+
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
 import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
 import OnChangeFields from '../../Generics/OnChangeFields';
 export default function ShowTax() {
-    const { navigate, handleDelete, taxInfo, handleEdit,
+    const { navigate, handleDelete, taxInfo, handleEdit, searchMode,
         prevPage, nextPage, currentPage, changeCurrentPage,
         numbers, prevPageDisabled, setTaxInfo, handleSearchClick, handleClear,
         nextPageDisabled, handleSorting, searchTaxInfo, setSearchTaxInfo,
@@ -30,7 +31,7 @@ export default function ShowTax() {
                 <SideNav />
                 <Box component="main" sx={{ margin: 6, flexGrow: 1, p: 3 }}>
                     <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Tax List</h1>
-                    <Grid container spacing={3} sx={{ display: 'flex', justifyContent: 'center', marginBottom: 3 }}>
+                    <Grid spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginBottom: 3 }}>
 
                         <Grid item xs={2}>
                             <TextField
@@ -50,18 +51,23 @@ export default function ShowTax() {
                                 inputProps={{ maxLength: 10 }}
                             />
                         </Grid>
-                        <Grid item xs={1.5}>
+                        <Grid sx={{ marginLeft: 2 }} item xs={1}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>
-                        <Grid item xs={1.5}>
+                        <Grid sx={{ marginLeft: 2 }} item xs={1}>
                             <GenericButton btnName='Clear' handleSubmit={handleClear} />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid sx={{ marginLeft: 100 }} item xs={10}>
                             <AddButton path={"/tax"} />
                         </Grid>
                     </Grid>
-                    <GenericList data={taxInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={taxDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    {taxInfo !== null ?
+                        <GenericList data={taxInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={taxDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{searchMode ? "Data not present" : "Table is empty"}</h1>
+                    }
+                    <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    </Grid>
 
                 </Box>
             </Box>

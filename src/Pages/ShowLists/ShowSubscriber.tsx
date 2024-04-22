@@ -17,9 +17,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import { UserUtility } from '../../Utility/UserUtility';
-import ShowUserUtility from '../../Utility/ShowUserUtility';
-import ShowSubscriberUtility from '../../Utility/ShowSubscriberUtility';
+import { UserUtility } from '../../Utility/Pages/UserUtility';
+import ShowUserUtility from '../../Utility/List/ShowUserUtility';
+import ShowSubscriberUtility from '../../Utility/List/ShowSubscriberUtility';
 import GenericList from './GenericList';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
 import GenericList2 from '../HelpingPages/Helpme2';
@@ -135,21 +135,23 @@ export default function ShowSubscriber() {
                                 inputProps={{ maxLength: 10 }}
                             />
                         </Grid>
-                        <Grid item xs={1.2}>
+                        <Grid item xs={0.8}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>
-                        <Grid item xs={1.2}>
+                        <Grid item xs={1}>
                             <GenericButton btnName='Clear' handleSubmit={handleClear} />
                         </Grid>
-                        <Grid item xs={1.6}>
+                        <Grid item xs={2.2}>
                             <AddButton path={"/subscriber"} />
                         </Grid>
                     </Grid>
                     {subscriberInfo !== null ?
                         <GenericList data={subscriberInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={subscriberDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Table is empty</h1>
+                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{searchMode ? "Data not present":"Table is empty"}</h1>
                     }
-                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    </Grid>
                 </Box>
             </Box>
 

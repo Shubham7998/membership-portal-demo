@@ -1,9 +1,9 @@
 import React from 'react'
 import SideNav from '../HelpingPages/SideNav';
-import ShowUserUtility from '../../Utility/ShowUserUtility';
+import ShowUserUtility from '../../Utility/List/ShowUserUtility';
 import { Box, Button, Grid, Pagination, Snackbar, TextField } from '@mui/material';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import ShowDiscountUtility from '../../Utility/ShowDiscountUtility';
+import ShowDiscountUtility from '../../Utility/List/ShowDiscountUtility';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent';
 import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
@@ -12,7 +12,7 @@ import GenericButton from '../../Generics/Components/Buttons/ButtonGeneric';
 import OnChangeFields from '../../Generics/OnChangeFields';
 export default function ShowDiscount() {
 
-    const { navigate, handleDelete, discountInfo,
+    const { navigate, handleDelete, discountInfo, searchMode,
         handleEdit, prevPage, nextPage, currentPage,
         changeCurrentPage, numbers, prevPageDisabled,
         nextPageDisabled, handleSearchClick, handleClear,
@@ -76,20 +76,23 @@ export default function ShowDiscount() {
                                 }
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={1}>
                             <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={1}>
                             <GenericButton btnName='Clear' handleSubmit={handleClear} />
                         </Grid>
-                        <Grid item xs={3.6}>
+                        <Grid item xs={6}>
                             <AddButton path={"/discount"} />
                         </Grid>
                     </Grid>
-
-                    <GenericList data={discountInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={discountDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-                    <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
-                    {/* <GenericSnackbar /> */}
+                    {discountInfo !== null ?
+                        <GenericList data={discountInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={discountDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+                        : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{searchMode ? "Data not present" : "Table is empty"}</h1>
+                    }
+                    <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
+                        <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+                    </Grid>
                 </Box>
             </Box >
         </>

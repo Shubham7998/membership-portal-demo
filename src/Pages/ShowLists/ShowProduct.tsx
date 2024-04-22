@@ -12,7 +12,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import ShowProductUtility from '../../Utility/ShowProductUtility';
+import ShowProductUtility from '../../Utility/List/ShowProductUtility';
 import SideNav from '../HelpingPages/SideNav';
 import GenericList from './GenericList';
 import AddButton from '../../Generics/Components/Buttons/AddButton';
@@ -46,11 +46,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ShowProduct() {
   const productDataHeader = ["Product Name", "Product Price"]
 
-  const { handleSearchClick, handleClear, handleSorting, setSearchProductInfo, searchProductInfo, handleSelectChange, navigate, handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates } = ShowProductUtility();
+  const { handleSearchClick, searchMode, handleClear, handleSorting, setSearchProductInfo, searchProductInfo, handleSelectChange, navigate, handleDelete, productInfo, handleEdit, prevPage, nextPage, currentPage, changeCurrentPage, numbers, prevPageDisabled, nextPageDisabled, removeDuplicates } = ShowProductUtility();
   const sortColumn = ["productName", "price"];
   const {
     onTextFieldChange,
-
+    onSelectFieldChange
   } = OnChangeFields();
   console.log(productInfo)
   return (
@@ -60,7 +60,7 @@ export default function ShowProduct() {
         <SideNav />
         <Box component="main" sx={{ margin: 3, flexGrow: 1, p: 3 }}>
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>Product List</h1>
-          <Grid container spacing={3} sx={{ marginBottom: 3 }}>
+          <Grid sx={{ marginBottom: 3 }} container spacing={3}>
             <Grid item xs={2}>
               <FormControl fullWidth>
                 <InputLabel id="productName">Select Product</InputLabel>
@@ -73,7 +73,7 @@ export default function ShowProduct() {
                   name="productName"
                   label="Select Product"
                   value={searchProductInfo.productName}
-                  onChange={handleSelectChange}
+                  onChange={(event: any) => onSelectFieldChange(event, setSearchProductInfo)}
                 >
                   <MenuItem value={""}>Select Product </MenuItem>
                   {productInfo.map(
@@ -105,19 +105,25 @@ export default function ShowProduct() {
                 inputProps={{ maxLength: 6 }}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={0.9}>
               <GenericButton btnName='Search' handleSubmit={handleSearchClick} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <GenericButton btnName='Clear' handleSubmit={handleClear} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <AddButton path={"/product"} />
             </Grid>
           </Grid>
-          <GenericList data={productInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={productDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-          <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+          {productInfo !== null ?
+            <GenericList data={productInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={searchMode} dataHeader={productDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
+            : <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>{searchMode ? "Data not present" : "Table is empty"}</h1>
+          }
+          <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
+            <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
+          </Grid>
         </Box>
+
       </Box>
     </>
   );

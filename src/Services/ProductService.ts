@@ -152,13 +152,11 @@ export const GetPaginatedProductAsync = async  (page  : number = 0, pageSize : n
     paginatedResult.dataArray = response.data.dataArray;
     paginatedResult.totalPages = response.data.totalPages;
 
-    console.log(paginatedResult)
-
-    console.log(response);
     
     result.errorCode = response.status + "";
   } catch (error) {
     handleError(error, result);
+    console.log(error)
   }
 
   return paginatedResult;
@@ -179,14 +177,12 @@ export const GetPaginatedAdvanceProductAsync = async  (page  : number = 0, pageS
     const response = await axios.post(`${API_URL}product/paginated?page=${page}&pageSize=${pageSize}`,productInfo);
     paginatedResult.dataArray = response.data.dataArray;
     paginatedResult.totalPages = response.data.totalPages;
-
-    console.log(paginatedResult)
-
-    console.log(response);
     
     result.errorCode = response.status + "";
   } catch (error) {
     handleError(error, result);
+    console.log(error)
+
   }
 
   return paginatedResult;

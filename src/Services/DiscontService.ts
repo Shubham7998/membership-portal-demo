@@ -25,7 +25,7 @@ export const CreateDiscountAsync = async (
             }
         })
         .catch(function (error) {
-            alert(JSON.stringify(error));
+            console.log(error)
         })
     return result;
 
@@ -47,7 +47,7 @@ export const UpdateDiscountAsync = async (
         })
         .catch(function (error) {
             handleError(error, result);
-            alert(JSON.stringify(error));
+            console.log(error)
         })
     return result;
 };
@@ -70,7 +70,7 @@ export const GetDiscountByIdAsync = async (
         })
         .catch(function (error) {
             handleError(error, result);
-            alert(JSON.stringify(error));
+            console.log(error)
         })
     return result;
 };
@@ -91,7 +91,7 @@ export const DeleteDiscountAsync = async (
         })
         .catch(function (error) {
             handleError(error, result);
-            alert(JSON.stringify(error));
+            console.log(error)
         })
     return result;
 };
@@ -111,7 +111,7 @@ export const GetDiscountAsync = async (
         })
         .catch(function (error) {
             handleError(error, result);
-            alert(JSON.stringify(error));
+            console.log(error)
         })
     return result;
 };

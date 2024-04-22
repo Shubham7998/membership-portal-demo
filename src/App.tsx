@@ -25,7 +25,7 @@ import Subscription from './Pages/CreatePages/Subscription';
 import ShowSubscriptions from './Pages/ShowLists/ShowSubscriptions';
 import GenericFloatingTable from './Pages/GenericFloatingTable';
 import Gender from './Pages/CreatePages/Gender';
-import ShowGender from './Pages/ShowLists/GenderList';
+import ShowGender from './Pages/ShowLists/ShowGender';
 import Home1 from './Pages/HelperComponents';
 
 function App() {

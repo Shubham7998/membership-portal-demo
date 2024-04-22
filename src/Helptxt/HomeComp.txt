@@ -1,88 +1,60 @@
-<Box height={70} />
-            <Box sx={{ display: 'flex' }}>
-                <SideNav />
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={8}>
-                            <Stack spacing={2} direction="row">
-                                <Card sx={{ minWidth: 49 + "%", height: 140 }}>
-                                    <CardContent>
-                                        <div>
-                                            <CreditCardIcon />
-                                        </div>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            $500.00
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="div" sx={{color : "#ccd1d"}}>
-                                            Total Earnings
-                                        </Typography>
+// Import statements...
 
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ minWidth: 49 + "%", height: 140 }}>
-                                <CardContent>
-                                        <div>
-                                            <ShoppingBagIcon />
-                                        </div>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            $500.00
-                                        </Typography>
-                                        <Typography gutterBottom variant="body2" component="div" sx={{color : "#ccd1d"}}>
-                                            Total Earnings
-                                        </Typography>
+export default function GenericListSubscription({
+    data,
+    handleDelete,
+    handleEdit,
+    subscriberInfo,
+    dataHeader,
+    isSearchMode,
+    tableName,
+    handleSorting
+}: GenericListProps) {
+    const getSubscriberName = (id: number): string => {
+        const subscriber = subscriberInfo.find(subscriber => subscriber.id === id);
+        if (subscriber) {
+            return `${subscriber.firstName} ${subscriber.lastName}`;
+        }
+        return 'Subscriber Not Found';
+    };
 
-                                    </CardContent>
-
-                                </Card>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Stack spacing={2}>
-                                <Card sx={{ maxWidth: 345 }}>
-                                    <Stack spacing={2} direction="row">
-                                        <div className='iconstyle'>
-                                            <StorefrontIcon />
-                                        </div>
-                                        <div className='paddingall'>
-                                            <span className='pricetitle'>$230k</span>
-                                            <br />
-                                            <span className='pricesubtitle'>Total Income</span>
-                                        </div>
-                                    </Stack>
-                                </Card>
-                                <Card sx={{ maxWidth: 345 }}>
-                                    <Stack spacing={2} direction="row">
-                                        <div className='iconstyle'>
-                                            <StorefrontIcon />
-                                        </div>
-                                        <div className='paddingall'>
-                                            <span className='pricetitle'>$230k</span>
-                                            <br />
-                                            <span className='pricesubtitle'>Total Income</span>
-                                        </div>
-                                    </Stack>
-                                </Card>
-                            </Stack>
-                        </Grid>
-                    </Grid>
-                    <Box height={20} />
-                    <Grid container spacing={2}>
-                        <Grid item xs={8}>
-                            <Card sx={{ height: 60 + "vh" }}>
-                                <CardContent>
-                                    ok
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={2.65}>
-                            <Card sx={{ height: 60 + "vh" }}>
-                                <CardContent>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                    </Grid>
-
-                </Box>
-
-            </Box>
+    return (
+        <>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    {/* Table headers */}
+                    <TableHead>
+                        <TableRow>
+                            {/* Render table headers */}
+                        </TableRow>
+                    </TableHead>
+                    {/* Table body */}
+                    <TableBody>
+                        {data?.map((item: any, index) => (
+                            <StyledTableRow key={index}>
+                                <StyledTableCell align="left">{/* Render Sr No */}</StyledTableCell>
+                                {Object.entries(item).map(([key, value]: any, idx) => {
+                                    if (key !== "id" && key !== "discountId" && key !== "taxId" && key !== "productId" && key !== "genderId") {
+                                        if (key === 'subscriberId') {
+                                            return (
+                                                <StyledTableCell key={idx} align="center">
+                                                    {getSubscriberName(value)}
+                                                </StyledTableCell>
+                                            );
+                                        }
+                                        return (
+                                            <StyledTableCell key={idx} align="center">
+                                                {/* Render other data */}
+                                            </StyledTableCell>
+                                        );
+                                    }
+                                })}
+                                {/* Render edit and delete buttons */}
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
+    );
+}

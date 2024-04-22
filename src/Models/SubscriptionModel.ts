@@ -1,5 +1,6 @@
 export interface SubscriptionModel {
     id : number,
+    subscriberName? : string,
     subscriberId : number,
     productId : number,
     productName? : string,

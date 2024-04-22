@@ -1,47 +1,135 @@
-import React, { useState } from 'react';
-import { Grid, FormControl, InputLabel, TextField } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 
-export default function YourComponent() {
-  const [startDate, setStartDate] = useState('');
+// Assuming these are the initial values
+const initialValueSubscriber = {
+    id: 0,
+    firstName: '',
+    contactNumber: '',
+    email: '',
+    genderId: -1,
+    lastName: ''
+};
 
-  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(event.target.value);
-  };
+const initialValueSubscription = {
+    id: 0,
+    subscriberName: "",
+    subscriberId: 0,
+    productId: 0,
+    productName: "",
+    productPrice: 0,
+    discountId: 0,
+    discountCode: "",
+    discountAmount: 0,
+    startDate: undefined,
+    expiryDate: undefined,
+    priceAfterDiscount: 0,
+    taxId: 0,
+    cgst: 0,
+    sgst: 0,
+    totalTaxPercent: 0,
+    taxAmount: 0,
+    finalAmount: 0
+};
 
-  return (
-    <Grid container>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-          <InputLabel id="startDate">Select Start Date</InputLabel>
-          <TextField
-            fullWidth
-            id="startDate"
-            variant="outlined"
-            size="small"
-            name='startDate'
-            type='date'
-            value={startDate}
-            onChange={handleTextChange}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </FormControl>
-      </Grid>
-    </Grid>
-  );
+const YourComponent = () => {
+    const [subscriptionInfo, setSubscriptionInfo] = useState([initialValueSubscription]);
+    const [subscriberInfo, setSubscriberInfo] = useState([initialValueSubscriber]);
+
+    useEffect(() => {
+        // Update subscriptionInfo when subscriberInfo changes
+        const updatedSubscriptionInfo = subscriberInfo.map(subscriber => {
+            const subscriberName = `${subscriber.firstName} ${subscriber.lastName}`;
+            return {
+                ...initialValueSubscription,
+                subscriberName,
+                subscriberId: subscriber.id // Assuming you want to keep subscriber id as well
+                // You can add other properties from subscriptionInfo if needed
+            };
+        });
+        setSubscriptionInfo(updatedSubscriptionInfo);
+    }, [subscriberInfo]);
+
+    // Your component JSX and other logic here
+};
+
+export default YourComponent;
+
+const onSelectFieldChange = (event: SelectChangeEvent<string>, setSearchInfo: Function) => {
+    const { name, value } = event.target;
+    setSearchInfo(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+
+    // If the field being changed is 'subscriberId', update the subscriberName in searchSubscriptionInfo
+    if (name === 'subscriberId') {
+        const selectedSubscriber = subscriberInfo.find(subscriber => subscriber.id === parseInt(value));
+        if (selectedSubscriber) {
+            setSearchInfo(prevState => ({
+                ...prevState,
+                subscriberName: `${selectedSubscriber.firstName} ${selectedSubscriber.lastName}`
+            }));
+        }
+    }
+};
+
+import React, { useState, useEffect } from 'react';
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { SubscriberModel } from '../../Models/SubscriberModel';
+import { DiscountModel } from '../../Models/DiscountModel';
+import { ProductModel } from '../../Models/ProductModel';
+
+export default function ShowSubscriptions() {
+    const [searchSubscriptionInfo, setSearchSubscriptionInfo] = useState({
+        subscriberId: '0',
+        productName: '0',
+        discountCode: '0',
+        expiryDate: '',
+        subscriberName: '' // Initialize subscriberName here
+    });
+
+    const [subscriberInfo, setSubscriberInfo] = useState<SubscriberModel[]>([]);
+    const [productInfo, setProductInfo] = useState<ProductModel[]>([]);
+    const [discountInfo, setDiscountInfo] = useState<DiscountModel[]>([]);
+
+    useEffect(() => {
+        // Fetch subscriberInfo, productInfo, and discountInfo here
+        // For example:
+        // fetchSubscriberInfo();
+        // fetchProductInfo();
+        // fetchDiscountInfo();
+
+        // Once data is fetched, set initial searchSubscriptionInfo
+        if (subscriberInfo.length > 0) {
+            const defaultSubscriber = subscriberInfo[0]; // Assuming default subscriber is the first one
+            setSearchSubscriptionInfo(prevState => ({
+                ...prevState,
+                subscriberName: `${defaultSubscriber.firstName} ${defaultSubscriber.lastName}`
+            }));
+        }
+    }, [subscriberInfo]); // Make sure to include dependencies if needed for fetching data
+
+    // Other code for rendering UI components
 }
+// Assuming subscriberInfo is an array of SubscriberModel
+const subscriberNames = subscriberInfo.map(subscriber => ({
+    subscriberId: subscriber.id,
+    subscriberName: `${subscriber.firstName} ${subscriber.lastName}`
+}));
 
-// Assuming you have a function to format the date in the desired format
-function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`; // This format is compatible with DateOnly in C#
-}
+// Filter and set the subscriptionInfo based on subscriberId
+const updatedSubscriptionInfo = subscriptionInfo.map(subscription => {
+    const matchingSubscriber = subscriberNames.find(subscriber => subscriber.subscriberId === subscription.subscriberId);
+    if (matchingSubscriber) {
+        return {
+            ...subscription,
+            subscriberName: matchingSubscriber.subscriberName
+        };
+    }
+    return subscription;
+});
 
-// Usage in your code
-const startDateToSend = formatDate(startDate); // Adjust startDate to your actual date variable
-const expiryDateToSend = formatDate(expiryDate); // Adjust expiryDate to your actual date variable
+// Set the updated subscriptionInfo state
+setSubscriptionInfo(updatedSubscriptionInfo);
 
-// Now you can send startDateToSend and expiryDateToSend to the backend
+

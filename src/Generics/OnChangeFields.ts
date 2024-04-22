@@ -66,6 +66,23 @@ export default function OnInputChange() {
         }
 
     };
+    const onNumberFieldContactChangeError = (
+        event: React.ChangeEvent<HTMLInputElement>, set: any,
+        setErrors: any, errors: ParameterErrorModel[]
+    ) => {
+        const { name, value } = event.target;
+        if (/^\d*$/.test(value)) {
+            if (value.length < 11) {
+                set((prevState: any) => ({ ...prevState, [name]: value }));
+
+                if (errors.some(error => error.parameterName === name)) {
+                    const updatedErrors = errors.filter(error => error.parameterName !== name);
+                    setErrors(updatedErrors);
+                }
+            }
+        }
+
+    };
     const onSelectFieldChange = (event: SelectChangeEvent<string>, set: React.Dispatch<React.SetStateAction<any>>) => {
         const name = event.target.name;
         const newValue = event.target.value;
@@ -79,6 +96,7 @@ export default function OnInputChange() {
         onTextFieldChange,
         onNumberFieldChange,
         onTextFieldChangeError,
-        onNumberFieldChangeError
+        onNumberFieldChangeError,
+        onNumberFieldContactChangeError
     }
 }

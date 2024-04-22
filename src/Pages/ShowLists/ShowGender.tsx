@@ -2,7 +2,7 @@ import { Grid } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 import SideNav from '../HelpingPages/SideNav'
-import ShowGenderUtility from '../../Utility/ShowGenderUtility'
+import ShowGenderUtility from '../../Utility/List/ShowGenderUtility'
 import PaginationComponent from '../../Generics/Components/Pagination/PaginationComponent'
 import GenericList from './GenericList'
 import AddButton from '../../Generics/Components/Buttons/AddButton'
@@ -29,8 +29,7 @@ export default function ShowGender() {
 
                     <AddButton path={"/gender"} />
                     <GenericList data={genderInfo} handleDelete={handleDelete} handleEdit={handleEdit} isSearchMode={false} dataHeader={genderDataHeader} tableName={sortColumn} handleSorting={handleSorting} />
-                    <Grid sx={{ marginTop: 3 }} style={{ display: 'flex', justifyContent: 'center'}}>
-
+                    <Grid sx={{marginTop : 3}} style={{ display: 'flex', justifyContent: 'center' }}>
                         <PaginationComponent numbers={numbers} prevPage={prevPage} prevPageDisabled={prevPageDisabled} changeCurrentPage={changeCurrentPage} nextPage={nextPage} nextPageDisabled={nextPageDisabled} />
                     </Grid>
                 </Box>
@@ -38,3 +37,5 @@ export default function ShowGender() {
         </div>
     )
 }
+
+// sx={{ marginTop: 0 }}

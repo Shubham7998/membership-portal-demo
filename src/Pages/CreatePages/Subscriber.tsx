@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import SubscriberUtility from '../../Utility/SubscriberUtility';
+import SubscriberUtility from '../../Utility/Pages/SubscriberUtility';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
     Paper, Grid, TextField, InputLabel,
@@ -16,7 +16,7 @@ export default function Subscriber() {
     const { id = 0 } = useParams();
 
 
-    const { errors,setErrors, navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
+    const { errors, setErrors, navigate, handleSubmit, subscriberInfo, genders, setSubscriberInfo, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity } = SubscriberUtility(+id);
     const {
         onSelectFieldChange,
         onTextFieldChangeError,
@@ -148,7 +148,7 @@ export default function Subscriber() {
                                             </InputAdornment>
                                         ),
                                         inputProps: {
-                                            maxLength: 10, 
+                                            maxLength: 10,
                                         },
                                     }}
                                     helperText={errors.find(

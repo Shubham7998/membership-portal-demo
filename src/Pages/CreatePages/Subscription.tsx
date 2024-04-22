@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import SubscriberUtility from '../../Utility/SubscriberUtility';
+import SubscriberUtility from '../../Utility/Pages/SubscriberUtility';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
     Paper, Grid, TextField, InputLabel,
@@ -8,7 +8,7 @@ import {
     CardActions
 } from "@mui/material";
 import SideNav from '../HelpingPages/SideNav';
-import SubscriptionUtility from '../../Utility/SubscriptionUtility';
+import SubscriptionUtility from '../../Utility/Pages/SubscriptionUtility';
 import dayjs, { Dayjs } from 'dayjs';
 import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../../Generics/OnChangeFields';

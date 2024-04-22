@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { SubscriberModel } from '../Models/SubscriberModel';
-import { DeleteSubscriberByIdAsync, GetSubscriberAsync } from '../Services/SubscriberService';
+import { SubscriberModel } from '../../Models/SubscriberModel';
+import { DeleteSubscriberByIdAsync, GetSubscriberAsync } from '../../Services/SubscriberService';
 import { useNavigate } from 'react-router-dom';
-import { handleSwirl } from '../Generics/Swirl';
-import { ProductModel } from '../Models/ProductModel';
-import { DiscountModel } from '../Models/DiscountModel';
-import { SubscriptionModel } from '../Models/SubscriptionModel';
-import { GetProductAsync } from '../Services/ProductService';
-import { GetDiscountAsync } from '../Services/DiscontService';
+import { handleSwirl } from '../../Generics/Swirl';
+import { ProductModel } from '../../Models/ProductModel';
+import { DiscountModel } from '../../Models/DiscountModel';
+import { SubscriptionModel } from '../../Models/SubscriptionModel';
+import { GetProductAsync } from '../../Services/ProductService';
+import { GetDiscountAsync } from '../../Services/DiscontService';
 import dayjs, { Dayjs } from 'dayjs';
 import { SelectChangeEvent, } from "@mui/material";
-import { CreateSubscriptionAsync, GetSubscriptionByIdAsync, UpdateSubscriptionAsync } from '../Services/SubscriptionService';
-import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
+import { CreateSubscriptionAsync, GetSubscriptionByIdAsync, UpdateSubscriptionAsync } from '../../Services/SubscriptionService';
+import SnackBarGeneric from '../../Generics/Components/Snackbar/SnackBarGeneric';
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
 
 export default function SubscriptionUtility(id: number) {
     type DateFieldChangeHandler = (name: string, value: Dayjs | null) => void;
@@ -51,7 +51,7 @@ export default function SubscriptionUtility(id: number) {
         startDate: new Date(),
         expiryDate: new Date(),
         priceAfterDiscount: 0,
-        
+
         taxId: 4,
         cgst: 0,
         sgst: 0,
@@ -73,7 +73,6 @@ export default function SubscriptionUtility(id: number) {
 
     useEffect(() => {
         fetchData();
-        console.log("use effect")
     }, [])
 
     async function fetchData() {
@@ -87,8 +86,6 @@ export default function SubscriptionUtility(id: number) {
         const fetchProductInfo = await GetProductAsync();
         if (fetchProductInfo != null) {
             setProductInfo(fetchProductInfo.data);
-            console.log("fetchProductInfo");
-            console.log(fetchProductInfo)
         }
 
         const fetchDiscountInfo = await GetDiscountAsync();
@@ -96,8 +93,6 @@ export default function SubscriptionUtility(id: number) {
         if (fetchDiscountInfo != null) {
 
             setDiscountInfo(fetchDiscountInfo.data);
-            console.log("fetchDiscountInfo");
-            console.log(fetchDiscountInfo)
         }
 
         if (id > 0) {
@@ -168,7 +163,7 @@ export default function SubscriptionUtility(id: number) {
                 errorMessage: "Please select a subscriber"
             });
         }
-        
+
         setErrors(newErrors);
 
         return newErrors.length === 0;
@@ -190,18 +185,16 @@ export default function SubscriptionUtility(id: number) {
     const handleSubmit = async () => {
         alert(JSON.stringify(subscriptionInfo))
         if (isValidate()) {
-            if(subscriptionInfo.discountId == 0){
+            if (subscriptionInfo.discountId == 0) {
                 subscriptionInfo.discountId = 1;
-            } 
+            }
             if (id > 0) {
                 const result = await UpdateSubscriptionAsync(id, subscriptionInfo);
                 setSubscriptionInfo(result.data);
-                console.log(result)
                 displaySnackbar("Subscription details updated successfully", "success");
             } else {
                 alert("Create subscription subscription")
                 const result = await CreateSubscriptionAsync(subscriptionInfo);
-                console.log(result)
                 displaySnackbar("Subscription details added successfully", "success");
 
             }

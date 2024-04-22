@@ -43,11 +43,6 @@ const Home1: React.FC = () => {
                 <Typography variant="body1" style={authorStyle}>
                     - Unknown
                 </Typography>
-
-
-                <Button onClick = {() => navigate("/showsubscriptions")} variant="contained" color="primary" style={joinButtonStyle}>
-                    Join Our Gym Today
-                </Button>
             </Container>
         </Grid>
     );

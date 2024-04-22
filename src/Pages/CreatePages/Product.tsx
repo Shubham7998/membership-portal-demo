@@ -2,7 +2,7 @@ import { Alert, Button, CardActions, Grid, Paper, Snackbar, TextField } from '@m
 import React from 'react'
 import SideNav from '../HelpingPages/SideNav'
 import { useParams } from 'react-router-dom'
-import ProductUtility from '../../Utility/ProductUtility';
+import ProductUtility from '../../Utility/Pages/ProductUtility';
 import GenericSnackbar from '../../Generics/Components/Snackbar/SnackBar';
 import OnChangeFields from '../../Generics/OnChangeFields';
 
@@ -12,7 +12,7 @@ export default function Product() {
 
     const {
         setProductInfo,
-        productInfo,setErrors,
+        productInfo, setErrors,
         errors, navigate,
         onInputChangeproduct,
         snackbarOpen,
@@ -76,7 +76,7 @@ export default function Product() {
                                     aria-label="Demo number input"
                                     placeholder="Type a number…"
                                     value={productInfo.price}
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setProductInfo,setErrors,errors)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setProductInfo, setErrors, errors)}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === "price"

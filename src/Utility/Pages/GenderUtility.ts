@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
 import { useNavigate } from 'react-router-dom';
-import GenderModel from '../Models/GenderModel';
-import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
-import { CreateInfo, GetAllAsync, GetInfoById, UpdateInfo } from '../Generics/Services/GenericService';
+import GenderModel from '../../Models/GenderModel';
+import SnackBarGeneric from '../../Generics/Components/Snackbar/SnackBarGeneric';
+import { CreateInfo, GetAllAsync, GetInfoById, UpdateInfo } from '../../Generics/Services/GenericService';
 
 export default function GenderUtility(id: number) {
     const gendersAllData: string[] = [
@@ -122,14 +122,15 @@ export default function GenderUtility(id: number) {
 
     const handleSubmit = async () => {
         if (isValidate()) {
-            if(id == 0){
+            if (id == 0) {
                 const result = await CreateInfo(genderInfo, tableName);
                 displaySnackbar("Gender added successfully", "success")
-            }else{
-                const result = await UpdateInfo(genderInfo, tableName,id);
+            } else {
+                const result = await UpdateInfo(genderInfo, tableName, id);
                 displaySnackbar("Gender update successfully", "success")
-                
+
             }
+            navigate(`/showgenders`)
             displaySnackbar("Please fieled requie data", "error")
 
         }

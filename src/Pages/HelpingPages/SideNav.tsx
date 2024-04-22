@@ -22,7 +22,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import MailIcon from '@mui/icons-material/Mail';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { CssBaseline, List } from '@mui/material';
+import { CssBaseline, List, Tooltip } from '@mui/material';
 import Groups3Icon from '@mui/icons-material/Groups3';
 
 const drawerWidth = 240;
@@ -63,7 +63,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    position : "relative",
+    position: "relative",
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -77,8 +77,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function SideNav() {
   const theme = useTheme();
-  const updateOpen = useAppStore((state : any) => state.updateOpen);
-  const dOpen = useAppStore((state : any) => state.dOpen);
+  const updateOpen = useAppStore((state: any) => state.updateOpen);
+  const dOpen = useAppStore((state: any) => state.dOpen);
   const isOpen = typeof dOpen === 'boolean' ? dOpen : false;
   const navigate = useNavigate();
 
@@ -96,7 +96,7 @@ export default function SideNav() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      
+
       <Drawer variant="permanent" open={isOpen}>
         <DrawerHeader>
           <IconButton onClick={() => updateOpen(!isOpen)}>
@@ -125,7 +125,11 @@ export default function SideNav() {
                     justifyContent: 'center',
                   }}
                 >
-                  {item.icon}
+                  <Tooltip title={item.label}>
+                    <IconButton>
+                    {item.icon}
+                    </IconButton>
+                  </Tooltip>
                 </ListItemIcon>
                 <ListItemText primary={item.label} sx={{ opacity: isOpen ? 1 : 0 }} />
               </ListItemButton>

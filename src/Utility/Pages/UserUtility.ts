@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { UserModel } from '../Models/UserModel';
-import { CreateUserService, GetUserService, UpdateUserService } from '../Services/UserService';
+import { UserModel } from '../../Models/UserModel';
+import { CreateUserService, GetUserService, UpdateUserService } from '../../Services/UserService';
 import { useNavigate } from 'react-router-dom';
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import { isValidContactNumber, isValidEmailAddress, isValidName, isValidPassword, removeSpace } from '../Generics/Validations';
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
+import { isValidContactNumber, isValidEmailAddress, isValidName, isValidPassword, removeSpace } from '../../Generics/Validations';
 import { Snackbar, SnackbarOrigin } from "@mui/material";
-import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import SnackBarGeneric from '../../Generics/Components/Snackbar/SnackBarGeneric';
 
 export function UserUtility(id: number) {
     const initialValue: UserModel = {
@@ -35,13 +35,10 @@ export function UserUtility(id: number) {
         if (id > 0) {
             try {
                 const result = await GetUserService(id);
-                console.log("result.errorCode = " + result.errorCode)
 
                 if (result.errorCode == "200") {
-                    console.log("result.errorCode = " + result.errorCode)
                     if (result != null) {
                         setUserInfo(result.data);
-                        console.log(result.data);
 
                     }
                 }
@@ -185,11 +182,9 @@ export function UserUtility(id: number) {
             try {
                 if (id > 0) {
                     var result = await UpdateUserService(userInfo, id);
-                    console.log(result.data);
                     displaySnackbar("User updated successfully", "success")
                 } else {
                     var result = await CreateUserService(userInfo);
-                    console.log(result.data);
                     displaySnackbar("User added successfully", "success")
                 }
                 setErrors(newErrors);
@@ -210,5 +205,5 @@ export function UserUtility(id: number) {
         setErrors([]);
         setUserInfo(initialValue);
     }
-    return {handleClear,setErrors, navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
+    return { handleClear, setErrors, navigate, setUserInfo, userInfo, handleSubmit, errors, snackbarOpen, handleSnackbarClose, snackbarMessage, snackbarSeverity };
 }

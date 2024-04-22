@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { TaxModel } from '../Models/TaxModel'
+import { TaxModel } from '../../Models/TaxModel'
 import { useNavigate } from 'react-router-dom';
-import { CreateTaxAsync, GetTaxAsync, GetTaxByIdAsync, UpdateTaxAsync } from '../Services/TaxService';
+import { CreateTaxAsync, GetTaxAsync, GetTaxByIdAsync, UpdateTaxAsync } from '../../Services/TaxService';
 import { SnackbarOrigin } from '@mui/material';
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
-import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
+import SnackBarGeneric from '../../Generics/Components/Snackbar/SnackBarGeneric';
 
 export default function TaxUtility(id: number) {
     let initialValue: TaxModel = {
@@ -72,7 +72,7 @@ export default function TaxUtility(id: number) {
                 if (result.data != null) {
 
                     setTaxInfo(result.data)
-                    
+
                     if (result.errorCode == "200") {
                         console.log("result.errorCode = " + result.errorCode)
                         if (result != null) {
@@ -149,15 +149,10 @@ export default function TaxUtility(id: number) {
         if (isValidate()) {
             try {
                 if (id > 0) {
-                    alert("update");
                     var result = await UpdateTaxAsync(taxInfo, id);
-                    alert(result.data);
-                    console.log(result.data);
                     displaySnackbar("Tax updated successfully", "success");
                 } else {
                     var result = await CreateTaxAsync(taxInfo);
-                    alert(result.data);
-                    console.log(result.data);
                     displaySnackbar("Tax added successfully", "success");
                 }
                 setErrors(newErrors);
@@ -167,7 +162,6 @@ export default function TaxUtility(id: number) {
                 }, 1000);
             } catch (error) {
                 displaySnackbar(String(error), "info");
-                console.log(error)
             }
         } else {
             displaySnackbar("Fields marked in red are required", "error");

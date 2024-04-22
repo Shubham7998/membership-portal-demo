@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { UserModel } from '../../Models/UserModel'
 import { Button, Grid, Paper, TextField, Snackbar, Alert, CardActions, IconButton } from '@mui/material';
 import { userInfo } from 'os';
-import { UserUtility } from '../../Utility/UserUtility';
+import { UserUtility } from '../../Utility/Pages/UserUtility';
 import { useParams } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
@@ -26,7 +26,7 @@ export default function User() {
     const { onTextFieldChange,
         onNumberFieldChange,
         onTextFieldChangeError,
-        onNumberFieldChangeError
+        onNumberFieldChangeError,onNumberFieldContactChangeError
     } = OnChangeFields();
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -95,7 +95,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='email'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChangeError(event, setUserInfo, setErrors, errors)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onTextFieldChange(event, setUserInfo)}
                                     value={userInfo.email}
                                     required
                                     InputProps={{
@@ -103,7 +103,8 @@ export default function User() {
                                             <InputAdornment position="start">
                                                 <EmailIcon />
                                             </InputAdornment>
-                                        )}}
+                                        )
+                                    }}
                                     helperText={
                                         errors.find(
                                             (error) => error.parameterName === 'email'
@@ -124,7 +125,7 @@ export default function User() {
                                     variant="outlined"
                                     size="small"
                                     name='contactNumber'
-                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldChangeError(event, setUserInfo,setErrors,errors)}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => onNumberFieldContactChangeError(event, setUserInfo, setErrors, errors)}
                                     value={userInfo.contactNumber}
                                     required
                                     InputProps={{
@@ -134,7 +135,7 @@ export default function User() {
                                             </InputAdornment>
                                         ),
                                         inputProps: {
-                                            maxLength: 10, 
+                                            maxLength: 10,
                                         },
                                     }}
                                     helperText={errors.find(

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { DiscountModel } from '../Models/DiscountModel';
+import { DiscountModel } from '../../Models/DiscountModel';
 import { useNavigate } from 'react-router-dom';
-import { handleSwirl } from '../Generics/Swirl';
-import { SubscriberModel } from '../Models/SubscriberModel';
-import { GetSubscriberAsync, DeleteSubscriberByIdAsync } from '../Services/SubscriberService';
-import { DeleteDiscountAsync, GetDiscountAsync } from '../Services/DiscontService';
-import { TaxModel } from '../Models/TaxModel';
-import { DeleteTaxAsync, GetTaxAsync } from '../Services/TaxService';
-import { GetAllAsync } from '../Generics/Services/GenericService';
-import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
+import { handleSwirl } from '../../Generics/Swirl';
+import { SubscriberModel } from '../../Models/SubscriberModel';
+import { GetSubscriberAsync, DeleteSubscriberByIdAsync } from '../../Services/SubscriberService';
+import { DeleteDiscountAsync, GetDiscountAsync } from '../../Services/DiscontService';
+import { TaxModel } from '../../Models/TaxModel';
+import { DeleteTaxAsync, GetTaxAsync } from '../../Services/TaxService';
+import { GetAllAsync } from '../../Generics/Services/GenericService';
+import PaginationUtility from '../../Generics/Components/Pagination/PaginationUtility';
 
 export default function ShowTaxUtility() {
     const initialValue: TaxModel = {
@@ -45,11 +45,8 @@ export default function ShowTaxUtility() {
     }
     const handleSorting = async (columnName: string, sortOrder: string) => {
 
-        alert(columnName + " " + sortOrder);
 
         const result = await GetAllAsync(initialValue, tableName, currentPage, recordsPerPage, columnName, sortOrder);
-        console.log("result")
-        console.log(columnName)
         if (result != null) {
             setTaxInfo(result.dataArray);
             setTotalPages(result.totalPages);
@@ -61,41 +58,37 @@ export default function ShowTaxUtility() {
     const handleClear = () => {
         setSearchTaxInfo(initialValue);
         fetchData();
-    
-      };
-      async function searchData() {
-        // var find = "";
-    
-        alert("Handle search data")
-        alert(JSON.stringify(searchTaxInfo));
-        const result = await GetAllAsync(searchTaxInfo, tableName,currentPage, recordsPerPage, "id", "asc");
+        setSearchMode(false);
 
-        console.log(result)
+    };
+    async function searchData() {
+        // var find = "";
+
+        const result = await GetAllAsync(searchTaxInfo, tableName, currentPage, recordsPerPage, "id", "asc");
+
         setTaxInfo(result.dataArray);
         setTotalPages(result.totalPages);
-        
-      }
-      const handleSearchClick = () => {
-        alert("Handle search cleck")
+
+    }
+    const handleSearchClick = () => {
         searchData();
         setSearchMode(true);
-        
-      };
+
+    };
     const handleDelete = async (id: number) => {
         const confirmation = await handleSwirl();
         if (confirmation.confirmed) {
-            console.log("delete data successfullu")
             const result = await DeleteTaxAsync(id);
-            console.log(result)
             fetchData();
         }
     }
 
-    return {handleSearchClick,handleClear,
+    return {
+        handleSearchClick, handleClear,
         prevPage, nextPage, currentPage, changeCurrentPage,
         numbers, prevPageDisabled, handleSorting, setTaxInfo,
         nextPageDisabled, navigate, handleDelete, taxInfo, handleEdit,
-        searchTaxInfo, setSearchTaxInfo
+        searchTaxInfo, setSearchTaxInfo,searchMode
     }
 }
 

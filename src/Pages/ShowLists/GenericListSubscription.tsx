@@ -15,6 +15,7 @@ import { DiscountModel } from '../../Models/DiscountModel';
 import { TaxModel } from '../../Models/TaxModel';
 import GenderModel from '../../Models/GenderModel';
 import { useState } from 'react';
+import { subscribe } from 'diagnostics_channel';
 
 
 const userDataHeader = ["Sr. No.", "First Name", "Last Name", "Email", "Contact No."]
@@ -32,7 +33,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 2,
     },
 }));
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -46,6 +46,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 interface GenericListProps {
     data: UserModel[] | ProductModel[] | SubscriberModel[] | DiscountModel[] | TaxModel[] | GenderModel[];
+    subscriberInfo: SubscriberModel[],
     handleDelete: (id: number) => void;
     handleEdit: (id: number) => void;
     dataHeader: string[],
@@ -54,18 +55,28 @@ interface GenericListProps {
     handleSorting: (tableName: string, sortOrder: string) => void
 }
 
-export default function GenericList(
+
+export default function GenericListSubscription(
     {
-        data, handleDelete, handleEdit,
+        data, handleDelete, handleEdit, subscriberInfo,
         dataHeader, isSearchMode, tableName, handleSorting
     }: GenericListProps) {
 
+    const [subscribersName, setSubscribersName] = useState("");
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     function handleSort(tableName: string): void {
         setSortOrder(sortOrder === "asc" ? "desc" : "asc");
         handleSorting(tableName, sortOrder);
     }
+
+    const getSubscribersName = (id: number): string => {
+        const subscriber = subscriberInfo.find(subscriber => subscriber.id === id);
+        if (subscriber) {
+            return `${subscriber.firstName} ${subscriber.lastName}`;
+        }
+        return 'Subscriber Not Found';
+    };
 
     return (
         <>
@@ -103,7 +114,15 @@ export default function GenericList(
                                                     {value ? "true" : "false"}
                                                 </StyledTableCell>
                                             );
-                                        } else {
+                                        } else if (key === 'subscriberId') {
+                                            return (
+                                                <StyledTableCell key={idx} align="center">
+                                                    {getSubscribersName(value)}
+                                                </StyledTableCell>
+                                            );
+                                        }
+
+                                        else {
                                             return (
                                                 <StyledTableCell key={idx} align="center">
                                                     {value}

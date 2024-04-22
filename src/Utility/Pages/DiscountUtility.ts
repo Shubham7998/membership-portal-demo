@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { DiscountModel } from '../Models/DiscountModel'
-import { ParameterErrorModel } from '../Models/ParameterErrorModel';
+import { DiscountModel } from '../../Models/DiscountModel'
+import { ParameterErrorModel } from '../../Models/ParameterErrorModel';
 import { SelectChangeEvent, SnackbarOrigin } from '@mui/material';
-import { GetProductByIdAsync } from '../Services/ProductService';
-import { CreateDiscountAsync, GetDiscountByIdAsync, UpdateDiscountAsync } from '../Services/DiscontService';
-import SnackBarGeneric from '../Generics/Components/Snackbar/SnackBarGeneric';
+import { GetProductByIdAsync } from '../../Services/ProductService';
+import { CreateDiscountAsync, GetDiscountByIdAsync, UpdateDiscountAsync } from '../../Services/DiscontService';
+import SnackBarGeneric from '../../Generics/Components/Snackbar/SnackBarGeneric';
 import { useNavigate } from 'react-router-dom';
 
 export default function DiscountUtility(id: number) {
@@ -78,12 +78,10 @@ export default function DiscountUtility(id: number) {
     }
 
     const handleSubmit = async () => {
-        alert(discoutInfo)
         if (isValidate()) {
             console.log("isValidate");
             try {
                 if (discoutInfo.id !== 0) {
-                    console.log("Update discount info")
                     var response = await UpdateDiscountAsync(discoutInfo, discoutInfo.id);
                     displaySnackbar("Discount updated successfully", "success");
                 }
@@ -95,7 +93,6 @@ export default function DiscountUtility(id: number) {
                 setTimeout(() => {
                     navigate(`/showdiscounts`)
                 }, 1000)
-                // setDiscountInfo(initialValue);
             } catch (error) {
                 console.error("Error  in saving Product information:", error);
             }
@@ -123,7 +120,7 @@ export default function DiscountUtility(id: number) {
     };
 
     return {
-        navigate,setErrors,
+        navigate, setErrors,
         handleNumberChange, handleSelectChange,
         handleSubmit, discoutInfo,
         onInputChangeDiscount, errors,

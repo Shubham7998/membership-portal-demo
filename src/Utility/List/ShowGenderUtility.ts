@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import GenderModel from '../Models/GenderModel';
+import GenderModel from '../../Models/GenderModel';
 import { useNavigate } from 'react-router-dom';
-import PaginationUtility from '../Generics/Components/Pagination/PaginationUtility';
-import { DeleteInfoById, GetAllAsync } from '../Generics/Services/GenericService';
-import { handleSwirl } from '../Generics/Swirl';
-import { DeleteUserService } from '../Services/UserService';
+import PaginationUtility from '../../Generics/Components/Pagination/PaginationUtility';
+import { DeleteInfoById, GetAllAsync } from '../../Generics/Services/GenericService';
+import { handleSwirl } from '../../Generics/Swirl';
+import { DeleteUserService } from '../../Services/UserService';
 
 export default function ShowGenderUtility() {
 
@@ -35,10 +35,8 @@ export default function ShowGenderUtility() {
 
     async function handleDelete(id: number) {
         const confirmation = await handleSwirl();
-        console.log(confirmation.confirmed)
         if (confirmation.confirmed) {
             const result = await DeleteInfoById(tableName, id);
-            console.log(result.data);
             fetchData();
         }
     }
@@ -48,11 +46,8 @@ export default function ShowGenderUtility() {
     }
 
     const handleSorting = async (columnName: string, sortOrder: string) => {
-
-
         const result = await GetAllAsync(initialValue, tableName, currentPage, recordsPerPage, columnName, sortOrder);
-        console.log("result")
-        console.log(columnName)
+
         if (result != null) {
             setGenderInfo(result.dataArray);
             setTotalPages(result.totalPages);
@@ -60,10 +55,12 @@ export default function ShowGenderUtility() {
     }
 
 
-    return { handleDelete, genderInfo,
-        handleEdit,navigate , handleSorting,
+    return {
+        handleDelete, genderInfo,
+        handleEdit, navigate, handleSorting,
         setGenderInfo
-        ,prevPage, nextPage, currentPage, changeCurrentPage,
-         numbers, prevPageDisabled, 
-         nextPageDisabled}
+        , prevPage, nextPage, currentPage, changeCurrentPage,
+        numbers, prevPageDisabled,
+        nextPageDisabled
+    }
 }
